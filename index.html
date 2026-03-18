@@ -257,7 +257,7 @@ const fg=document.getElementById('featuredGrid');
 FEAT.forEach(s=>{
   const a=document.createElement('a');a.href='species.html';a.className='feat-card';
   const img=document.createElement('img');
-  img.src=s.img;img.alt=s.name;img.className='feat-thumb';img.loading='lazy';
+  img.src=s.img;img.alt=s.name;img.id='feat_'+s.tid;img.className='feat-thumb';img.loading='lazy';
   img.setAttribute('referrerpolicy','no-referrer');
   img.onerror=function(){const fb=document.createElement('div');fb.className='feat-fallback';fb.textContent=s.icon;this.parentElement.replaceChild(fb,this);};
   a.appendChild(img);
@@ -266,6 +266,14 @@ FEAT.forEach(s=>{
   const nm=document.createElement('div');nm.className='feat-name';nm.textContent=s.name;info.appendChild(nm);
   const diff=document.createElement('span');diff.className='feat-diff '+dC[s.diff];diff.textContent=dL[s.diff];info.appendChild(diff);
   a.appendChild(info);fg.appendChild(a);
+  // iNaturalist写真を非同期で取得
+  fetch('https://api.inaturalist.org/v1/taxa/'+s.tid)
+    .then(r=>r.json())
+    .then(d=>{
+      const url=d.results&&d.results[0]&&d.results[0].default_photo
+        ?d.results[0].default_photo.medium_url:null;
+      if(url){const el=document.getElementById('feat_'+s.tid);if(el)el.src=url;}
+    }).catch(()=>{});
 });
 </script>
 </body>

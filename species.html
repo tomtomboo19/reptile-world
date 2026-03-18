@@ -618,10 +618,34 @@ function renderMorphs(){
     </div>`).join('');
 }
 
+
+/* ===== iNaturalist 写真ローダー ===== */
+const _photoCache = {};
+async function _loadPhoto(name, tid, imgEl) {
+  if (!document.contains(imgEl)) return;
+  if (_photoCache[name]) { imgEl.src = _photoCache[name]; return; }
+  try {
+    const r = await fetch('https://api.inaturalist.org/v1/taxa/' + tid);
+    if (!r.ok) return;
+    const d = await r.json();
+    const url = d.results && d.results[0] && d.results[0].default_photo
+      ? d.results[0].default_photo.medium_url : null;
+    if (url) { _photoCache[name] = url; if (document.contains(imgEl)) imgEl.src = url; }
+  } catch(e) {}
+}
+function loadGridPhotos() {
+  if (!window.TAXON_IDS) return;
+  document.querySelectorAll('.sp-img-wrap img').forEach(img => {
+    const tid = TAXON_IDS[img.alt];
+    if (tid) _loadPhoto(img.alt, tid, img);
+  });
+}
+
 /* ===== INIT ===== */
 buildMorphFilter();
 renderMorphs();
 renderGrid();
+loadGridPhotos();
 
 const _obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);_obs.unobserve(e.target);}})},{threshold:0.07});
 document.querySelectorAll('.fade-in').forEach(el=>_obs.observe(el));
