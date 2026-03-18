@@ -8,15 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <style>
-.faq-list{margin-top:2rem;}
-.faq-item{border-bottom:1px solid var(--border);overflow:hidden;}
-.faq-q{width:100%;background:none;border:none;color:var(--text);font-family:'Noto Sans JP',sans-serif;font-size:.92rem;font-weight:700;padding:1.2rem 1rem;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;transition:color .2s;}
-.faq-q:hover{color:var(--accent2);}
-.faq-icon{font-family:'Space Mono',monospace;font-size:.9rem;color:var(--accent);flex-shrink:0;transition:transform .25s;}
-.faq-item.open .faq-icon{transform:rotate(45deg);}
-.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;}
-.faq-item.open .faq-a{max-height:400px;}
-.faq-a-inner{padding:.2rem 1rem 1.2rem;font-size:.86rem;color:var(--text2);font-weight:300;line-height:1.8;}
 .post-form{background:var(--surface);border:1px solid var(--border);padding:1.8rem;margin-bottom:2rem;}
 .post-form-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--accent2);margin-bottom:1rem;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:.8rem;}
@@ -73,12 +64,13 @@
   <a href="care.html" onclick="closeDrawer()">飼育・繁殖</a>
   <a href="info.html" onclick="closeDrawer()">情報・ショップ</a>
   <a href="community.html" onclick="closeDrawer()">コミュニティ</a>
+  <a href="faq.html" onclick="closeDrawer()">FAQ</a>
 </div>
 
 <div class="page-hero">
   <div class="page-hero-label">// 04. COMMUNITY</div>
   <h1 class="page-hero-title">コミュ<span>ニティ</span></h1>
-  <p class="page-hero-desc">飼育の悩みや自慢の子を投稿できる掲示板と、よくある質問（FAQ）をまとめました。</p>
+  <p class="page-hero-desc">飼育の悩みや自慢の子を投稿できる掲示板です。気軽に投稿してください。</p>
 </div>
 
 <!-- BOARD -->
