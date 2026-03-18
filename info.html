@@ -68,6 +68,14 @@
 .fact-desc{font-size:.85rem;color:var(--text2);font-weight:300;line-height:1.65;}
 @media(max-width:600px){.facts-grid{grid-template-columns:1fr;}.fact-item:nth-child(odd){border-right:none;}}
 </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NQVSG0XPLW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NQVSG0XPLW');
+</script>
 </head>
 <body>
 <nav>
@@ -113,7 +121,7 @@
 
   <p class="sec-label" style="margin-top:3rem;">// RECOMMENDED SHOPS</p>
   <h3 style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--text);margin-bottom:2rem;">西東京・多摩エリアのおすすめ店舗</h3>
-  <div class="shop-grid">
+  <div class="shop-grid" id="staticShopGrid">
     <div class="shop-card"><div class="shop-badge">爬虫類専門 ★おすすめ</div><div class="shop-name">Tsuchinoko</div><div class="shop-addr">東京都昭島市緑町5-7-17</div><div class="shop-hours">月～木 18～21時 / 土 15～21時（火・金・日定休）</div><div class="shop-rating"><span class="shop-stars">★★★★☆</span><span class="shop-rnum">4.3（52件）</span></div><div class="shop-tel">☎ 090-4748-7706</div><p class="shop-note">レオパ・血統アナコンダ等を専門に扱う地域密着型。購入後のアフターフォローが手厚いと評判。</p></div>
     <div class="shop-card"><div class="shop-badge">爬虫類専門 ★高評価</div><div class="shop-name">LUCK UP Reptiles</div><div class="shop-addr">東京都杉並区阿佐谷北3-13-13</div><div class="shop-hours">月・火・木～日 12～20時（水定休）</div><div class="shop-rating"><span class="shop-stars">★★★★★</span><span class="shop-rnum">4.9（110件）</span></div><div class="shop-tel">☎ 03-4361-7794</div><p class="shop-note">都内屈指の高評価爬虫類専門店。レオパの自家繁殖個体が豊富。店内清潔で初心者にも入りやすい。</p></div>
     <div class="shop-card"><div class="shop-badge">爬虫類取扱あり</div><div class="shop-name">TropiLand（東村山）</div><div class="shop-addr">東京都東村山市恩多町2-41-7</div><div class="shop-hours">月・水～金 13～20:30 / 土日 11～19時（火定休）</div><div class="shop-rating"><span class="shop-stars">★★★★☆</span><span class="shop-rnum">4.0（959件）</span></div><div class="shop-tel">☎ 042-390-0708</div><p class="shop-note">小平市から最も近い大型ペットショップのひとつ。爬虫類コーナーも充実。スタッフの知識が高い。</p></div>
@@ -131,7 +139,7 @@
     <p class="sec-label">// EVENTS</p>
     <h2 class="sec-title">爬虫類イベント情報</h2>
     <p class="sec-desc">即売会・展示会・オフ会など。最新情報は各主催の公式SNSで必ず確認を。</p>
-    <div class="events-grid">
+    <div class="events-grid" id="eventsGrid">
       <div class="event-card"><div class="event-badge">大型即売会</div><div class="event-date">年2回</div><div class="event-freq">春・秋開催</div><div class="event-name">東京レプタイルズワールド</div><div class="event-place">東京ビッグサイト（江東区）</div><p class="event-desc">日本最大級の爬虫類即売会。全国のブリーダー・ショップが集結。生体・用品・グッズまで網羅。入場料あり。</p></div>
       <div class="event-card"><div class="event-badge">大型即売会</div><div class="event-date">年複数回</div><div class="event-freq">不定期開催</div><div class="event-name">ジャパンレプタイルズショー（JRS）</div><div class="event-place">浜松市・幕張メッセ（会場変動あり）</div><p class="event-desc">東海～関東を中心に開催される大型爬虫類ショー。海外ブリーダーの参加もあり希少種との出会いも。</p></div>
       <div class="event-card"><div class="event-badge">中型イベント</div><div class="event-date">年複数回</div><div class="event-freq">関東各地で開催</div><div class="event-name">レプタイルズフィーバー</div><div class="event-place">関東各会場（公式SNSで告知）</div><p class="event-desc">比較的こぢんまりした即売会。初心者も入りやすい雰囲気でブリーダーと直接話せる機会が多い。</p></div>
@@ -241,6 +249,51 @@ function getLocation(){
 
 const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);obs.unobserve(e.target);}});},{threshold:0.07});
 document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+</script>
+<script src="common.js"></script>
+
+<script>
+// Render shops from data.js
+function renderShops() {
+  if(!window.SHOPS) return;
+  const grid = document.getElementById('staticShopGrid');
+  if(!grid) return;
+  grid.innerHTML = SHOPS.map(s => `
+    <div class="shop-card">
+      <div class="shop-badge">${s.badge}${s.star?' ★おすすめ':''}</div>
+      <div class="shop-name">${s.name}</div>
+      <div class="shop-addr">${s.addr}</div>
+      <div class="shop-hours">${s.hours}</div>
+      <div class="shop-rating"><span class="shop-stars">★ ${s.rating}</span><span class="shop-rnum">（${s.reviews}件）</span></div>
+      <div class="shop-tel">☎ ${s.tel}</div>
+      <p class="shop-note">${s.note}</p>
+      ${s.url ? `<a href="${s.url}" target="_blank" rel="noopener" style="display:inline-block;margin-top:.6rem;font-family:'Space Mono',monospace;font-size:.62rem;color:var(--accent3);text-decoration:none;border:1px solid var(--border);padding:.2rem .6rem;transition:all .2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--accent3)'">公式サイト →</a>` : ''}
+    </div>`).join('');
+}
+
+// Render events from data.js
+function renderEvents() {
+  if(!window.EVENTS) return;
+  const grid = document.getElementById('eventsGrid');
+  if(!grid) return;
+  grid.innerHTML = EVENTS.map(e => `
+    <div class="event-card">
+      <div class="event-badge">${e.badge}</div>
+      <div class="event-name">${e.name}</div>
+      <div class="event-freq" style="font-family:'Space Mono',monospace;font-size:.6rem;color:var(--accent3);margin-bottom:.4rem;">${e.freq}</div>
+      <div class="event-place">${e.place}</div>
+      <p class="event-desc">${e.desc}</p>
+      <div style="display:flex;gap:.5rem;margin-top:.8rem;flex-wrap:wrap;">
+        ${e.url ? `<a href="${e.url}" target="_blank" rel="noopener" style="font-family:'Space Mono',monospace;font-size:.6rem;color:var(--accent3);text-decoration:none;border:1px solid var(--border);padding:.2rem .6rem;transition:all .2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--accent3)'">公式サイト →</a>` : ''}
+        ${e.twitter ? `<a href="https://twitter.com/${e.twitter.replace('@','')}" target="_blank" rel="noopener" style="font-family:'Space Mono',monospace;font-size:.6rem;color:var(--accent3);text-decoration:none;border:1px solid var(--border);padding:.2rem .6rem;transition:all .2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--accent3)'">X/Twitter</a>` : ''}
+      </div>
+    </div>`).join('');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderShops();
+  renderEvents();
+});
 </script>
 </body>
 </html>

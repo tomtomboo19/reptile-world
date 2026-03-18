@@ -58,6 +58,14 @@
 .equip-desc{font-size:.78rem;color:var(--text2);font-weight:300;line-height:1.55;}
 .equip-price{font-family:'Space Mono',monospace;font-size:.66rem;color:var(--gold);margin-top:.4rem;}
 </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NQVSG0XPLW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NQVSG0XPLW');
+</script>
 </head>
 <body>
 <nav>
@@ -224,5 +232,6 @@ buildChecker();buildDiseaseGrid();
 const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);obs.unobserve(e.target);}});},{threshold:0.07});
 document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
 </script>
+<script src="common.js"></script>
 </body>
 </html>

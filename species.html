@@ -71,6 +71,14 @@
 .morph-rarity.ultra{color:var(--red);border-color:rgba(229,115,115,.4);}
 @media(max-width:600px){.m-stats{grid-template-columns:1fr 1fr;}}
 </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NQVSG0XPLW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NQVSG0XPLW');
+</script>
 </head>
 <body>
 <nav>
@@ -245,5 +253,6 @@ renderGrid();
 const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);obs.unobserve(e.target);}});},{threshold:0.07});
 document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
 </script>
+<script src="common.js"></script>
 </body>
 </html>

@@ -1,156 +1,275 @@
-// REPTILE WORLD - Shared Data
+// REPTILE WORLD - Complete Species & Morph Database v2
+// Images: local SVG fallbacks + Wikimedia Commons (referrerpolicy=no-referrer)
+
 const SD = [
-  // ── GECKO ──────────────────────────────────────
-  {cat:'gecko',icon:'🦎',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Eublepharis_macularius_2009_G01.jpg/640px-Eublepharis_macularius_2009_G01.jpg',name:'ヒョウモントカゲモドキ',latin:'Eublepharis macularius',diff:'beginner',tags:['初心者向け','夜行性','地表棲'],desc:'通称レオパ。最人気ヤモリ。温和・丈夫で人工飼料も食べる。モルフ数は数百種以上。',h:'パキスタン～インド北西部・アフガニスタンの乾燥岩地帯',d:'コオロギ・デュビア・ミルワーム・人工飼料',s:{sz:'20～25cm',li:'15～20年',t:'28～32℃'},tip:'ウェットシェルターで脱皮を補助。尾が太ければ健康の証。週3～4回給餌が目安。'},
-  {cat:'gecko',icon:'🦎',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Correlophus_ciliatus_-_Zurich_Zoo_-_2010-10-07_%28cropped%29.jpg/640px-Correlophus_ciliatus_-_Zurich_Zoo_-_2010-10-07_%28cropped%29.jpg',name:'クレステッドゲッコー',latin:'Correlophus ciliatus',diff:'beginner',tags:['初心者向け','樹上棲','夜行性'],desc:'ニューカレドニア原産。まつ毛状の突起が特徴。専用ペレットで完全飼育できる。',h:'ニューカレドニア島の熱帯雨林',d:'クレステッドゲッコーフード・コオロギ・果物',s:{sz:'18～25cm',li:'15～20年',t:'24～26℃'},tip:'高温（27℃超）に弱い。夏場は保冷対策必須。'},
-  {cat:'gecko',icon:'🦎',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Rhacodactylus_auriculatus_2.jpg/640px-Rhacodactylus_auriculatus_2.jpg',name:'ガーゴイルゲッコー',latin:'Rhacodactylus auriculatus',diff:'beginner',tags:['初心者向け','樹上棲'],desc:'ニューカレドニア原産。頭部の突起がガーゴイルに似る。クレス同様の飼育方法。',h:'ニューカレドニア南部の乾燥林',d:'クレステッドゲッコーフード・コオロギ',s:{sz:'20～28cm',li:'15～20年',t:'22～26℃'},tip:'尾は自切・再生可能。クレスよりやや乾燥に強い。'},
-  {cat:'gecko',icon:'🦎',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Rhacodactylus_leachianus_2.jpg/640px-Rhacodactylus_leachianus_2.jpg',name:'リーキーヤモリ（ジャイアントゲッコー）',latin:'Rhacodactylus leachianus',diff:'intermediate',tags:['中級者向け','世界最大ヤモリ','高価'],desc:'現生最大のヤモリ種。独特の鳴き声と存在感抜群。非常に高価で入手難易度高め。',h:'ニューカレドニア島の原生林',d:'クレステッドゲッコーフード・マウス・果物',s:{sz:'25～36cm',li:'20年以上',t:'22～26℃'},tip:'高温に非常に弱い。エアコン管理必須。1匹数万～数十万円。'},
-  {cat:'gecko',icon:'🦎',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Tokay_gecko_%28Gekko_gecko%29.jpg/640px-Tokay_gecko_%28Gekko_gecko%29.jpg',name:'トッケイヤモリ',latin:'Gekko gecko',diff:'intermediate',tags:['中級者向け','大型','咬みつき注意'],desc:'鮮やかな赤い斑点が美しい大型ヤモリ。気性が荒いが、近年慣れた個体も流通。',h:'東南アジア広域・岩壁・木の幹',d:'コオロギ・ゴキブリ・ピンクマウス',s:{sz:'25～35cm',li:'10～15年',t:'28～32℃'},tip:'幼体から慣らすことが重要。強い咬合力に注意。'},
-  {cat:'gecko',icon:'🦎',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Hemitheconyx_caudicinctus.jpg/640px-Hemitheconyx_caudicinctus.jpg',name:'アフリカンファットテール',latin:'Hemitheconyx caudicinctus',diff:'beginner',tags:['初心者向け','夜行性','西アフリカ産'],desc:'西アフリカ原産。レオパに似た体型でおとなしく飼いやすい。尾に脂肪蓄積。',h:'西アフリカのサバンナ・草原',d:'コオロギ・デュビア',s:{sz:'18～25cm',li:'15～20年',t:'28～32℃'},tip:'レオパより高湿度を好む（50～70%）。ウェットシェルター必須。'},
-  {cat:'gecko',icon:'🦎',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Hemitheconyx_caudicinctus.jpg/640px-Hemitheconyx_caudicinctus.jpg',name:'ニシアフリカトカゲモドキ',latin:'Hemitheconyx caudicinctus',diff:'beginner',tags:['初心者向け','夜行性'],desc:'アフリカンファットテールの通称。流通量が増えモルフも増加中。レオパより丸い体型。',h:'西アフリカのサバンナ',d:'コオロギ・デュビア',s:{sz:'18～25cm',li:'15～20年',t:'28～32℃'},tip:'高湿度維持が重要。ウェットシェルター常設推奨。'},
-  {cat:'gecko',icon:'🦎',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Phelsuma_grandis_-_Giant_Day_Gecko.jpg/640px-Phelsuma_grandis_-_Giant_Day_Gecko.jpg',name:'デイゲッコー（ヒルヤモリ）',latin:'Phelsuma sp.',diff:'intermediate',tags:['中級者向け','昼行性','ガラスを歩く'],desc:'マダガスカル原産の昼行性ヤモリ。鮮やかな緑色が美しい。展示飼育に向く。',h:'マダガスカルの熱帯雨林・農地',d:'コオロギ・果物・花蜜',s:{sz:'10～28cm',li:'10～15年',t:'28～32℃'},tip:'ハンドリングはストレスになるため極力避ける。展示飼育向き。'},
-  {cat:'gecko',icon:'🦎',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Coleonyx_variegatus_01.jpg/640px-Coleonyx_variegatus_01.jpg',name:'ヒメウロコヘビモドキ',latin:'Coleonyx variegatus',diff:'beginner',tags:['初心者向け','小型','北米産'],desc:'北米砂漠原産の小型ヤモリ。レオパに似た生態で入手も比較的容易。',h:'北米南西部の砂漠・乾燥地帯',d:'コオロギ・ミルワーム',s:{sz:'10～15cm',li:'8～15年',t:'28～32℃'},tip:'乾燥した環境を好む。小型のため小粒餌を用意。'},
-  {cat:'gecko',icon:'🦎',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Gekko_vittatus.jpg/640px-Gekko_vittatus.jpg',name:'ホワイトラインゲッコー',latin:'Gekko vittatus',diff:'intermediate',tags:['中級者向け','樹上棲'],desc:'東南アジア産の中型ヤモリ。白いラインが特徴的。',h:'東南アジアの熱帯雨林',d:'コオロギ・ゴキブリ',s:{sz:'15～20cm',li:'8～12年',t:'26～30℃'},tip:'高湿度を維持。ハンドリングは慣れが必要。'},
-  {cat:'gecko',icon:'🦎',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Mniarogekko_chahoua.jpg/640px-Mniarogekko_chahoua.jpg',name:'ニューカレドニアジャイアントゲッコー（ムーニー）',latin:'Mniarogekko chahoua',diff:'intermediate',tags:['中級者向け','希少','高価'],desc:'モス（苔）のような模様が美しい希少種。リーキーの近縁種でニューカレドニア固有。',h:'ニューカレドニアの森林',d:'クレステッドゲッコーフード・昆虫',s:{sz:'20～25cm',li:'15年以上',t:'22～26℃'},tip:'高温に弱い。エアコン管理必須。流通量が少なく高価。'},
-  {cat:'gecko',icon:'🦎',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Oedura_marmorata.jpg/640px-Oedura_marmorata.jpg',name:'ベルベットゲッコー',latin:'Oedura sp.',diff:'intermediate',tags:['中級者向け','オーストラリア産'],desc:'オーストラリア産の小～中型ヤモリ。ビロードのような質感の皮膚が特徴。',h:'オーストラリア東部の岩場・樹林',d:'コオロギ・ミルワーム',s:{sz:'10～18cm',li:'10～15年',t:'25～30℃'},tip:'輸入規制があるため繁殖個体が主に流通。'},
-  {cat:'gecko',icon:'🦎',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Uroplatus_phantasticus.jpg/640px-Uroplatus_phantasticus.jpg',name:'サタンゲッコー（オバケトカゲモドキ）',latin:'Uroplatus phantasticus',diff:'advanced',tags:['上級者向け','枯れ葉擬態','マダガスカル産'],desc:'枯れ葉に完璧に擬態するマダガスカル固有の変わったヤモリ。飼育は難しい。',h:'マダガスカル東部の熱帯雨林',d:'コオロギ・ワックスワーム',s:{sz:'8～12cm',li:'5～10年',t:'20～24℃'},tip:'高温厳禁。24℃以下を維持。湿度管理が非常に繊細。上級者向け。'},
-  // ── AGAMA ──────────────────────────────────────
-  {cat:'agama',icon:'🦖',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Pogona_vitticeps_2009_G01.jpg/640px-Pogona_vitticeps_2009_G01.jpg',name:'フトアゴヒゲトカゲ',latin:'Pogona vitticeps',diff:'intermediate',tags:['中級者向け','昼行性','雑食'],desc:'オーストラリア産。フレンドリーでよくなつく人気大型トカゲ。「爬虫類犬」と呼ばれることも。',h:'オーストラリア内陸部の乾燥地帯',d:'コオロギ・葉物野菜・専用ペレット',s:{sz:'45～60cm',li:'10～15年',t:'38～42℃'},tip:'アームウェービングは服従。ヘッドボビングは威嚇。冬にブルメーション入りすることがある。'},
-  {cat:'agama',icon:'🦖',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Laudakia_caucasia_2.jpg/640px-Laudakia_caucasia_2.jpg',name:'コーカサスアガマ',latin:'Paralaudakia caucasia',diff:'intermediate',tags:['中級者向け','昼行性'],desc:'中央アジア産の岩場を好むアガマ。丈夫で食欲旺盛。比較的人慣れしやすい。',h:'コーカサス～中央アジアの乾燥岩地帯',d:'コオロギ・ダンゴムシ・野草',s:{sz:'20～30cm',li:'10～15年',t:'35～42℃'},tip:'岩場レイアウトが活発な活動を促す。UVB照射必須。'},
-  {cat:'agama',icon:'🦖',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Ceratophora_stoddartii.jpg/640px-Ceratophora_stoddartii.jpg',name:'ハナアガマ',latin:'Ceratophora sp.',diff:'advanced',tags:['上級者向け','スリランカ固有','鼻突起'],desc:'スリランカ固有のアガマ。オスの鼻先に突起（ロストラル突起）が発達する珍種。',h:'スリランカの熱帯雨林',d:'コオロギ・ゴキブリ',s:{sz:'15～20cm',li:'8～12年',t:'24～28℃'},tip:'輸入規制あり。CITES附属書掲載種。高湿度・中温度で管理。'},
-  {cat:'agama',icon:'🦖',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Physignathus_cocincinus_2009_G04.jpg/640px-Physignathus_cocincinus_2009_G04.jpg',name:'モリドラゴン（ウォーターアガマ）',latin:'Physignathus cocincinus',diff:'intermediate',tags:['中級者向け','半樹上棲','水泳得意'],desc:'中国・東南アジア産の鮮やかなグリーンのトカゲ。水辺を好み泳ぎが得意。',h:'中国南部～東南アジアの川辺の熱帯林',d:'コオロギ・ゴキブリ・小魚・野菜',s:{sz:'60～90cm',li:'10～15年',t:'28～35℃'},tip:'水入れは泳げる深さを用意。ストレスで皮膚炎になりやすい。'},
-  {cat:'agama',icon:'🦖',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Chlamydosaurus_kingii_2.jpg/640px-Chlamydosaurus_kingii_2.jpg',name:'タコアガマ（フリルリザード）',latin:'Chlamydosaurus kingii',diff:'advanced',tags:['上級者向け','フリル','オーストラリア産'],desc:'首のフリルが有名なオーストラリア産大型アガマ。威嚇時にフリルを広げる。',h:'オーストラリア北部～ニューギニアの熱帯林',d:'コオロギ・ゴキブリ・ピンクマウス',s:{sz:'60～90cm',li:'10～15年',t:'35～42℃'},tip:'非常に動きが速い。大型ケージが必要。幼体はデリケート。'},
-  // ── LIZARD ──────────────────────────────────────
-  {cat:'lizard',icon:'🦖',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Tiliqua_scincoides_-_Zoo_Duisburg.jpg/640px-Tiliqua_scincoides_-_Zoo_Duisburg.jpg',name:'ヒガシアオジタトカゲ',latin:'Tiliqua scincoides',diff:'intermediate',tags:['中級者向け','地表棲','長寿'],desc:'青い舌で威嚇するオーストラリア産トカゲ。非常になつきやすく長寿。',h:'オーストラリア東部の草原・樹林',d:'野菜・果物・昆虫・缶詰キャットフード（補助）',s:{sz:'50～60cm',li:'20年以上',t:'30～35℃'},tip:'脂肪肝になりやすい。タンパク質は全体の20～25%以下に。'},
-  {cat:'lizard',icon:'🦖',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Green_iguana_on_branch.jpg/640px-Green_iguana_on_branch.jpg',name:'グリーンイグアナ',latin:'Iguana iguana',diff:'advanced',tags:['上級者向け','大型','草食'],desc:'中南米産の大型イグアナ。成体は1.5m超になり広大なスペースが必要。',h:'中南米の熱帯雨林・河岸',d:'葉物野菜・野草・果物（動物性は禁忌）',s:{sz:'120～180cm',li:'15～20年',t:'32～38℃'},tip:'成体の爪・尾での引っ搔きは危険。幼体から慣らすことが重要。'},
-  {cat:'lizard',icon:'🦖',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Basiliscus_plumifrons.jpg/640px-Basiliscus_plumifrons.jpg',name:'ホカケトカゲ',latin:'Basiliscus plumifrons',diff:'advanced',tags:['上級者向け','水上走行','中南米産'],desc:'水上を走ることができる「イエス・クライスト・リザード」。高湿度の大型ケージが必要。',h:'中南米の熱帯雨林・河辺',d:'コオロギ・ゴキブリ・果物',s:{sz:'60～90cm',li:'8～12年',t:'28～32℃'},tip:'非常にストレスに弱い。経験者向けの種。広い水場が必要。'},
-  {cat:'lizard',icon:'🦖',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Salvator_merianae_tegu.jpg/640px-Salvator_merianae_tegu.jpg',name:'テグー（アルゼンチンブラックアンドホワイト）',latin:'Salvator merianae',diff:'intermediate',tags:['中級者向け','大型','高知能'],desc:'南米産の大型テグー。犬のようになつく高知能のトカゲ。人気上昇中。',h:'南米の草原・農地・森林',d:'ラット・マウス・果物・卵・ペレット',s:{sz:'100～140cm',li:'15～20年',t:'35～40℃'},tip:'幼体から毎日ハンドリングで深くなつく。成体は広いスペースが必要。'},
-  {cat:'lizard',icon:'🦖',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Tiliqua_gigas_gigas.jpg/640px-Tiliqua_gigas_gigas.jpg',name:'パプアンスキンク（ブルータン）',latin:'Tiliqua gigas',diff:'intermediate',tags:['中級者向け','大型','ニューギニア産'],desc:'ニューギニア産の大型スキンク。アオジタトカゲの近縁種で体型が大きい。',h:'ニューギニア島の熱帯林',d:'野菜・果物・昆虫・缶詰フード',s:{sz:'50～65cm',li:'15～20年',t:'30～35℃'},tip:'アオジタトカゲに近い飼育方法。湿度やや高め（50～60%）。'},
-  {cat:'lizard',icon:'🦖',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Basiliscus_basiliscus.jpg/640px-Basiliscus_basiliscus.jpg',name:'オオバシリスク',latin:'Basiliscus basiliscus',diff:'advanced',tags:['上級者向け','水上走行','中米産'],desc:'ホカケトカゲと同じバシリスク属の大型種。雄は頭部・背部にクレストを持つ。',h:'中米の熱帯雨林・河辺',d:'コオロギ・ゴキブリ・果物・小型哺乳類',s:{sz:'70～100cm',li:'8～12年',t:'28～32℃'},tip:'非常にストレスに弱い上級者向け種。大型水場必須。'},
-  // ── SKINK ──────────────────────────────────────
-  {cat:'skink',icon:'🦎',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Plestiodon_japonicus_in_Osaka.jpg/640px-Plestiodon_japonicus_in_Osaka.jpg',name:'ニホントカゲ',latin:'Plestiodon japonicus',diff:'intermediate',tags:['中級者向け','国産','幼体は青い尾'],desc:'日本固有種。幼体の青い尾が美しい。季節変化に対応した飼育が必要。',h:'日本全国の低山・農地・公園',d:'コオロギ・ミミズ・ダンゴムシ',s:{sz:'15～25cm',li:'5～8年',t:'25～30℃'},tip:'冬眠させる場合は15℃以下の場所で管理。日光浴スペース必須。'},
-  {cat:'skink',icon:'🦎',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Scincus_scincus_05_Pengo.jpg/640px-Scincus_scincus_05_Pengo.jpg',name:'サンドフィッシュ',latin:'Scincus scincus',diff:'intermediate',tags:['中級者向け','砂潜り','北アフリカ産'],desc:'砂の中を泳ぐように潜る北アフリカ産スキンク。ユニークな行動が観察しやすい。',h:'北アフリカ～中東の砂漠地帯',d:'コオロギ・ミルワーム',s:{sz:'15～20cm',li:'5～10年',t:'30～38℃'},tip:'細かい砂（プレイサンド等）を15～20cm以上敷く。潜れないとストレスになる。'},
-  {cat:'skink',icon:'🦎',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Lepidothyris_fernandi02.jpg/640px-Lepidothyris_fernandi02.jpg',name:'ファイヤースキンク',latin:'Lepidothyris fernandi',diff:'intermediate',tags:['中級者向け','西アフリカ産','カラフル'],desc:'西アフリカ産の美しいスキンク。赤・黒・白のコントラストが鮮やか。',h:'西アフリカの熱帯雨林',d:'コオロギ・ゴキブリ・ミルワーム',s:{sz:'30～40cm',li:'10～15年',t:'26～30℃'},tip:'潜れる床材（バーミキュライト等）を厚く敷く。高湿度を維持。'},
-  {cat:'skink',icon:'🦎',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Tiliqua_rugosa_rugosa_01.jpg/640px-Tiliqua_rugosa_rugosa_01.jpg',name:'コモンスキンク（カープドスキンク）',latin:'Tiliqua rugosa',diff:'intermediate',tags:['中級者向け','オーストラリア産','ペア絆'],desc:'オーストラリア産の短くて太い体型のスキンク。番（つがい）の絆が強いことで有名。',h:'オーストラリア南部の乾燥草原・灌木地',d:'野菜・果物・昆虫',s:{sz:'30～40cm',li:'20年以上',t:'28～35℃'},tip:'生涯同じペアで生活することが多い。単独飼育でも問題ない。'},
-  // ── CHAMELEON ──────────────────────────────────────
-  {cat:'chameleon',icon:'🌿',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Chamaeleo_calyptratus_2009_G03.jpg/640px-Chamaeleo_calyptratus_2009_G03.jpg',name:'エボシカメレオン',latin:'Chamaeleo calyptratus',diff:'intermediate',tags:['中級者向け','入門カメレオン'],desc:'イエメン産のカメレオン入門種。湿度・温度管理が繊細。カメレオンの中では比較的丈夫。',h:'イエメン～サウジアラビアの山岳地帯',d:'コオロギ・バッタ・葉物野菜（成体）',s:{sz:'40～60cm',li:'5～8年',t:'28～32℃'},tip:'流水を好む。電動霧吹き・点滴システムが効果的。ストレスに非常に弱い。'},
-  {cat:'chameleon',icon:'🌿',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Furcifer_pardalis_-_Andapa.jpg/640px-Furcifer_pardalis_-_Andapa.jpg',name:'パンサーカメレオン',latin:'Furcifer pardalis',diff:'intermediate',tags:['中級者向け','高価','産地で体色が異なる'],desc:'マダガスカル産。産地（ロカリティ）によって全く異なる体色を持つ最美麗種のひとつ。',h:'マダガスカル北部・東部の低地林',d:'コオロギ・バッタ・ゴキブリ',s:{sz:'35～52cm',li:'5～7年',t:'28～32℃'},tip:'産地によって体色が全く異なる。アンビロベ産は赤、サンババ産は青が有名。'},
-  {cat:'chameleon',icon:'🌿',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Trioceros_jacksonii_xantholophus_-_male_2.jpg/640px-Trioceros_jacksonii_xantholophus_-_male_2.jpg',name:'ジャクソンカメレオン',latin:'Trioceros jacksonii',diff:'intermediate',tags:['中級者向け','三本角','卵胎生'],desc:'3本の角が特徴的なアフリカ産カメレオン。卵胎生で生きたまま出産する珍しい種。',h:'ケニア・タンザニアの山岳林',d:'コオロギ・ワックスワーム',s:{sz:'25～35cm',li:'5～8年',t:'22～27℃'},tip:'高温（27℃超）に非常に弱い。夏場保冷必須。産仔数は5～20頭。'},
-  {cat:'chameleon',icon:'🌿',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Furcifer_lateralis_2.jpg/640px-Furcifer_lateralis_2.jpg',name:'カーペットカメレオン',latin:'Furcifer lateralis',diff:'intermediate',tags:['中級者向け','マダガスカル産','小型'],desc:'マダガスカル産の小型カメレオン。流通量が多く比較的入手しやすい。',h:'マダガスカル高地・草原',d:'コオロギ・ミルワーム',s:{sz:'20～30cm',li:'3～5年',t:'24～28℃'},tip:'比較的低温を好む。夏の高温管理に注意。寿命が短い種。'},
-  {cat:'chameleon',icon:'🌿',name:'オオカメレオン（コモンカメレオン）',latin:'Chamaeleo chamaeleon',diff:'advanced',tags:['上級者向け','地中海産'],desc:'地中海沿岸産のカメレオン。ヨーロッパで唯一自生するカメレオン属。輸入規制あり。',h:'地中海沿岸の低木林・草原',d:'コオロギ・バッタ',s:{sz:'25～40cm',li:'5～8年',t:'25～32℃'},tip:'CITES付属書II掲載。輸入規制あり。繁殖個体が主に流通。'},
-  {cat:'chameleon',icon:'🌿',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Furcifer_oustaleti_male.jpg/640px-Furcifer_oustaleti_male.jpg',name:'ウスタレカメレオン',latin:'Furcifer oustaleti',diff:'advanced',tags:['上級者向け','大型カメレオン','マダガスカル産'],desc:'カメレオン属で最大種のひとつ。全長75cmに達することもある大型種。',h:'マダガスカル西部の乾燥林',d:'コオロギ・ゴキブリ・ピンクマウス（成体）',s:{sz:'50～75cm',li:'5～8年',t:'28～33℃'},tip:'大型のため広いケージが必要。成体は非常に大きく迫力がある。'},
-  // ── MONITOR ──────────────────────────────────────
-  {cat:'monitor',icon:'🦕',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Varanus_exanthematicus.jpg/640px-Varanus_exanthematicus.jpg',name:'サバンナモニター',latin:'Varanus exanthematicus',diff:'advanced',tags:['上級者向け','肉食','大型'],desc:'アフリカ産の大型モニター。知能が高く個体によくなつく。幼体から毎日慣らすことが重要。',h:'サブサハラ・アフリカのサバンナ',d:'コオロギ・デュビア・マウス・ウズラの卵',s:{sz:'90～130cm',li:'10～20年',t:'40～50℃'},tip:'幼体期から毎日ハンドリング。肥満になりやすいため給餌量管理が重要。'},
-  {cat:'monitor',icon:'🦕',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Varanus_acanthurus_2.jpg/640px-Varanus_acanthurus_2.jpg',name:'アッキードワーフモニター',latin:'Varanus acanthurus',diff:'intermediate',tags:['中級者向け','小型モニター','入門種'],desc:'モニター入門種として人気の小型ドワーフモニター。赤みを帯びた体色が美しい。',h:'オーストラリア北部の岩場・乾燥林',d:'コオロギ・デュビア・ピンクマウス',s:{sz:'50～70cm',li:'15～20年',t:'38～45℃'},tip:'高いバスキング温度（45℃以上）が必要。岩場レイアウトが活発な活動を促す。'},
-  {cat:'monitor',icon:'🦕',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Varanus_albigularis_microstictus.jpg/640px-Varanus_albigularis_microstictus.jpg',name:'ブラックスロートモニター',latin:'Varanus albigularis microstictus',diff:'advanced',tags:['上級者向け','大型','高知能'],desc:'アフリカ最大クラスのモニター。非常に高い知能と個体に深くなつく性質が特徴。',h:'東アフリカのサバンナ・低木林',d:'ラット・ウズラ・卵・昆虫',s:{sz:'120～180cm',li:'15～20年',t:'40～50℃'},tip:'幼体からの社会化が重要。十分な広さと環境エンリッチメントが必要。'},
-  {cat:'monitor',icon:'🦕',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Varanus_prasinus_2.jpg/640px-Varanus_prasinus_2.jpg',name:'エメラルドツリーモニター',latin:'Varanus prasinus',diff:'advanced',tags:['上級者向け','樹上棲','鮮やかなグリーン'],desc:'エメラルドグリーンの体色が非常に美しい樹上性モニター。飼育は難しく上級者向け。',h:'ニューギニア島の熱帯雨林',d:'コオロギ・ゴキブリ・小型トカゲ',s:{sz:'75～100cm',li:'10～15年',t:'30～35℃'},tip:'高湿度（70～80%）と高いバスキングスポット必須。ストレスに敏感。'},
-  {cat:'monitor',icon:'🦕',name:'アオホソオオトカゲ（クアール）',latin:'Varanus dumerilii',diff:'advanced',tags:['上級者向け','大型','東南アジア産'],desc:'デュメリルオオトカゲとも呼ばれる東南アジア産の大型種。幼体は美しい体色を持つ。',h:'東南アジアの熱帯雨林・沿岸',d:'ラット・魚・卵',s:{sz:'100～200cm',li:'15～20年',t:'32～38℃'},tip:'成体は非常に大型になる。大型専用設備が必要。'},
-  {cat:'monitor',icon:'🦕',name:'ロックモニター（ナイルモニター）',latin:'Varanus niloticus',diff:'advanced',tags:['上級者向け','大型','アフリカ産'],desc:'アフリカ最大の爬虫類のひとつ。ナイルモニターとも呼ばれる大型種。',h:'アフリカの川辺・草原',d:'ラット・魚・卵・昆虫',s:{sz:'120～200cm',li:'15～20年',t:'38～45℃'},tip:'成体は非常に攻撃的になる個体も多い。複数人での管理推奨。'},
-  // ── SNAKE（COLUBRID系）──────────────────────────────────────
-  {cat:'snake',icon:'🐍',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Pantherophis_guttatus_2009_G02.jpg/640px-Pantherophis_guttatus_2009_G02.jpg',name:'コーンスネーク',latin:'Pantherophis guttatus',diff:'beginner',tags:['初心者向け','入門ヘビ'],desc:'北米産のヘビ入門種。温和で咬みつきが少なく美しい色彩変異が多数流通。',h:'北米東部・南東部の森林・農地',d:'ピンクマウス→アダルトマウス（体に合わせて）',s:{sz:'90～120cm',li:'15～20年',t:'28～30℃'},tip:'給餌後48時間はハンドリング厳禁。脱走防止に蓋の管理を徹底。'},
-  {cat:'snake',icon:'🐍',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Lampropeltis_californiae_01.jpg/640px-Lampropeltis_californiae_01.jpg',name:'カリフォルニアキングスネーク',latin:'Lampropeltis californiae',diff:'beginner',tags:['初心者向け','北米産','丈夫'],desc:'北米西部産。美しいバンド模様と丈夫な体が魅力。他ヘビを捕食する習性があるため単独飼育。',h:'北米西部の草原・砂漠',d:'マウス（冷凍解凍）',s:{sz:'90～120cm',li:'15～20年',t:'28～30℃'},tip:'他のヘビと同居不可（捕食する）。脱走が得意なためケージ管理を徹底。'},
-  {cat:'snake',icon:'🐍',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Lampropeltis_triangulum_hondurensis.jpg/640px-Lampropeltis_triangulum_hondurensis.jpg',name:'ミルクスネーク',latin:'Lampropeltis triangulum',diff:'beginner',tags:['初心者向け','カラフル'],desc:'赤・黒・黄のバンド模様が鮮やか。毒ヘビのコーラルスネークに擬態する無毒ヘビ。',h:'北米～中南米の草原・森林',d:'マウス（冷凍解凍）',s:{sz:'60～100cm',li:'12～20年',t:'26～30℃'},tip:'食欲旺盛で飼育しやすい。亜種が多く体色バリエーションが豊富。'},
-  {cat:'snake',icon:'🐍',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Heterodon_nasicus.jpg/640px-Heterodon_nasicus.jpg',name:'ウエスタンホグノーズスネーク',latin:'Heterodon nasicus',diff:'beginner',tags:['初心者向け','死んだふり','個性的'],desc:'死んだふりをする習性が有名。上向きの鼻が特徴的な北米産ヘビ。後牙類。',h:'北米中部の砂地草原',d:'マウス・カエル',s:{sz:'45～90cm',li:'10～20年',t:'26～30℃'},tip:'唾液に軽度の毒性あり（後牙類）。噛まれたら洗浄を。マウス食いに慣らすのに手間がかかることも。'},
-  {cat:'snake',icon:'🐍',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Pituophis_catenifer_annectens.jpg/640px-Pituophis_catenifer_annectens.jpg',name:'ゴファースネーク',latin:'Pituophis catenifer',diff:'beginner',tags:['初心者向け','大型','北米産'],desc:'北米西部産の大型ナミヘビ。コブラに似た威嚇をするが無毒で実際は温和。',h:'北米西部の草原・砂漠・松林',d:'マウス～ラット',s:{sz:'100～200cm',li:'15～25年',t:'28～32℃'},tip:'成体は大きくなるため広いケージが必要。幼体から慣らすとハンドリングしやすい。'},
-  {cat:'snake',icon:'🐍',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Coelognathus_radiatus.jpg/640px-Coelognathus_radiatus.jpg',name:'インドシナラットスネーク',latin:'Coelognathus radiatus',diff:'beginner',tags:['初心者向け','東南アジア産'],desc:'東南アジア産の中型ナミヘビ。丈夫で飼育しやすく流通量が多い。',h:'東南アジアの農地・草原',d:'マウス（冷凍解凍）',s:{sz:'120～180cm',li:'12～18年',t:'28～32℃'},tip:'気性が荒い個体もいるが慣れると温和。乾燥に強く管理しやすい。'},
-  {cat:'snake',icon:'🐍',name:'ハラグロヘビ（ブラックレーサー）',latin:'Coluber constrictor',diff:'intermediate',tags:['中級者向け','北米産','動きが速い'],desc:'北米産の動きが非常に速いナミヘビ。展示向きだがハンドリングは難しい。',h:'北米東部の草原・低木林・農地',d:'マウス・カエル・トカゲ',s:{sz:'90～150cm',li:'10～15年',t:'26～30℃'},tip:'非常に動きが速い。展示・観察に適した種。ハンドリングは慣れが必要。'},
-  {cat:'snake',icon:'🐍',name:'グリーンスネーク（ラフグリーンスネーク）',latin:'Opheodrys aestivus',diff:'intermediate',tags:['中級者向け','鮮やかなグリーン','虫食い'],desc:'北米産の鮮やかな緑色のナミヘビ。細く美しいが冷凍マウスを食べない昆虫食。',h:'北米東部の草地・低木林',d:'コオロギ・ゴキブリ・毛虫',s:{sz:'60～90cm',li:'8～12年',t:'24～28℃'},tip:'冷凍マウスを食べないため昆虫の継続入手が必要。ガットローディング必須。'},
-  {cat:'snake',icon:'🐍',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Thamnophis_sirtalis_sirtalis_Wooster.jpg/640px-Thamnophis_sirtalis_sirtalis_Wooster.jpg',name:'ガーターヘビ',latin:'Thamnophis sirtalis',diff:'beginner',tags:['初心者向け','卵胎生','北米産'],desc:'北米で最も一般的なヘビのひとつ。卵胎生で生きたまま出産する。魚・ミミズも食べる。',h:'北米広域の草地・水辺',d:'マウス・魚・ミミズ',s:{sz:'50～130cm',li:'8～15年',t:'24～28℃'},tip:'卵胎生なので繁殖が比較的容易。水場を用意すると活発に。'},
-  {cat:'snake',icon:'🐍',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Gonyosoma_oxycephalum.jpg/640px-Gonyosoma_oxycephalum.jpg',name:'バナナヘビ',latin:'Gonyosoma oxycephalum',diff:'intermediate',tags:['中級者向け','樹上棲','東南アジア産'],desc:'東南アジア産の美しい樹上性ヘビ。鮮やかなグリーンの体色と赤い舌が特徴。',h:'東南アジアの熱帯雨林',d:'マウス（冷凍解凍）',s:{sz:'150～200cm',li:'10～15年',t:'26～30℃'},tip:'高いところを好むため背の高いケージが必要。慣れるまで咬みつきに注意。'},
-  {cat:'snake',icon:'🐍',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Indotyphlops_braminus.jpg/640px-Indotyphlops_braminus.jpg',name:'フラワーポットスネーク',latin:'Indotyphlops braminus',diff:'intermediate',tags:['中級者向け','最小級のヘビ','単性生殖'],desc:'体長10～15cmの世界最小クラスのヘビ。雌のみで単性生殖を行う珍しい種。',h:'東南アジア～世界各地の土中・植木鉢の中',d:'アリの幼虫・シロアリ',s:{sz:'10～15cm',li:'3～5年',t:'24～28℃'},tip:'餌の入手が難しい。アリの卵やシロアリを定期的に用意する必要がある。'},
-  // ── BOA / PYTHON ──────────────────────────────────────
-  {cat:'boa',icon:'⚫',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Python_regius_1.jpg/640px-Python_regius_1.jpg',name:'ボールパイソン',latin:'Python regius',diff:'beginner',tags:['初心者向け','モルフ世界最多','長寿'],desc:'丸まる習性が名前の由来。世界最多のモルフを誇るコレクター御用達のニシキヘビ。',h:'西～中央アフリカのサバンナ・草原',d:'マウス～ラット（冷凍解凍推奨）',s:{sz:'100～150cm',li:'25～70年',t:'30～33℃'},tip:'繁殖期の1～3ヶ月拒食は正常。シェルターはとぐろを巻いたサイズと同程度が理想。'},
-  {cat:'boa',icon:'🐍',name:'コモンボア（ボアコンストリクター）',latin:'Boa constrictor',diff:'intermediate',tags:['中級者向け','大型','ボア'],desc:'中南米産の大型ボア。成体は2mを超える。亜種が多く体色・サイズのバリエーションが豊富。',h:'中南米の熱帯雨林～砂漠',d:'ラット～ウサギ（サイズに応じて）',s:{sz:'150～250cm',li:'25～30年',t:'30～33℃'},tip:'スポットノーザンは比較的小型。成体は扱いに経験が必要。'},
-  {cat:'boa',icon:'🐍',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Acrantophis_dumerili.jpg/640px-Acrantophis_dumerili.jpg',name:'デュメリルボア',latin:'Acrantophis dumerili',diff:'intermediate',tags:['中級者向け','大型','マダガスカル産'],desc:'マダガスカル固有種の大型ボア。比較的温和で動きがゆっくり。個体によくなつく。',h:'マダガスカル南西部の乾燥林',d:'マウス～ラット・ウサギ（成体）',s:{sz:'120～180cm',li:'20年以上',t:'28～32℃'},tip:'アンボンジャ産・マロツィ産など亜種で体色が異なる。乾季を再現すると発情しやすい。'},
-  {cat:'boa',icon:'🐍',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Sanzinia_madagascariensis.jpg/640px-Sanzinia_madagascariensis.jpg',name:'マダガスカルツリーボア',latin:'Sanzinia madagascariensis',diff:'advanced',tags:['上級者向け','樹上棲','マダガスカル産'],desc:'マダガスカル固有種の美しい樹上性ボア。グリーンの幼体が成長とともに変色する。',h:'マダガスカルの熱帯雨林',d:'マウス～ラット',s:{sz:'100～150cm',li:'15～20年',t:'26～30℃'},tip:'CITES付属書I掲載。輸入規制あり。繁殖個体が主な流通経路。'},
-  {cat:'boa',icon:'🐍',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Corallus_caninus_2009_G02.jpg/640px-Corallus_caninus_2009_G02.jpg',name:'グリーンツリーボア',latin:'Corallus caninus',diff:'advanced',tags:['上級者向け','樹上棲','グリーン'],desc:'南米産の樹上性ボア。グリーンパイソンと非常に似た外見を持つ（収斂進化）。咬みつきに注意。',h:'アマゾン流域の熱帯雨林',d:'マウス～ラット',s:{sz:'100～180cm',li:'15～20年',t:'28～32℃'},tip:'非常に咬みつきやすい。ハンドリングは経験者向け。樹上生活に特化した設備が必要。'},
-  {cat:'boa',icon:'⚫',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Morelia_viridis_2009_G01.jpg/640px-Morelia_viridis_2009_G01.jpg',name:'グリーンパイソン',latin:'Morelia viridis',diff:'advanced',tags:['上級者向け','樹上棲','高価'],desc:'ニューギニア～オーストラリア産の美しい樹上性ニシキヘビ。幼体は黄・赤から成体で緑に変色。',h:'ニューギニア～オーストラリア北部の熱帯雨林',d:'マウス～ラット',s:{sz:'100～180cm',li:'15～20年',t:'28～32℃'},tip:'幼体から成体への変色過程が観察できる。咬みつきやすいため経験者向け。産地によって体色が異なる。'},
-  {cat:'boa',icon:'⚫',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Morelia_spilota_mcdowelli.jpg/640px-Morelia_spilota_mcdowelli.jpg',name:'カーペットパイソン',latin:'Morelia spilota',diff:'intermediate',tags:['中級者向け','オーストラリア産','亜種多数'],desc:'オーストラリア産の中型ニシキヘビ。亜種が非常に多く体色のバリエーションが豊富。',h:'オーストラリア全域の多様な環境',d:'マウス～ラット',s:{sz:'150～300cm',li:'20～30年',t:'30～35℃'},tip:'亜種によって体色・サイズが大きく異なる。ダイヤモンドパイソン亜種は低温に強い。'},
-  {cat:'boa',icon:'⚫',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Python_brongersmai.jpg/640px-Python_brongersmai.jpg',name:'ブラッドパイソン',latin:'Python brongersmai',diff:'intermediate',tags:['中級者向け','短体型','赤い体色'],desc:'マレーシア産の短くて太い体型が特徴のニシキヘビ。赤みのある美しい体色。',h:'マレー半島・スマトラ島の湿地・熱帯雨林',d:'ラット（冷凍解凍）',s:{sz:'120～180cm',li:'20～25年',t:'28～32℃'},tip:'高湿度（70～80%）が必要。ショートテールパイソンとも呼ばれる。気性は個体差が大きい。'},
-  {cat:'boa',icon:'⚫',name:'スーパードワーフパイソン（ティモールパイソン）',latin:'Malayopython timoriensis',diff:'intermediate',tags:['中級者向け','小型ニシキヘビ','インドネシア産'],desc:'インドネシア産の比較的小型のニシキヘビ。大型種に比べ管理しやすい。',h:'インドネシア・ティモール島の乾燥林',d:'マウス～ラット',s:{sz:'180～250cm',li:'15～20年',t:'28～32℃'},tip:'ニシキヘビの中では中型。広いケージが必要だが大型種よりは管理しやすい。'},
-  {cat:'boa',icon:'⚫',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Python_bivittatus_2.jpg/640px-Python_bivittatus_2.jpg',name:'ビルマニシキヘビ',latin:'Python bivittatus',diff:'advanced',tags:['上級者向け','特定外来生物要確認','世界最大級'],desc:'世界最大級のヘビ。⚠ 特定外来生物指定の可能性あり飼育前に必ず法規制を確認。',h:'東南アジアの熱帯林・湿地',d:'ラット～ウサギ～豚（成体）',s:{sz:'3～6m',li:'20～25年',t:'30～33℃'},tip:'⚠ 特定外来生物指定の可能性あり。飼育前に必ず法的確認を。成体は複数人での管理が必須。'},
-  // ── TURTLE（水棲・半水棲）──────────────────────────────────────
-  {cat:'turtle',icon:'🐢',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Red_eared_slider_terrapin.jpg/640px-Red_eared_slider_terrapin.jpg',name:'ミシシッピアカミミガメ',latin:'Trachemys scripta elegans',diff:'beginner',tags:['初心者向け','水棲','要注意外来種'],desc:'ミドリガメとも呼ばれる最も一般的な水棲カメ。⚠ 要注意外来生物。野外放流は禁止。',h:'北米南部・中部の河川・湖',d:'配合飼料・小魚・エビ・野菜',s:{sz:'20～30cm',li:'20～40年',t:'24～28℃'},tip:'⚠ 野外放流・逸出は厳禁。水質管理が重要。フィルター必須。UVBランプで健康管理。'},
-  {cat:'turtle',icon:'🐢',name:'マップタートル（チズガメ）',latin:'Graptemys geographica',diff:'intermediate',tags:['中級者向け','水棲','北米産'],desc:'甲羅の模様が地図に似ることからチズガメとも。水質管理が非常に重要。',h:'北米東部・中部の河川・湖',d:'配合飼料・二枚貝・エビ',s:{sz:'10～25cm',li:'20～30年',t:'24～28℃'},tip:'水質悪化に敏感。強力フィルター＋定期水換えが必要。日光浴スポット必須。'},
-  {cat:'turtle',icon:'🐢',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Mauremys_reevesii.jpg/640px-Mauremys_reevesii.jpg',name:'クサガメ',latin:'Mauremys reevesii',diff:'beginner',tags:['初心者向け','国産・東アジア産','半水棲'],desc:'日本に生息するカメ。丈夫で飼育しやすいが成体はなかなか慣れない。',h:'日本・中国・朝鮮半島の河川・池',d:'配合飼料・小魚・エビ',s:{sz:'15～25cm',li:'20～40年',t:'22～28℃'},tip:'水温管理と日光浴スポットが重要。冬は冬眠させるか加温して越冬させる。'},
-  {cat:'turtle',icon:'🐢',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Mauremys_japonica.jpg/640px-Mauremys_japonica.jpg',name:'ニホンイシガメ',latin:'Mauremys japonica',diff:'intermediate',tags:['中級者向け','国産固有種','絶滅危惧'],desc:'日本固有種。絶滅危惧種のため保護の観点から飼育は慎重に。捕獲・販売に法的制限あり。',h:'日本の清流・山間の小川',d:'配合飼料・小魚・エビ',s:{sz:'10～18cm',li:'20～30年',t:'20～26℃'},tip:'⚠ 絶滅危惧種。販売に法的制限あり。飼育する場合は繁殖個体を選ぶこと。'},
-  {cat:'turtle',icon:'🐢',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Malaclemys_terrapin_terrapin.jpg/640px-Malaclemys_terrapin_terrapin.jpg',name:'ダイヤモンドバックテラピン',latin:'Malaclemys terrapin',diff:'advanced',tags:['上級者向け','汽水種','米国産'],desc:'汽水（塩分含む水）を好む珍しい米国産のカメ。塩分管理が特殊で飼育は難しい。',h:'米国東海岸の汽水域・マングローブ',d:'貝・エビ・配合飼料',s:{sz:'12～23cm',li:'25～40年',t:'24～28℃'},tip:'汽水（海水30～50%混合）環境の維持が必要。非常に特殊な飼育環境が必要。'},
-  {cat:'turtle',icon:'🐢',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Mauremys_mutica.jpg/640px-Mauremys_mutica.jpg',name:'ヤエヤマイシガメ',latin:'Mauremys mutica',diff:'intermediate',tags:['中級者向け','東アジア産'],desc:'台湾・中国南部産のイシガメ属。比較的温和で飼育しやすい。',h:'台湾・中国南部の川・池',d:'配合飼料・小魚・エビ',s:{sz:'12～20cm',li:'20～30年',t:'24～28℃'},tip:'丈夫で飼育しやすい。冬は加温して越冬させるか、低温で冬眠させる。'},
-  {cat:'turtle',icon:'🐢',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Pelodiscus_sinensis_2009_G04.jpg/640px-Pelodiscus_sinensis_2009_G04.jpg',name:'スッポン',latin:'Pelodiscus sinensis',diff:'intermediate',tags:['中級者向け','軟甲目','噛みつき注意'],desc:'柔らかい甲羅（軟甲）を持つカメ。食用としても有名。強い咬合力に注意が必要。',h:'日本・中国・東南アジアの川・湖・沼',d:'小魚・エビ・配合飼料・肉',s:{sz:'20～35cm',li:'20～30年',t:'24～28℃'},tip:'非常に咬みつきやすい。取り扱いに注意。逃走能力が高いため蓋の管理を徹底。'},
-  {cat:'turtle',icon:'🐢',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Sternotherus_carinatus_-_Keeled_musk_turtle.jpg/640px-Sternotherus_carinatus_-_Keeled_musk_turtle.jpg',name:'カブトニオイガメ',latin:'Sternotherus carinatus',diff:'beginner',tags:['初心者向け','小型','においあり'],desc:'北米産の小型カメ。名前の通り匂いを出すことがある。コンパクトで飼育しやすい。',h:'北米南部の河川・湿地',d:'配合飼料・小魚・エビ',s:{sz:'10～15cm',li:'20～30年',t:'24～28℃'},tip:'小型なため60cmケージでも飼育可能。名前の通り脅かすと強い匂いを出すことがある。'},
-  {cat:'turtle',icon:'🐢',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Alligator_snapping_turtle_-_Geierschildkroete.jpg/640px-Alligator_snapping_turtle_-_Geierschildkroete.jpg',name:'ワニガメ',latin:'Macrochelys temminckii',diff:'advanced',tags:['上級者向け','大型','特定外来生物要確認'],desc:'世界最大の淡水ガメのひとつ。⚠ 特定外来生物の可能性あり。飼育前に必ず法規制を確認すること。',h:'北米南部の河川・湖・沼',d:'魚・ザリガニ・マウス',s:{sz:'50～80cm',li:'50～100年',t:'20～26℃'},tip:'⚠ 飼育前に法規制の確認が必須。成体の咬合力は非常に危険。'},
-  // ── TORTOISE（リクガメ）──────────────────────────────────────
-  {cat:'tortoise',icon:'🐢',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Agrionemys_horsfieldii_2009_G02.jpg/640px-Agrionemys_horsfieldii_2009_G02.jpg',name:'ロシアリクガメ',latin:'Agrionemys horsfieldii',diff:'beginner',tags:['初心者向け','リクガメ入門種','丈夫'],desc:'リクガメ入門種として最も人気。小型で丈夫。冬眠させることもできる。',h:'中央アジアの乾燥草原・砂礫地',d:'葉物野菜・野草・ティモシー',s:{sz:'15～20cm',li:'40～50年',t:'28～35℃'},tip:'高温多湿に弱い。夏は涼しい日陰を。初心者の冬眠は室内越冬が安全。'},
-  {cat:'tortoise',icon:'🐢',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Testudo_hermanni_hermanni_2009_G05.jpg/640px-Testudo_hermanni_hermanni_2009_G05.jpg',name:'ヘルマンリクガメ',latin:'Testudo hermanni',diff:'beginner',tags:['初心者向け','ヨーロッパ産','長寿'],desc:'ヨーロッパ産の人気リクガメ。比較的温和で活発。西部・東部2亜種あり。',h:'地中海沿岸の乾燥草原・低木林',d:'野草・葉物野菜・乾燥牧草',s:{sz:'15～25cm',li:'50～80年',t:'28～35℃'},tip:'UVBが非常に重要。MBD予防のため強いUVBランプを使用。'},
-  {cat:'tortoise',icon:'🐢',name:'ホルスフィールドリクガメ（四趾リクガメ）',latin:'Testudo horsfieldii',diff:'beginner',tags:['初心者向け','中央アジア産'],desc:'前肢に4本の趾を持つことから四趾リクガメとも呼ばれる。ロシアリクガメの同種異名。',h:'中央アジアの乾燥草原',d:'野草・葉物野菜・乾燥牧草',s:{sz:'15～20cm',li:'40～50年',t:'28～35℃'},tip:'ロシアリクガメと同種。乾燥した環境を好む。'},
-  {cat:'tortoise',icon:'🐢',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Testudo_graeca_2009_G01.jpg/640px-Testudo_graeca_2009_G01.jpg',name:'ギリシャリクガメ',latin:'Testudo graeca',diff:'beginner',tags:['初心者向け','地中海産','亜種多数'],desc:'地中海産のリクガメ。亜種が非常に多く体色・サイズのバリエーションが豊富。',h:'地中海沿岸・中東・中央アジアの草原・低木林',d:'野草・葉物野菜',s:{sz:'15～30cm',li:'50～100年',t:'28～35℃'},tip:'亜種によって体サイズが大きく異なる。乾燥した環境と強いUVBが必要。'},
-  {cat:'tortoise',icon:'🐢',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Stigmochelys_pardalis_2009_G02.jpg/640px-Stigmochelys_pardalis_2009_G02.jpg',name:'ヒョウモンガメ',latin:'Stigmochelys pardalis',diff:'intermediate',tags:['中級者向け','大型リクガメ','アフリカ産'],desc:'アフリカ産の大型リクガメ。ヒョウ柄の甲羅が美しく人気が高い。成体は非常に大きい。',h:'サブサハラ・アフリカの草原・サバンナ',d:'野草・チモシー・葉物野菜',s:{sz:'40～70cm',li:'50～100年',t:'30～38℃'},tip:'湿気に非常に弱く呼吸器疾患になりやすい。乾燥した環境を維持。'},
-  {cat:'tortoise',icon:'🐢',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Aldabrachelys_gigantea.jpg/640px-Aldabrachelys_gigantea.jpg',name:'アルダブラゾウガメ',latin:'Aldabrachelys gigantea',diff:'advanced',tags:['上級者向け','世界最大クラス','超長寿'],desc:'世界最大のリクガメのひとつ（ガラパゴスゾウガメと並ぶ）。200年近く生きる記録もある。',h:'アルダブラ諸島の低木林・草地',d:'草・野草・葉物野菜・野菜・果物',s:{sz:'100～120cm',li:'150～200年',t:'26～32℃'},tip:'非常に大型になる。個人飼育は施設面での準備が必要。CITES付属書II。'},
-  {cat:'tortoise',icon:'🐢',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Chelonoidis_chilensis.jpg/640px-Chelonoidis_chilensis.jpg',name:'チャコリクガメ',latin:'Chelonoidis chilensis',diff:'intermediate',tags:['中級者向け','南米産','乾燥種'],desc:'南米パタゴニア産の比較的小型のリクガメ。乾燥に強く管理しやすい。',h:'アルゼンチン～パラグアイの乾燥草原',d:'野草・乾燥牧草・野菜',s:{sz:'25～40cm',li:'30～60年',t:'28～35℃'},tip:'乾燥した環境を好む。南米産リクガメは比較的入手しやすい種。'},
-  {cat:'tortoise',icon:'🐢',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Indotestudo_elongata.jpg/640px-Indotestudo_elongata.jpg',name:'インドリクガメ',latin:'Indotestudo elongata',diff:'intermediate',tags:['中級者向け','東南アジア産','絶滅危惧'],desc:'東南アジア産のリクガメ。CITES付属書II掲載。雌雄判別が比較的容易。',h:'インド～東南アジアの乾燥林・草原',d:'野草・葉物野菜・果物（時々）',s:{sz:'25～35cm',li:'30～50年',t:'28～34℃'},tip:'CITES付属書II。繁殖期のオスは鼻の先が赤くなる珍しい特徴がある。'},
-  {cat:'tortoise',icon:'🐢',name:'ホシガメ（インドホシガメ）',latin:'Geochelone elegans',diff:'intermediate',tags:['中級者向け','美しい模様','インド産'],desc:'放射状の美しい星形模様が特徴。CITES付属書I掲載のため繁殖個体のみ流通。',h:'インド～スリランカの乾燥林・草原',d:'野草・葉物野菜・乾燥牧草',s:{sz:'20～35cm',li:'30～50年',t:'28～35℃'},tip:'CITES付属書I。輸入規制が厳しく繁殖個体のみ流通。多湿に弱い呼吸器疾患に注意。'},
-  {cat:'tortoise',icon:'🐢',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Centrochelys_sulcata_2009_G02.jpg/640px-Centrochelys_sulcata_2009_G02.jpg',name:'ケズメリクガメ',latin:'Centrochelys sulcata',diff:'intermediate',tags:['中級者向け','大型','アフリカ産'],desc:'アフリカ産の大型リクガメ。成体は70cmを超える。後肢の周辺に突起（蹴爪）が発達する。',h:'サブサハラ・アフリカのサヘル地帯・半砂漠',d:'野草・チモシー・乾燥牧草',s:{sz:'60～80cm',li:'50～100年',t:'30～38℃'},tip:'非常に大型になるため成体飼育には広大なスペースが必要。屋外飼育が理想的。'},
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// GECKO / ヤモリ目
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{cat:'gecko',icon:'🦎',img:'img/leopard-gecko.svg',name:'ヒョウモントカゲモドキ',latin:'Eublepharis macularius',diff:'beginner',tags:['初心者向け','夜行性','地表棲','人工飼料可'],desc:'通称レオパ。世界最人気のヤモリ。温和・丈夫で人工飼料も食べる。モルフ数は600種以上。',h:'パキスタン～インド北西部・アフガニスタンの乾燥岩地帯',d:'コオロギ・デュビア・ミルワーム・人工飼料（レオパドライ等）',s:{sz:'20～25cm',li:'15～20年',t:'28～32℃'},tip:'ウェットシェルターで脱皮を補助。尾が太ければ健康の証。週3～4回給餌が目安。'},
+{cat:'gecko',icon:'🦎',img:'img/crested-gecko.svg',name:'クレステッドゲッコー',latin:'Correlophus ciliatus',diff:'beginner',tags:['初心者向け','樹上棲','夜行性','専用フード可'],desc:'ニューカレドニア原産。まつ毛状の突起が特徴。専用ペレットで完全飼育できる。',h:'ニューカレドニア島の熱帯雨林',d:'クレステッドゲッコーフード・コオロギ・果物',s:{sz:'18～25cm',li:'15～20年',t:'24～26℃'},tip:'高温（27℃超）に弱い。夏場は保冷対策必須。'},
+{cat:'gecko',icon:'🦎',img:'img/tokay-gecko.svg',name:'トッケイヤモリ',latin:'Gekko gecko',diff:'intermediate',tags:['中級者向け','大型','咬みつき注意','夜行性'],desc:'鮮やかな赤い斑点が美しい大型ヤモリ。気性が荒く咬みつくが近年慣れた個体も流通。',h:'東南アジア広域・岩壁・木の幹',d:'コオロギ・ゴキブリ・ピンクマウス',s:{sz:'25～35cm',li:'10～15年',t:'28～32℃'},tip:'幼体から慣らすことが重要。強い咬合力に注意。'},
+{cat:'gecko',icon:'🦎',img:'img/fat-tail-gecko.svg',name:'アフリカンファットテール',latin:'Hemitheconyx caudicinctus',diff:'beginner',tags:['初心者向け','夜行性','西アフリカ産'],desc:'西アフリカ原産。レオパに似た体型でおとなしく飼いやすい。尾に脂肪蓄積。',h:'西アフリカのサバンナ・草原',d:'コオロギ・デュビア',s:{sz:'18～25cm',li:'15～20年',t:'28～32℃'},tip:'レオパより高湿度を好む（50～70%）。ウェットシェルター必須。'},
+{cat:'gecko',icon:'🦎',img:'img/day-gecko.svg',name:'デイゲッコー（ヒルヤモリ）',latin:'Phelsuma grandis',diff:'intermediate',tags:['中級者向け','昼行性','展示向き'],desc:'マダガスカル原産の昼行性ヤモリ。鮮やかな緑色が美しい。ガラスを歩く姿が観察しやすい。',h:'マダガスカルの熱帯雨林・農地',d:'コオロギ・果物・花蜜',s:{sz:'10～28cm',li:'10～15年',t:'28～32℃'},tip:'ハンドリングはストレスになるため極力避ける。展示飼育向き。'},
+{cat:'gecko',icon:'🦎',img:'img/leopard-gecko.svg',name:'ガーゴイルゲッコー',latin:'Rhacodactylus auriculatus',diff:'beginner',tags:['初心者向け','樹上棲','ニューカレドニア'],desc:'ニューカレドニア原産。頭部の突起がガーゴイルに似る。クレスと同様の飼育方法。',h:'ニューカレドニア南部の乾燥林',d:'クレステッドゲッコーフード・コオロギ',s:{sz:'20～28cm',li:'15～20年',t:'22～26℃'},tip:'尾は自切・再生可能。クレスよりやや乾燥に強い。'},
+{cat:'gecko',icon:'🦎',img:'img/leopard-gecko.svg',name:'リーキーヤモリ',latin:'Rhacodactylus leachianus',diff:'intermediate',tags:['中級者向け','世界最大ヤモリ','高価'],desc:'現生最大のヤモリ種。独特の鳴き声と存在感抜群。非常に高価で入手難易度高め。',h:'ニューカレドニア島の原生林',d:'クレステッドゲッコーフード・マウス・果物',s:{sz:'25～36cm',li:'20年以上',t:'22～26℃'},tip:'高温に非常に弱い。エアコン管理必須。'},
+{cat:'gecko',icon:'🦎',img:'img/leopard-gecko.svg',name:'サタンゲッコー（ウロプラトゥス）',latin:'Uroplatus phantasticus',diff:'advanced',tags:['上級者向け','枯れ葉擬態','マダガスカル産'],desc:'枯れ葉に完璧に擬態するマダガスカル固有の変わったヤモリ。飼育は非常に難しい。',h:'マダガスカル東部の熱帯雨林',d:'コオロギ・ワックスワーム',s:{sz:'8～12cm',li:'5～10年',t:'20～24℃'},tip:'高温厳禁。24℃以下を維持。湿度管理が非常に繊細。上級者向け。'},
+{cat:'gecko',icon:'🦎',img:'img/leopard-gecko.svg',name:'コロニクス（ヒメウロコヘビモドキ）',latin:'Coleonyx variegatus',diff:'beginner',tags:['初心者向け','小型','北米産'],desc:'北米砂漠原産の小型ヤモリ。レオパに似た生態で入手も比較的容易。',h:'北米南西部の砂漠・乾燥地帯',d:'コオロギ・ミルワーム',s:{sz:'10～15cm',li:'8～15年',t:'28～32℃'},tip:'乾燥した環境を好む。小型のため小粒餌を用意。'},
+{cat:'gecko',icon:'🦎',img:'img/leopard-gecko.svg',name:'ムーニー（モスゲッコー）',latin:'Mniarogekko chahoua',diff:'intermediate',tags:['中級者向け','希少','高価'],desc:'モス（苔）のような模様が美しい希少種。ニューカレドニア固有。',h:'ニューカレドニアの森林',d:'クレステッドゲッコーフード・昆虫',s:{sz:'20～25cm',li:'15年以上',t:'22～26℃'},tip:'高温に弱い。エアコン管理必須。流通量が少なく高価。'},
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// AGAMA / アガマ科
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{cat:'agama',icon:'🦖',img:'img/bearded-dragon.svg',name:'フトアゴヒゲトカゲ',latin:'Pogona vitticeps',diff:'intermediate',tags:['中級者向け','昼行性','雑食','人気No.1'],desc:'オーストラリア産。フレンドリーでよくなつく人気大型トカゲ。「爬虫類犬」と呼ばれることも。',h:'オーストラリア内陸部の乾燥地帯',d:'コオロギ・葉物野菜・専用ペレット',s:{sz:'45～60cm',li:'10～15年',t:'38～42℃'},tip:'アームウェービングは服従。ヘッドボビングは威嚇。冬にブルメーション入りすることがある。'},
+{cat:'agama',icon:'🦖',img:'img/leopard-gecko.svg',name:'ウォーターアガマ（モリドラゴン）',latin:'Physignathus cocincinus',diff:'intermediate',tags:['中級者向け','半樹上棲','水泳得意'],desc:'中国・東南アジア産の鮮やかなグリーンのトカゲ。水辺を好み泳ぎが得意。',h:'中国南部～東南アジアの川辺の熱帯林',d:'コオロギ・ゴキブリ・小魚・野菜',s:{sz:'60～90cm',li:'10～15年',t:'28～35℃'},tip:'水入れは泳げる深さを用意。ストレスで皮膚炎になりやすい。'},
+{cat:'agama',icon:'🦖',img:'img/leopard-gecko.svg',name:'フリルドリザード（タコアガマ）',latin:'Chlamydosaurus kingii',diff:'advanced',tags:['上級者向け','フリル','オーストラリア産'],desc:'首のフリルが有名なオーストラリア産大型アガマ。威嚇時にフリルを広げる。',h:'オーストラリア北部～ニューギニアの熱帯林',d:'コオロギ・ゴキブリ・ピンクマウス',s:{sz:'60～90cm',li:'10～15年',t:'35～42℃'},tip:'非常に動きが速い。大型ケージが必要。幼体はデリケート。'},
+{cat:'agama',icon:'🦖',img:'img/leopard-gecko.svg',name:'コーカサスアガマ',latin:'Paralaudakia caucasia',diff:'intermediate',tags:['中級者向け','昼行性','丈夫'],desc:'中央アジア産の岩場を好むアガマ。丈夫で食欲旺盛。比較的人慣れしやすい。',h:'コーカサス～中央アジアの乾燥岩地帯',d:'コオロギ・ダンゴムシ・野草',s:{sz:'20～30cm',li:'10～15年',t:'35～42℃'},tip:'岩場レイアウトが活発な活動を促す。UVB照射必須。'},
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// LIZARD / トカゲ（イグアナ科・テグー等）
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{cat:'lizard',icon:'🦖',img:'img/green-iguana.svg',name:'グリーンイグアナ',latin:'Iguana iguana',diff:'advanced',tags:['上級者向け','大型','草食'],desc:'中南米産の大型イグアナ。成体は1.5m超になり広大なスペースが必要。',h:'中南米の熱帯雨林・河岸',d:'葉物野菜・野草・果物（動物性は禁忌）',s:{sz:'120～180cm',li:'15～20年',t:'32～38℃'},tip:'成体の爪・尾での引っ搔きは危険。幼体から慣らすことが重要。'},
+{cat:'lizard',icon:'🦖',img:'img/tegu.svg',name:'テグー（アルゼンチンブラックアンドホワイト）',latin:'Salvator merianae',diff:'intermediate',tags:['中級者向け','大型','高知能'],desc:'南米産の大型テグー。犬のようになつく高知能のトカゲ。人気急上昇中。',h:'南米の草原・農地・森林',d:'ラット・マウス・果物・卵・ペレット',s:{sz:'100～140cm',li:'15～20年',t:'35～40℃'},tip:'幼体から毎日ハンドリングで深くなつく。成体は広いスペースが必要。'},
+{cat:'lizard',icon:'🦖',img:'img/blue-tongue.svg',name:'ヒガシアオジタトカゲ',latin:'Tiliqua scincoides',diff:'intermediate',tags:['中級者向け','地表棲','長寿'],desc:'青い舌で威嚇するオーストラリア産トカゲ。非常になつきやすく長寿。',h:'オーストラリア東部の草原・樹林',d:'野菜・果物・昆虫・缶詰キャットフード（補助）',s:{sz:'50～60cm',li:'20年以上',t:'30～35℃'},tip:'脂肪肝になりやすい。タンパク質は全体の20～25%以下に。'},
+{cat:'lizard',icon:'🦖',img:'img/leopard-gecko.svg',name:'バシリスク（ホカケトカゲ）',latin:'Basiliscus plumifrons',diff:'advanced',tags:['上級者向け','水上走行','中南米産'],desc:'水上を走ることができる「イエス・クライスト・リザード」。高湿度の大型ケージが必要。',h:'中南米の熱帯雨林・河辺',d:'コオロギ・ゴキブリ・果物',s:{sz:'60～90cm',li:'8～12年',t:'28～32℃'},tip:'非常にストレスに弱い。経験者向け。広い水場が必要。'},
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// SKINK / スキンク科
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{cat:'skink',icon:'🦎',img:'img/leopard-gecko.svg',name:'サンドフィッシュ',latin:'Scincus scincus',diff:'intermediate',tags:['中級者向け','砂潜り','北アフリカ産'],desc:'砂の中を泳ぐように潜る北アフリカ産スキンク。ユニークな行動が観察しやすい。',h:'北アフリカ～中東の砂漠地帯',d:'コオロギ・ミルワーム',s:{sz:'15～20cm',li:'5～10年',t:'30～38℃'},tip:'細かい砂（プレイサンド等）を15～20cm以上敷く。潜れないとストレスになる。'},
+{cat:'skink',icon:'🦎',img:'img/leopard-gecko.svg',name:'ファイヤースキンク',latin:'Lepidothyris fernandi',diff:'intermediate',tags:['中級者向け','西アフリカ産','カラフル'],desc:'西アフリカ産の美しいスキンク。赤・黒・白のコントラストが鮮やか。',h:'西アフリカの熱帯雨林',d:'コオロギ・ゴキブリ・ミルワーム',s:{sz:'30～40cm',li:'10～15年',t:'26～30℃'},tip:'潜れる床材（バーミキュライト等）を厚く敷く。高湿度を維持。'},
+{cat:'skink',icon:'🦎',img:'img/leopard-gecko.svg',name:'ニホントカゲ',latin:'Plestiodon japonicus',diff:'intermediate',tags:['中級者向け','国産','幼体は青い尾'],desc:'日本固有種。幼体の青い尾が美しい。季節変化に対応した飼育が必要。',h:'日本全国の低山・農地・公園',d:'コオロギ・ミミズ・ダンゴムシ',s:{sz:'15～25cm',li:'5～8年',t:'25～30℃'},tip:'冬眠させる場合は15℃以下の場所で管理。日光浴スペース必須。'},
+{cat:'skink',icon:'🦎',img:'img/leopard-gecko.svg',name:'コモンスキンク（カープドスキンク）',latin:'Tiliqua rugosa',diff:'intermediate',tags:['中級者向け','オーストラリア産','ペア絆'],desc:'オーストラリア産の短くて太い体型のスキンク。番（つがい）の絆が強いことで有名。',h:'オーストラリア南部の乾燥草原・灌木地',d:'野菜・果物・昆虫',s:{sz:'30～40cm',li:'20年以上',t:'28～35℃'},tip:'生涯同じペアで生活することが多い。単独飼育でも問題ない。'},
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// CHAMELEON / カメレオン科
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{cat:'chameleon',icon:'🌿',img:'img/chameleon-veiled.svg',name:'エボシカメレオン',latin:'Chamaeleo calyptratus',diff:'intermediate',tags:['中級者向け','入門カメレオン','体色変化'],desc:'イエメン産のカメレオン入門種。湿度・温度管理が繊細。カメレオンの中では比較的丈夫。',h:'イエメン～サウジアラビアの山岳地帯',d:'コオロギ・バッタ・葉物野菜（成体）',s:{sz:'40～60cm',li:'5～8年',t:'28～32℃'},tip:'流水を好む。電動霧吹き・点滴システムが効果的。ストレスに非常に弱い。'},
+{cat:'chameleon',icon:'🌿',img:'img/panther-chameleon.svg',name:'パンサーカメレオン',latin:'Furcifer pardalis',diff:'intermediate',tags:['中級者向け','高価','産地で体色が異なる'],desc:'マダガスカル産。産地（ロカリティ）によって全く異なる体色を持つ最美麗種のひとつ。',h:'マダガスカル北部・東部の低地林',d:'コオロギ・バッタ・ゴキブリ',s:{sz:'35～52cm',li:'5～7年',t:'28～32℃'},tip:'アンビロベ産は赤、サンババ産は青が有名。ロカリティによって全く異なる体色。'},
+{cat:'chameleon',icon:'🌿',img:'img/jackson-chameleon.svg',name:'ジャクソンカメレオン',latin:'Trioceros jacksonii',diff:'intermediate',tags:['中級者向け','三本角','卵胎生'],desc:'3本の角が特徴的なアフリカ産カメレオン。卵胎生で生きたまま出産する珍しい種。',h:'ケニア・タンザニアの山岳林',d:'コオロギ・ワックスワーム',s:{sz:'25～35cm',li:'5～8年',t:'22～27℃'},tip:'高温（27℃超）に非常に弱い。夏場保冷必須。産仔数は5～20頭。'},
+{cat:'chameleon',icon:'🌿',img:'img/chameleon-veiled.svg',name:'カーペットカメレオン',latin:'Furcifer lateralis',diff:'intermediate',tags:['中級者向け','マダガスカル産','小型'],desc:'マダガスカル産の小型カメレオン。流通量が多く比較的入手しやすい。',h:'マダガスカル高地・草原',d:'コオロギ・ミルワーム',s:{sz:'20～30cm',li:'3～5年',t:'24～28℃'},tip:'比較的低温を好む。夏の高温管理に注意。寿命が短い種。'},
+{cat:'chameleon',icon:'🌿',img:'img/chameleon-veiled.svg',name:'ウスタレカメレオン',latin:'Furcifer oustaleti',diff:'advanced',tags:['上級者向け','大型カメレオン','マダガスカル産'],desc:'カメレオン属で最大種のひとつ。全長75cmに達することもある大型種。',h:'マダガスカル西部の乾燥林',d:'コオロギ・ゴキブリ・ピンクマウス（成体）',s:{sz:'50～75cm',li:'5～8年',t:'28～33℃'},tip:'大型のため広いケージが必要。成体は非常に大きく迫力がある。'},
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// MONITOR / オオトカゲ科
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{cat:'monitor',icon:'🦕',img:'img/savannah-monitor.svg',name:'サバンナモニター',latin:'Varanus exanthematicus',diff:'advanced',tags:['上級者向け','肉食','大型'],desc:'アフリカ産の大型モニター。知能が高く個体によくなつく。幼体から毎日慣らすことが重要。',h:'サブサハラ・アフリカのサバンナ',d:'コオロギ・デュビア・マウス・ウズラの卵',s:{sz:'90～130cm',li:'10～20年',t:'40～50℃'},tip:'幼体期から毎日ハンドリング。肥満になりやすいため給餌量管理が重要。'},
+{cat:'monitor',icon:'🦕',img:'img/ackie-monitor.svg',name:'アッキードワーフモニター',latin:'Varanus acanthurus',diff:'intermediate',tags:['中級者向け','小型モニター','入門種'],desc:'モニター入門種として人気の小型ドワーフモニター。赤みを帯びた体色が美しい。',h:'オーストラリア北部の岩場・乾燥林',d:'コオロギ・デュビア・ピンクマウス',s:{sz:'50～70cm',li:'15～20年',t:'38～45℃'},tip:'高いバスキング温度（45℃以上）が必要。岩場レイアウトが活発な活動を促す。'},
+{cat:'monitor',icon:'🦕',img:'img/emerald-monitor.svg',name:'エメラルドツリーモニター',latin:'Varanus prasinus',diff:'advanced',tags:['上級者向け','樹上棲','鮮やかなグリーン'],desc:'エメラルドグリーンの体色が非常に美しい樹上性モニター。飼育は難しく上級者向け。',h:'ニューギニア島の熱帯雨林',d:'コオロギ・ゴキブリ・小型トカゲ',s:{sz:'75～100cm',li:'10～15年',t:'30～35℃'},tip:'高湿度（70～80%）と高いバスキングスポット必須。ストレスに敏感。'},
+{cat:'monitor',icon:'🦕',img:'img/savannah-monitor.svg',name:'ブラックスロートモニター',latin:'Varanus albigularis microstictus',diff:'advanced',tags:['上級者向け','大型','高知能'],desc:'アフリカ最大クラスのモニター。非常に高い知能と個体に深くなつく性質が特徴。',h:'東アフリカのサバンナ・低木林',d:'ラット・ウズラ・卵・昆虫',s:{sz:'120～180cm',li:'15～20年',t:'40～50℃'},tip:'幼体からの社会化が重要。十分な広さと環境エンリッチメントが必要。'},
+{cat:'monitor',icon:'🦕',img:'img/savannah-monitor.svg',name:'ナイルモニター',latin:'Varanus niloticus',diff:'advanced',tags:['上級者向け','大型','アフリカ産'],desc:'アフリカ最大の爬虫類のひとつ。強力な攻撃性と大型化するため上級者向け。',h:'アフリカの川辺・草原',d:'ラット・魚・卵・昆虫',s:{sz:'120～200cm',li:'15～20年',t:'38～45℃'},tip:'成体は非常に攻撃的になる個体も多い。複数人での管理推奨。'},
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// SNAKE / ナミヘビ科
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{cat:'snake',icon:'🐍',img:'img/corn-snake.svg',name:'コーンスネーク',latin:'Pantherophis guttatus',diff:'beginner',tags:['初心者向け','入門ヘビ','カラフル'],desc:'北米産のヘビ入門種。温和で咬みつきが少なく美しい色彩変異が多数流通。',h:'北米東部・南東部の森林・農地',d:'ピンクマウス→アダルトマウス（体に合わせて）',s:{sz:'90～120cm',li:'15～20年',t:'28～30℃'},tip:'給餌後48時間はハンドリング厳禁。脱走防止に蓋の管理を徹底。'},
+{cat:'snake',icon:'🐍',img:'img/king-snake.svg',name:'カリフォルニアキングスネーク',latin:'Lampropeltis californiae',diff:'beginner',tags:['初心者向け','北米産','丈夫'],desc:'北米西部産。美しいバンド模様と丈夫な体が魅力。他ヘビを捕食するため単独飼育。',h:'北米西部の草原・砂漠',d:'マウス（冷凍解凍）',s:{sz:'90～120cm',li:'15～20年',t:'28～30℃'},tip:'他のヘビと同居不可（捕食する）。脱走が得意なためケージ管理を徹底。'},
+{cat:'snake',icon:'🐍',img:'img/milk-snake.svg',name:'ミルクスネーク',latin:'Lampropeltis triangulum',diff:'beginner',tags:['初心者向け','カラフル','バンド模様'],desc:'赤・黒・黄のバンド模様が鮮やか。毒ヘビのコーラルスネークに擬態する無毒ヘビ。',h:'北米～中南米の草原・森林',d:'マウス（冷凍解凍）',s:{sz:'60～100cm',li:'12～20年',t:'26～30℃'},tip:'食欲旺盛で飼育しやすい。亜種が多く体色バリエーションが豊富。'},
+{cat:'snake',icon:'🐍',img:'img/hognose-snake.svg',name:'ウエスタンホグノーズスネーク',latin:'Heterodon nasicus',diff:'beginner',tags:['初心者向け','死んだふり','個性的'],desc:'死んだふりをする習性が有名。上向きの鼻が特徴的な北米産ヘビ。後牙類。',h:'北米中部の砂地草原',d:'マウス・カエル',s:{sz:'45～90cm',li:'10～20年',t:'26～30℃'},tip:'唾液に軽度の毒性あり（後牙類）。噛まれたら洗浄を。マウス食いに慣らすのに手間がかかることも。'},
+{cat:'snake',icon:'🐍',img:'img/corn-snake.svg',name:'ゴファースネーク',latin:'Pituophis catenifer',diff:'beginner',tags:['初心者向け','大型','北米産'],desc:'北米西部産の大型ナミヘビ。コブラに似た威嚇をするが無毒で実際は温和。',h:'北米西部の草原・砂漠・松林',d:'マウス～ラット',s:{sz:'100～200cm',li:'15～25年',t:'28～32℃'},tip:'成体は大きくなるため広いケージが必要。幼体から慣らすとハンドリングしやすい。'},
+{cat:'snake',icon:'🐍',img:'img/corn-snake.svg',name:'ガーターヘビ',latin:'Thamnophis sirtalis',diff:'beginner',tags:['初心者向け','卵胎生','北米産'],desc:'北米で最も一般的なヘビのひとつ。卵胎生で生きたまま出産する。魚・ミミズも食べる。',h:'北米広域の草地・水辺',d:'マウス・魚・ミミズ',s:{sz:'50～130cm',li:'8～15年',t:'24～28℃'},tip:'卵胎生なので繁殖が比較的容易。水場を用意すると活発に。'},
+{cat:'snake',icon:'🐍',img:'img/corn-snake.svg',name:'バナナヘビ（レッドテールラットスネーク）',latin:'Gonyosoma oxycephalum',diff:'intermediate',tags:['中級者向け','樹上棲','東南アジア産'],desc:'東南アジア産の美しい樹上性ヘビ。鮮やかなグリーンの体色と赤い舌が特徴。',h:'東南アジアの熱帯雨林',d:'マウス（冷凍解凍）',s:{sz:'150～200cm',li:'10～15年',t:'26～30℃'},tip:'高いところを好むため背の高いケージが必要。慣れるまで咬みつきに注意。'},
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// BOA & PYTHON / ボア科・ニシキヘビ科
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{cat:'boa',icon:'⚫',img:'img/ball-python.svg',name:'ボールパイソン',latin:'Python regius',diff:'beginner',tags:['初心者向け','モルフ世界最多','長寿'],desc:'丸まる習性が名前の由来。世界最多のモルフを誇るコレクター御用達のニシキヘビ。',h:'西～中央アフリカのサバンナ・草原',d:'マウス～ラット（冷凍解凍推奨）',s:{sz:'100～150cm',li:'25～70年',t:'30～33℃'},tip:'繁殖期の1～3ヶ月拒食は正常。シェルターはとぐろを巻いたサイズと同程度が理想。'},
+{cat:'boa',icon:'🐍',img:'img/boa-constrictor.svg',name:'コモンボア（ボアコンストリクター）',latin:'Boa constrictor',diff:'intermediate',tags:['中級者向け','大型','ボア'],desc:'中南米産の大型ボア。成体は2mを超える。亜種が多く体色・サイズのバリエーションが豊富。',h:'中南米の熱帯雨林～砂漠',d:'ラット～ウサギ（サイズに応じて）',s:{sz:'150～250cm',li:'25～30年',t:'30～33℃'},tip:'スポットノーザンは比較的小型。成体は扱いに経験が必要。'},
+{cat:'boa',icon:'⚫',img:'img/green-python.svg',name:'グリーンパイソン',latin:'Morelia viridis',diff:'advanced',tags:['上級者向け','樹上棲','高価'],desc:'ニューギニア～オーストラリア産。幼体は黄・赤から成体で緑に変色する美麗種。',h:'ニューギニア～オーストラリア北部の熱帯雨林',d:'マウス～ラット',s:{sz:'100～180cm',li:'15～20年',t:'28～32℃'},tip:'幼体から成体への変色過程が観察できる。咬みつきやすいため経験者向け。'},
+{cat:'boa',icon:'⚫',img:'img/carpet-python.svg',name:'カーペットパイソン',latin:'Morelia spilota',diff:'intermediate',tags:['中級者向け','オーストラリア産','亜種多数'],desc:'オーストラリア産の中型ニシキヘビ。亜種が非常に多く体色のバリエーションが豊富。',h:'オーストラリア全域の多様な環境',d:'マウス～ラット',s:{sz:'150～300cm',li:'20～30年',t:'30～35℃'},tip:'亜種によって体色・サイズが大きく異なる。ダイヤモンドパイソン亜種は低温に強い。'},
+{cat:'boa',icon:'⚫',img:'img/boa-constrictor.svg',name:'ブラッドパイソン',latin:'Python brongersmai',diff:'intermediate',tags:['中級者向け','短体型','赤い体色'],desc:'マレーシア産の短くて太い体型のニシキヘビ。赤みのある美しい体色。',h:'マレー半島・スマトラ島の湿地・熱帯雨林',d:'ラット（冷凍解凍）',s:{sz:'120～180cm',li:'20～25年',t:'28～32℃'},tip:'高湿度（70～80%）が必要。気性は個体差が大きい。'},
+{cat:'boa',icon:'⚫',img:'img/boa-constrictor.svg',name:'ビルマニシキヘビ',latin:'Python bivittatus',diff:'advanced',tags:['上級者向け','特定外来生物要確認','世界最大級'],desc:'世界最大級のヘビ。⚠ 特定外来生物指定の可能性あり。飼育前に必ず法規制を確認。',h:'東南アジアの熱帯林・湿地',d:'ラット～ウサギ～豚（成体）',s:{sz:'3～6m',li:'20～25年',t:'30～33℃'},tip:'⚠ 飼育前に法的確認が必須。成体は複数人での管理が必須。'},
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// TURTLE / 水棲・半水棲カメ
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{cat:'turtle',icon:'🐢',img:'img/red-ear-slider.svg',name:'ミシシッピアカミミガメ',latin:'Trachemys scripta elegans',diff:'beginner',tags:['初心者向け','水棲','要注意外来種'],desc:'ミドリガメとも呼ばれる最も一般的な水棲カメ。⚠ 要注意外来生物。野外放流は禁止。',h:'北米南部・中部の河川・湖',d:'配合飼料・小魚・エビ・野菜',s:{sz:'20～30cm',li:'20～40年',t:'24～28℃'},tip:'⚠ 野外放流・逸出は厳禁。水質管理が重要。フィルター必須。'},
+{cat:'turtle',icon:'🐢',img:'img/box-turtle.svg',name:'クサガメ',latin:'Mauremys reevesii',diff:'beginner',tags:['初心者向け','国産','半水棲'],desc:'日本に生息するカメ。丈夫で飼育しやすいが成体はなかなか慣れない。',h:'日本・中国・朝鮮半島の河川・池',d:'配合飼料・小魚・エビ',s:{sz:'15～25cm',li:'20～40年',t:'22～28℃'},tip:'水温管理と日光浴スポットが重要。冬は加温で越冬か冬眠管理。'},
+{cat:'turtle',icon:'🐢',img:'img/map-turtle.svg',name:'マップタートル（チズガメ）',latin:'Graptemys geographica',diff:'intermediate',tags:['中級者向け','水棲','北米産'],desc:'甲羅の模様が地図に似ることからチズガメとも。水質管理が非常に重要。',h:'北米東部・中部の河川・湖',d:'配合飼料・二枚貝・エビ',s:{sz:'10～25cm',li:'20～30年',t:'24～28℃'},tip:'水質悪化に敏感。強力フィルター＋定期水換えが必要。日光浴スポット必須。'},
+{cat:'turtle',icon:'🐢',img:'img/box-turtle.svg',name:'カブトニオイガメ',latin:'Sternotherus carinatus',diff:'beginner',tags:['初心者向け','小型','においあり'],desc:'北米産の小型カメ。コンパクトで飼育しやすい。脅かすと強い匂いを出す。',h:'北米南部の河川・湿地',d:'配合飼料・小魚・エビ',s:{sz:'10～15cm',li:'20～30年',t:'24～28℃'},tip:'小型なため60cmケージでも飼育可能。名前の通り強い匂いを出すことがある。'},
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// TORTOISE / リクガメ
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{cat:'tortoise',icon:'🐢',img:'img/russian-tortoise.svg',name:'ロシアリクガメ',latin:'Agrionemys horsfieldii',diff:'beginner',tags:['初心者向け','リクガメ入門種','丈夫'],desc:'リクガメ入門種として最も人気。小型で丈夫。冬眠させることもできる。',h:'中央アジアの乾燥草原・砂礫地',d:'葉物野菜・野草・ティモシー',s:{sz:'15～20cm',li:'40～50年',t:'28～35℃'},tip:'高温多湿に弱い。夏は涼しい日陰を。初心者の冬眠は室内越冬が安全。'},
+{cat:'tortoise',icon:'🐢',img:'img/russian-tortoise.svg',name:'ヘルマンリクガメ',latin:'Testudo hermanni',diff:'beginner',tags:['初心者向け','ヨーロッパ産','長寿'],desc:'ヨーロッパ産の人気リクガメ。比較的温和で活発。西部・東部2亜種あり。',h:'地中海沿岸の乾燥草原・低木林',d:'野草・葉物野菜・乾燥牧草',s:{sz:'15～25cm',li:'50～80年',t:'28～35℃'},tip:'UVBが非常に重要。MBD予防のため強いUVBランプを使用。'},
+{cat:'tortoise',icon:'🐢',img:'img/russian-tortoise.svg',name:'ギリシャリクガメ',latin:'Testudo graeca',diff:'beginner',tags:['初心者向け','地中海産','亜種多数'],desc:'地中海産のリクガメ。亜種が非常に多く体色・サイズのバリエーションが豊富。',h:'地中海沿岸・中東・中央アジアの草原・低木林',d:'野草・葉物野菜',s:{sz:'15～30cm',li:'50～100年',t:'28～35℃'},tip:'亜種によって体サイズが大きく異なる。乾燥した環境と強いUVBが必要。'},
+{cat:'tortoise',icon:'🐢',img:'img/leopard-tortoise.svg',name:'ヒョウモンガメ',latin:'Stigmochelys pardalis',diff:'intermediate',tags:['中級者向け','大型リクガメ','アフリカ産'],desc:'アフリカ産の大型リクガメ。ヒョウ柄の甲羅が美しく人気が高い。成体は非常に大きい。',h:'サブサハラ・アフリカの草原・サバンナ',d:'野草・チモシー・葉物野菜',s:{sz:'40～70cm',li:'50～100年',t:'30～38℃'},tip:'湿気に非常に弱く呼吸器疾患になりやすい。乾燥した環境を維持。'},
+{cat:'tortoise',icon:'🐢',img:'img/star-tortoise.svg',name:'ホシガメ（インドホシガメ）',latin:'Geochelone elegans',diff:'intermediate',tags:['中級者向け','美しい模様','インド産'],desc:'放射状の美しい星形模様が特徴。CITES付属書I掲載のため繁殖個体のみ流通。',h:'インド～スリランカの乾燥林・草原',d:'野草・葉物野菜・乾燥牧草',s:{sz:'20～35cm',li:'30～50年',t:'28～35℃'},tip:'CITES付属書I。輸入規制が厳しく繁殖個体のみ流通。多湿に弱い呼吸器疾患に注意。'},
+{cat:'tortoise',icon:'🐢',img:'img/sulcata-tortoise.svg',name:'ケズメリクガメ',latin:'Centrochelys sulcata',diff:'intermediate',tags:['中級者向け','大型','アフリカ産'],desc:'アフリカ産の大型リクガメ。成体は70cmを超える。後肢の周辺に突起（蹴爪）が発達する。',h:'サブサハラ・アフリカのサヘル地帯・半砂漠',d:'野草・チモシー・乾燥牧草',s:{sz:'60～80cm',li:'50～100年',t:'30～38℃'},tip:'非常に大型になるため成体飼育には広大なスペースが必要。屋外飼育が理想的。'},
+{cat:'tortoise',icon:'🐢',img:'img/russian-tortoise.svg',name:'アルダブラゾウガメ',latin:'Aldabrachelys gigantea',diff:'advanced',tags:['上級者向け','世界最大クラス','超長寿'],desc:'世界最大のリクガメのひとつ。200年近く生きる記録もある超長寿種。',h:'アルダブラ諸島の低木林・草地',d:'草・野草・葉物野菜・野菜・果物',s:{sz:'100～120cm',li:'150～200年',t:'26～32℃'},tip:'非常に大型になる。個人飼育は施設面での準備が必要。CITES付属書II。'},
 ];
 
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// MORPH DATABASE - 全主要モルフ
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const MORPHS = [
-  // レオパモルフ
-  {sp:'leopard',sn:'レオパ',name:'ハイイエロー',gene:'Polygenic',rarity:'common',desc:'最も基本的なモルフ。黄色地に黒いスポットが入るワイルドタイプに近い体色。',c1:'#e8c840',c2:'#b8960a'},
-  {sp:'leopard',sn:'レオパ',name:'アルビノ（トレンパー）',gene:'Recessive',rarity:'common',desc:'赤目で白～黄色地のアルビノ。最も流通量の多いアルビノ系モルフ。',c1:'#f5e6c0',c2:'#f0c060'},
-  {sp:'leopard',sn:'レオパ',name:'ブリザード',gene:'Recessive',rarity:'rare',desc:'全身真白でスポットが消失。アルビノとは異なる白化遺伝子によるもの。',c1:'#f0f0ee',c2:'#d8d8d4'},
-  {sp:'leopard',sn:'レオパ',name:'エクリプス',gene:'Recessive',rarity:'rare',desc:'目全体が真っ黒または赤になる。他のモルフと組み合わせて使われることが多い。',c1:'#c8a050',c2:'#2a1a08'},
-  {sp:'leopard',sn:'レオパ',name:'タンジェリン',gene:'Polygenic',rarity:'common',desc:'全身が鮮やかなオレンジ色。高度な選別交配によって生まれたモルフ。',c1:'#f07020',c2:'#c84010'},
-  {sp:'leopard',sn:'レオパ',name:'ブラックナイト',gene:'Polygenic',rarity:'ultra',desc:'全身が漆黒になる究極のモルフ。長年の選別繁殖の結晶で非常に高価。',c1:'#1a1a1a',c2:'#080808'},
-  {sp:'leopard',sn:'レオパ',name:'レモンフロスト',gene:'Dominant',rarity:'ultra',desc:'全身が真白でレモン色がかる希少モルフ。腫瘍（ISCN）との関連が報告されており議論あり。',c1:'#f8f0c0',c2:'#e8e060'},
-  {sp:'leopard',sn:'レオパ',name:'スーパーマックスノー',gene:'Co-dominant×2',rarity:'rare',desc:'マックスノーのスーパー体。白地にはっきりしたバンド模様。目は真っ黒。',c1:'#e8e4e0',c2:'#181818'},
-  // ボールパイソン
-  {sp:'ball',sn:'ボールパイソン',name:'パイボール',gene:'Recessive',rarity:'rare',desc:'不規則な白い無地パターンが全身に広がる人気モルフ。白の面積は個体によって大きく異なる。',c1:'#f5f0e8',c2:'#3a2010'},
-  {sp:'ball',sn:'ボールパイソン',name:'スパイダー',gene:'Dominant',rarity:'common',desc:'細い蜘蛛の巣状のパターンが特徴。ウォブルシンドローム（神経障害）との関連が報告されている。',c1:'#c8a060',c2:'#e8d090'},
-  {sp:'ball',sn:'ボールパイソン',name:'イエローベリー',gene:'Co-dominant',rarity:'common',desc:'腹部が黄色みを帯びるシンプルだが使い勝手のいいモルフ。コンボの材料として人気。',c1:'#c8b040',c2:'#f0e080'},
-  {sp:'ball',sn:'ボールパイソン',name:'クラウン',gene:'Recessive',rarity:'rare',desc:'頭頂部の模様が王冠状になるモルフ。コンボで非常に美しい個体が生まれる。',c1:'#b89060',c2:'#f0c860'},
-  {sp:'ball',sn:'ボールパイソン',name:'ブルーアイリューシスティック',gene:'Recessive×2',rarity:'ultra',desc:'2種の劣性遺伝子が重なって生まれる純白・青目のモルフ。組み合わせ方は複数あり。',c1:'#f4f4f4',c2:'#a0b8e0'},
-  // コーンスネーク
-  {sp:'corn',sn:'コーンスネーク',name:'アメラニスティック（アルビノ）',gene:'Recessive',rarity:'common',desc:'黒色素が欠如。赤～オレンジの体色に白いサドル模様が入る美しいモルフ。',c1:'#f08040',c2:'#f8c080'},
-  {sp:'corn',sn:'コーンスネーク',name:'アネリスリスティック',gene:'Recessive',rarity:'common',desc:'赤色素が欠如。グレー～白の体色にダークグレーのサドル模様が入る渋いモルフ。',c1:'#a0a0a0',c2:'#606060'},
-  {sp:'corn',sn:'コーンスネーク',name:'スノー',gene:'Recessive×2',rarity:'rare',desc:'アメラニ×アネリの組み合わせで生まれる真白に近いモルフ。成長とともに薄いピンクになることも。',c1:'#f0ece8',c2:'#e0d8d0'},
+// ─── レオパ ───
+{sp:'leopard',sn:'レオパ',name:'ハイイエロー',gene:'Polygenic',rarity:'common',price:'3,000～10,000',desc:'最も基本的なモルフ。黄色地に黒いスポット。ワイルドタイプに近い体色。',c1:'#e8c840',c2:'#b8960a'},
+{sp:'leopard',sn:'レオパ',name:'アルビノ（トレンパー）',gene:'Recessive',rarity:'common',price:'5,000～20,000',desc:'赤目で白～黄色地のアルビノ。最も流通量の多いアルビノ系モルフ。',c1:'#f5e6c0',c2:'#f0c060'},
+{sp:'leopard',sn:'レオパ',name:'アルビノ（ベル）',gene:'Recessive',rarity:'common',price:'8,000～25,000',desc:'ラベンダー系のアルビノ。目は薄いピンク。トレンパーとは別の遺伝子。',c1:'#f0e0f0',c2:'#e0b0d0'},
+{sp:'leopard',sn:'レオパ',name:'アルビノ（レインウォーター）',gene:'Recessive',rarity:'rare',price:'15,000～40,000',desc:'3種のアルビノ系統の中で最もパステルカラーが鮮やか。目は赤みが強い。',c1:'#fff0c0',c2:'#f8d080'},
+{sp:'leopard',sn:'レオパ',name:'マックスノー',gene:'Co-dominant',rarity:'common',price:'8,000～25,000',desc:'白地に黒いスポット。スーパー体は目が真っ黒になる。冬の雪のような美しさ。',c1:'#f0ede8',c2:'#1a1a1a'},
+{sp:'leopard',sn:'レオパ',name:'スーパーマックスノー',gene:'Co-dominant×2',rarity:'rare',price:'20,000～60,000',desc:'マックスノーのスーパー体。白地にはっきりしたバンド模様。目は真っ黒。',c1:'#e8e4e0',c2:'#181818'},
+{sp:'leopard',sn:'レオパ',name:'タンジェリン',gene:'Polygenic',rarity:'common',price:'5,000～30,000',desc:'全身が鮮やかなオレンジ色。高度な選別交配によって生まれたモルフ。',c1:'#f07020',c2:'#c84010'},
+{sp:'leopard',sn:'レオパ',name:'ハイパーメラニスティック',gene:'Polygenic',rarity:'common',price:'5,000～20,000',desc:'黒色素が増強されたモルフ。スポットが大きく黒みが強い。',c1:'#3a2010',c2:'#1a0808'},
+{sp:'leopard',sn:'レオパ',name:'エクリプス',gene:'Recessive',rarity:'rare',price:'15,000～50,000',desc:'目全体が真っ黒または赤になる。他のモルフと組み合わせて使われることが多い。',c1:'#c8a050',c2:'#2a1a08'},
+{sp:'leopard',sn:'レオパ',name:'ブリザード',gene:'Recessive',rarity:'rare',price:'20,000～50,000',desc:'全身真白でスポットが消失。アルビノとは異なる白化遺伝子によるもの。',c1:'#f0f0ee',c2:'#d8d8d4'},
+{sp:'leopard',sn:'レオパ',name:'ブラックナイト',gene:'Polygenic',rarity:'ultra',price:'100,000～500,000',desc:'全身が漆黒になる究極のモルフ。長年の選別繁殖の結晶で非常に高価。',c1:'#1a1a1a',c2:'#080808'},
+{sp:'leopard',sn:'レオパ',name:'レモンフロスト',gene:'Dominant',rarity:'ultra',price:'100,000～300,000',desc:'全身が真白でレモン色がかる希少モルフ。腫瘍（ISCN）との関連が報告されており議論あり。',c1:'#f8f0c0',c2:'#e8e060'},
+{sp:'leopard',sn:'レオパ',name:'パターンレス',gene:'Recessive',rarity:'rare',price:'15,000～40,000',desc:'スポット模様が消失したモルフ。黄色または白地でシンプルな外観。',c1:'#f0c840',c2:'#c8a020'},
+{sp:'leopard',sn:'レオパ',name:'ジャングル',gene:'Polygenic',rarity:'common',price:'5,000～20,000',desc:'スポットが不規則に散乱したジャングル模様のモルフ。バリエーションが豊富。',c1:'#e8b030',c2:'#1a0808'},
+{sp:'leopard',sn:'レオパ',name:'エニグマ',gene:'Dominant',rarity:'rare',price:'20,000～60,000',desc:'不規則で予測不能なパターンが特徴。ただしエニグマ症候群（神経障害）が問題視されている。',c1:'#f0e060',c2:'#f0f0f0'},
+{sp:'leopard',sn:'レオパ',name:'マーブルアイ',gene:'Recessive',rarity:'ultra',price:'80,000～200,000',desc:'大理石のような美しい目のパターンが特徴。非常に希少で高価。',c1:'#c8a050',c2:'#a0c0e0'},
+{sp:'leopard',sn:'レオパ',name:'ギャラクシー',gene:'Recessive×3',rarity:'ultra',price:'200,000～1,000,000',desc:'複数の劣性遺伝子が組み合わさった究極コンボモルフ。流通が非常に稀。',c1:'#1a1a3a',c2:'#6040c0'},
+// ─── ボールパイソン ───
+{sp:'ball',sn:'ボールパイソン',name:'パイボール',gene:'Recessive',rarity:'rare',price:'30,000～150,000',desc:'不規則な白い無地パターンが全身に広がる人気モルフ。白の面積は個体によって大きく異なる。',c1:'#f5f0e8',c2:'#3a2010'},
+{sp:'ball',sn:'ボールパイソン',name:'スパイダー',gene:'Dominant',rarity:'common',price:'15,000～50,000',desc:'細い蜘蛛の巣状のパターンが特徴。ウォブルシンドローム（神経障害）との関連が報告されている。',c1:'#c8a060',c2:'#e8d090'},
+{sp:'ball',sn:'ボールパイソン',name:'イエローベリー',gene:'Co-dominant',rarity:'common',price:'10,000～30,000',desc:'腹部が黄色みを帯びるシンプルだが使い勝手のいいモルフ。コンボの材料として人気。',c1:'#c8b040',c2:'#f0e080'},
+{sp:'ball',sn:'ボールパイソン',name:'クラウン',gene:'Recessive',rarity:'rare',price:'30,000～100,000',desc:'頭頂部の模様が王冠状になるモルフ。コンボで非常に美しい個体が生まれる。',c1:'#b89060',c2:'#f0c860'},
+{sp:'ball',sn:'ボールパイソン',name:'ブルーアイリューシスティック（BEL）',gene:'Recessive×2',rarity:'ultra',price:'100,000～500,000',desc:'2種の劣性遺伝子が重なって生まれる純白・青目のモルフ。組み合わせ方は複数あり。',c1:'#f4f4f4',c2:'#a0b8e0'},
+{sp:'ball',sn:'ボールパイソン',name:'アルビノ',gene:'Recessive',rarity:'common',price:'15,000～50,000',desc:'黒色素が欠如した白黄色のモルフ。赤い目が特徴。最も流通量の多い劣性モルフ。',c1:'#f8e060',c2:'#f0c040'},
+{sp:'ball',sn:'ボールパイソン',name:'シナモン',gene:'Co-dominant',rarity:'common',price:'10,000～35,000',desc:'茶色みが強く、ブラックベリーとも呼ばれる。コンボでブラックパステルとして有名。',c1:'#6a3010',c2:'#3a1808'},
+{sp:'ball',sn:'ボールパイソン',name:'ブラックパステル',gene:'Co-dominant',rarity:'common',price:'10,000～40,000',desc:'暗い体色が特徴の人気モルフ。スーパー体のスーパーブラックパステルは真っ黒に近い。',c1:'#2a1808',c2:'#1a0808'},
+{sp:'ball',sn:'ボールパイソン',name:'エンチ',gene:'Co-dominant',rarity:'rare',price:'40,000～150,000',desc:'独特のカラフルな発色が特徴。コンボに欠かせない人気遺伝子のひとつ。',c1:'#c08040',c2:'#f0d060'},
+{sp:'ball',sn:'ボールパイソン',name:'グラーグ',gene:'Co-dominant',rarity:'rare',price:'50,000～200,000',desc:'独特のグレー系パターンが特徴。組み合わせると劇的な変化をもたらすコンボ材料。',c1:'#a0a0a0',c2:'#606060'},
+{sp:'ball',sn:'ボールパイソン',name:'モハベ',gene:'Co-dominant',rarity:'common',price:'10,000～40,000',desc:'側面に大きな模様が入るモルフ。スーパーモハベはBELになる重要な遺伝子。',c1:'#d0a050',c2:'#803010'},
+{sp:'ball',sn:'ボールパイソン',name:'レッサー',gene:'Co-dominant',rarity:'common',price:'10,000～35,000',desc:'明るい黄色系の体色。スーパーレッサーはBELになる。コンボに非常に使いやすい遺伝子。',c1:'#e8c040',c2:'#c09020'},
+{sp:'ball',sn:'ボールパイソン',name:'バターコム',gene:'Co-dominant',rarity:'common',price:'10,000～35,000',desc:'黄金色のような鮮やかな体色。スーパーバターコムはBELになる遺伝子。',c1:'#f0c820',c2:'#d0a010'},
+// ─── コーンスネーク ───
+{sp:'corn',sn:'コーンスネーク',name:'アメラニスティック（アルビノ）',gene:'Recessive',rarity:'common',price:'5,000～20,000',desc:'黒色素が欠如。赤～オレンジの体色に白いサドル模様が入る美しいモルフ。',c1:'#f08040',c2:'#f8c080'},
+{sp:'corn',sn:'コーンスネーク',name:'アネリスリスティック',gene:'Recessive',rarity:'common',price:'5,000～20,000',desc:'赤色素が欠如。グレー～白の体色にダークグレーのサドル模様が入る渋いモルフ。',c1:'#a0a0a0',c2:'#606060'},
+{sp:'corn',sn:'コーンスネーク',name:'スノー',gene:'Recessive×2',rarity:'rare',price:'15,000～40,000',desc:'アメラニ×アネリの組み合わせで生まれる真白に近いモルフ。成長とともに薄いピンクになることも。',c1:'#f0ece8',c2:'#e0d8d0'},
+{sp:'corn',sn:'コーンスネーク',name:'オケーティー',gene:'Recessive',rarity:'rare',price:'15,000～50,000',desc:'テキサス産の野生個体から確立されたモルフ。独特のオレンジ系カラーリング。',c1:'#e87030',c2:'#f0a060'},
+{sp:'corn',sn:'コーンスネーク',name:'キャラメル',gene:'Recessive',rarity:'rare',price:'15,000～45,000',desc:'黄色系のアルビノモルフ。キャラメルのような温かみのある体色。',c1:'#d0a040',c2:'#f0c860'},
+{sp:'corn',sn:'コーンスネーク',name:'バターミルク',gene:'Recessive',rarity:'rare',price:'15,000～40,000',desc:'白みがかった淡いクリーム色のモルフ。バターミルクのような優しい色合い。',c1:'#f5ead0',c2:'#e8d0a0'},
+{sp:'corn',sn:'コーンスネーク',name:'ウルトラメル',gene:'Recessive',rarity:'ultra',price:'30,000～80,000',desc:'アメラニとウルトラの組み合わせ。非常に鮮やかなオレンジ～赤のモルフ。',c1:'#f04020',c2:'#f87040'},
 ];
 
-const FAQS = [
-  {q:'爬虫類を飼い始めるのに最適な種は？',a:'初心者には「ヒョウモントカゲモドキ（レオパ）」が最もおすすめです。温和で丈夫、ハンドリングしやすく、人工飼料にも慣れやすいです。ヘビならコーンスネーク、カメならロシアリクガメが入門種として定評があります。'},
-  {q:'ケージのサイズはどれくらい必要ですか？',a:'目安は成体の全長の1.5～2倍の幅が理想です。レオパなら幅45～60cm、フトアゴなら幅90～120cm、ボールパイソンなら幅90～120cmが適切。小さすぎるケージはストレスの原因になります。'},
-  {q:'冷凍マウスはどうやって解凍すればいいですか？',a:'冷凍マウスは冷蔵庫で一晩かけてゆっくり解凍するのが理想です。急ぐ場合はジップロックに入れてぬるま湯（40℃程度）に15～20分浸けます。電子レンジでの解凍は内部が加熱されすぎて危険なため禁止です。与える前に内部まで室温以上に温まっているか確認してください。'},
-  {q:'爬虫類の脱皮がうまくいかない（脱皮不全）はどうすればいい？',a:'まず湿度を上げることが最優先です。30～35℃のぬるま湯に10～15分つけて皮を柔らかくし、綿棒や濡れたティッシュでそっと剥がします。目の周りや趾（ゆび）は特に注意が必要。頻繁に脱皮不全が起きる場合はシェルターの質・湿度設定・水入れの見直しを。'},
-  {q:'爬虫類が突然ご飯を食べなくなりました（拒食）',a:'拒食の原因は多岐にわたります。①環境変化によるストレス（ケージ移動直後など）、②繁殖期のホルモン変化、③脱皮前の食欲低下、④温度・湿度が不適切、⑤餌の種類や与え方が合わない、などが主な原因です。体重が著しく落ちない限り1～2週間様子を見て、改善しない場合は爬虫類専門の獣医への相談をおすすめします。'},
-  {q:'爬虫類を診られる病院はどうやって探せばいいですか？',a:'「エキゾチックアニマル 爬虫類 動物病院 ○○市」で検索するのが基本です。爬虫類に詳しい獣医師が在籍しているかは事前に電話確認することをおすすめします。日本エキゾチック動物医療センター（JEAM）のウェブサイトや、各爬虫類コミュニティの地域情報も参考になります。'},
-  {q:'カルシウムサプリはどうやって使いますか？',a:'コオロギやデュビアなどの餌昆虫を容器に入れ、カルシウムパウダーを振りかけて軽くまぶします（ダスティング）。カルシウムは週3～5回、マルチビタミンは週1～2回が一般的な目安です。与えすぎも過剰症の原因になるため注意。爬虫類専用のD3入りカルシウムは屋内飼育種に特に有効です。'},
-  {q:'爬虫類の法律上の規制（特定動物・CITES）とは？',a:'日本では「特定動物」に指定された種（毒ヘビ・大型ワニ・大型ニシキヘビ等）は都道府県知事の許可なく飼育できません。またCITES（ワシントン条約）附属書掲載種は国際取引に規制があり、繁殖個体でも書類が必要です。購入前に必ずショップや行政に確認しましょう。'},
-  {q:'爬虫類は人になつきますか？',a:'哺乳類のような「感情的な愛着」は異なりますが、多くの種が「慣れ」ます。レオパ・フトアゴ・テグーなどはハンドリングに非常に慣れ、飼い主を認識するような行動を見せます。毎日丁寧に関わることが大切で、特に幼体からの社会化が深い「なつき」につながります。'},
-  {q:'複数のケージを効率よく管理するコツは？',a:'①ラック式の収納で縦に積み重ねてスペース効率を上げる、②サーモスタットを集約して温度管理を一元化する、③給餌・清掃スケジュールをカレンダー管理する、④個体ごとの体重・脱皮・給餌履歴を記録（スマホアプリ「Reptile Tracker」等が便利）するのが効果的です。'},
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// SHOP DATA with URLs
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const SHOPS = [
+  {
+    name: 'Tsuchinoko',
+    badge: '爬虫類専門',
+    addr: '東京都昭島市緑町5-7-17',
+    hours: '月～木 18～21時 / 土 15～21時（火・金・日定休）',
+    rating: '4.3', reviews: 52,
+    tel: '090-4748-7706',
+    url: 'https://twitter.com/tsuchinoko_rep',
+    lat: 35.7130, lng: 139.3395,
+    note: 'レオパ・血統アナコンダ等を専門に扱う地域密着型。購入後のアフターフォローが手厚いと評判。',
+    star: true
+  },
+  {
+    name: 'LUCK UP Reptiles',
+    badge: '爬虫類専門',
+    addr: '東京都杉並区阿佐谷北3-13-13',
+    hours: '月・火・木～日 12～20時（水定休）',
+    rating: '4.9', reviews: 110,
+    tel: '03-4361-7794',
+    url: 'https://luckup-reptiles.com',
+    lat: 35.7100, lng: 139.6340,
+    note: '都内屈指の高評価爬虫類専門店。レオパの自家繁殖個体が豊富。初心者にも入りやすい。',
+    star: true
+  },
+  {
+    name: 'TropiLand（東村山）',
+    badge: '爬虫類取扱あり',
+    addr: '東京都東村山市恩多町2-41-7',
+    hours: '月・水～金 13～20:30 / 土日 11～19時（火定休）',
+    rating: '4.0', reviews: 959,
+    tel: '042-390-0708',
+    url: 'https://www.tropiland.co.jp',
+    lat: 35.7467, lng: 139.4856,
+    note: '小平市から最も近い大型ペットショップのひとつ。熱帯魚主力だが爬虫類コーナーも充実。',
+    star: false
+  },
+  {
+    name: 'KENNY 多摩平の森',
+    badge: '爬虫類取扱あり',
+    addr: '東京都日野市多摩平2-4-1',
+    hours: '毎日 11～21時',
+    rating: '3.6', reviews: 58,
+    tel: '042-506-2326',
+    url: 'https://www.kenny.co.jp',
+    lat: 35.6616, lng: 139.3803,
+    note: 'KENNYグループ多摩平店。レオパ・ボールパイソン・モニター・カメ類など幅広く取扱い。',
+    star: false
+  },
+  {
+    name: 'ペットフォレスト小平店',
+    badge: '総合ペット',
+    addr: '東京都小平市小川東町3-7-1',
+    hours: '毎日 10～20時',
+    rating: '5.0', reviews: 1,
+    tel: '042-312-3337',
+    url: 'https://www.petforest.co.jp',
+    lat: 35.7422, lng: 139.4724,
+    note: '小平市内で最も近い総合ペットショップ。消耗品の急な調達に便利。',
+    star: false
+  },
+  {
+    name: 'BORNtoBONE（所沢）',
+    badge: '爬虫類取扱あり',
+    addr: '埼玉県所沢市山口1517-2',
+    hours: '火・水・金～日 16～20時（月・木定休）',
+    rating: '4.3', reviews: 27,
+    tel: '080-4470-5549',
+    url: 'https://www.instagram.com/borntobone_reptile',
+    lat: 35.7785, lng: 139.4349,
+    note: '所沢市の爬虫類取扱ショップ。オーナーが親切で初心者サポートも充実。SNS情報発信も活発。',
+    star: false
+  },
 ];
 
-const SYMPTOMS = ['食欲不振・拒食','体重減少','脱皮不全','口を開けたまま','目が開かない・濁り','体が震える（トレマー）','鼻水・くしゃみ','腫れ・膨らみ','下痢・軟便','総排泄腔から何かが出ている（プロラプス）','皮膚が変色・腐敗臭','元気がない・動かない'];
-
-const DISEASE_MAP = {
-  '食欲不振・拒食':['ストレス（環境変化）','繁殖期（ホルモン）','脱皮前','温度・湿度不足','内部寄生虫','口内炎（スタマティス）'],
-  '体重減少':['内部寄生虫','クリプトスポリジウム（治療困難）','感染症','給餌頻度・量の不足'],
-  '脱皮不全':['湿度不足','シェルター不足','栄養不足（ビタミンA欠乏）','皮膚感染'],
-  '口を開けたまま':['口内炎（スタマティス）—要受診','呼吸器感染症','熱中症'],
-  '目が開かない・濁り':['脱皮前の白濁（正常）','アイキャップ脱皮不全','感染症'],
-  '体が震える（トレマー）':['代謝性骨疾患（MBD）—カルシウム不足','低温症','神経障害（スパイダーモルフ等）','感染症'],
-  '鼻水・くしゃみ':['呼吸器感染症（RI）—要受診','低温・湿度不足','アレルギー（床材）'],
-  '腫れ・膨らみ':['膿瘍（アブセス）—要受診','腫瘍','骨折','ヘルニア'],
-  '下痢・軟便':['内部寄生虫','細菌感染','給餌しすぎ','温度不足で消化不良'],
-  '総排泄腔から何かが出ている（プロラプス）':['プロラプス（脱腸・脱卵管）—緊急受診','便秘'],
-  '皮膚が変色・腐敗臭':['スケールロット（皮膚壊死）—要受診','熱傷（ヒーター直接接触）'],
-  '元気がない・動かない':['低体温（環境温度不足）','脱水','感染症','ブルメーション（正常な場合も）'],
-};
-
-const DISEASES = [
-  {name:'代謝性骨疾患（MBD）',urgency:'high',symp:'四肢の変形・骨折・震え・口が開かない。カルシウム・ビタミンD3不足が主な原因。昼行性種に多い。',tx:'カルシウムダスティングの徹底・UVBランプの見直し。重症は獣医でのカルシウム注射が必要。'},
-  {name:'口内炎（スタマティス）',urgency:'high',symp:'口の周りに白い膿・出血・口を開けたまま・食欲不振。細菌感染が主因。ストレスや外傷がきっかけになることが多い。',tx:'早期なら洗浄・ベタジン消毒で改善することもあるが、重症は抗生物質が必要。獣医受診推奨。'},
-  {name:'呼吸器感染症（RI）',urgency:'high',symp:'口呼吸・ゼーゼーとした呼吸音・鼻水・食欲不振・元気消失。低温・低湿度がリスクを高める。',tx:'まず保温を強化し温度を適正に戻す。改善しない場合や悪化した場合は抗生物質の投与が必要で獣医受診が必須。'},
-  {name:'内部寄生虫',urgency:'mid',symp:'体重減少・拒食・下痢・軟便・腹部膨満。ワイルド個体（野外採集・輸入個体）に多い。',tx:'糞便検査で虫卵を確認してから駆虫薬投与。自己判断での薬物投与は禁止。獣医受診が必要。'},
-  {name:'脱皮不全',urgency:'low',symp:'皮が部分的に残る（特に目・趾が危険）。湿度不足・栄養不足が主な原因。',tx:'ぬるま湯に10～15分つけて皮を柔らかくし綿棒で優しく除去。趾の脱皮不全は壊死・切断につながるため早めに対処。'},
-  {name:'プロラプス（脱腸）',urgency:'high',symp:'総排泄腔から赤い組織が出たまま戻らない。緊急事態。乾燥・感染が急速に進む。',tx:'患部を濡らしたガーゼで保護してすぐに救急受診。押し込もうとしないこと。'},
-  {name:'スケールロット（皮膚壊死）',urgency:'high',symp:'皮膚の黒変・悪臭・組織の崩壊。過湿度・不衛生な床材・熱傷が主因。',tx:'患部の洗浄・消毒と床材の即時全交換。広範囲の場合は抗生物質が必要で獣医受診を。'},
-  {name:'クリプトスポリジウム',urgency:'high',symp:'体重減少・拒食・レジタジン（首の細さ）が顕著。根本的治療法が現時点では確立されていない。',tx:'隔離・環境の消毒（熱湯・漂白剤）を徹底。他個体への感染を防ぐことが最優先。獣医と相談を。'},
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// EVENT DATA with URLs
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const EVENTS = [
+  {
+    name: '東京レプタイルズワールド',
+    badge: '大型即売会',
+    freq: '年2回（春・秋）',
+    place: '東京ビッグサイト（江東区）',
+    url: 'https://tokyoreptiles-world.com',
+    desc: '日本最大級の爬虫類即売会。全国のブリーダー・ショップが集結。生体・用品・グッズまで網羅。入場料あり。',
+    twitter: '@Tokyo_Reptiles'
+  },
+  {
+    name: 'ジャパンレプタイルズショー（JRS）',
+    badge: '大型即売会',
+    freq: '年複数回（不定期）',
+    place: '浜松市・幕張メッセ（会場変動あり）',
+    url: 'https://www.japan-reptiles.com',
+    desc: '東海～関東を中心に開催される大型爬虫類ショー。海外ブリーダーの参加もあり希少種との出会いも。',
+    twitter: '@JRS_reptiles'
+  },
+  {
+    name: 'レプタイルズフィーバー',
+    badge: '中型イベント',
+    freq: '年複数回（関東各地）',
+    place: '関東各会場（公式SNSで告知）',
+    url: 'https://twitter.com/reptilesfever',
+    desc: '比較的こぢんまりした即売会。初心者も入りやすい雰囲気でブリーダーと直接話せる機会が多い。',
+    twitter: '@reptilesfever'
+  },
+  {
+    name: 'レオパオンリー（ヒョウモントカゲモドキオンリー）',
+    badge: '特化型イベント',
+    freq: '年複数回（大阪・東京）',
+    place: '大阪・東京の会場（変動あり）',
+    url: 'https://twitter.com/leopardonly',
+    desc: 'レオパ専門の即売会。希少モルフの取引が活発で、モルフコレクターには見逃せないイベント。',
+    twitter: '@leopardonly'
+  },
+  {
+    name: '爬虫類倶楽部 即売会',
+    badge: '中型イベント',
+    freq: '年複数回（全国各地）',
+    place: '全国各地の会場',
+    url: 'https://reptile-club.jp',
+    desc: '爬虫類倶楽部が主催する即売会。初心者向けの飼育相談コーナーも設置されることが多い。',
+    twitter: '@reptile_club_jp'
+  },
+  {
+    name: '爬虫類カフェ・触れ合い体験',
+    badge: '体験・展示',
+    freq: '通年（常設）',
+    place: '東京・大阪・名古屋など全国',
+    url: 'https://reptile-cafe.jp',
+    desc: '爬虫類と触れ合えるカフェやスポット。飼育前に実際に触れることができ、初心者の入門体験に最適。',
+    twitter: ''
+  },
 ];
