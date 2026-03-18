@@ -29,30 +29,28 @@
 .sp-count{font-family:'Space Mono',monospace;font-size:.68rem;color:var(--text3);margin-bottom:.8rem;}
 .sp-count span{color:var(--accent);font-weight:700;}
 .species-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);}
-.species-card{background:var(--bg);padding:0;cursor:pointer;transition:background .2s;position:relative;overflow:hidden;}
+.species-card{background:var(--bg);cursor:pointer;transition:background .2s;position:relative;overflow:hidden;}
 .species-card:hover{background:var(--bg3);}
 .species-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--accent);transition:height .3s;z-index:1;}
 .species-card:hover::before{height:100%;}
 .sp-img-wrap{width:100%;height:160px;overflow:hidden;background:var(--surface);}
 .sp-img-wrap img{width:100%;height:100%;object-fit:cover;filter:brightness(.88) saturate(.82);transition:all .4s;display:block;}
 .species-card:hover .sp-img-wrap img{filter:brightness(.96) saturate(1);transform:scale(1.04);}
-.sp-img-wrap .sp-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2.6rem;}
+.sp-fallback{width:100%;height:160px;display:flex;align-items:center;justify-content:center;font-size:2.6rem;background:var(--surface);}
 .sp-body{padding:1.1rem;}
 .sp-cat{font-family:'Space Mono',monospace;font-size:.54rem;letter-spacing:.18em;color:var(--accent3);margin-bottom:.25rem;}
 .sp-name{font-family:'Bebas Neue',sans-serif;font-size:1.25rem;color:var(--text);margin-bottom:.1rem;line-height:1.1;}
 .sp-latin{font-family:'Space Mono',monospace;font-size:.57rem;color:var(--text3);font-style:italic;margin-bottom:.55rem;}
 .sp-desc{font-size:.78rem;color:var(--text2);font-weight:300;line-height:1.55;margin-bottom:.7rem;}
 .sp-tags{display:flex;flex-wrap:wrap;gap:.3rem;}
-/* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:200;align-items:center;justify-content:center;padding:1.5rem;}
 .modal-overlay.open{display:flex;}
 .modal-box{background:var(--bg2);border:1px solid var(--border2);max-width:600px;width:100%;max-height:88vh;overflow-y:auto;padding:2rem;position:relative;animation:mIn .2s ease;}
 @keyframes mIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
 .modal-close{position:absolute;top:.9rem;right:.9rem;background:none;border:1px solid var(--border);color:var(--text2);width:30px;height:30px;cursor:pointer;font-size:.85rem;transition:all .2s;}
 .modal-close:hover{border-color:var(--accent);color:var(--accent);}
-.m-img-wrap{width:100%;height:220px;overflow:hidden;background:var(--surface);margin-bottom:1.2rem;}
-.m-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
-.m-img-wrap .sp-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:4rem;}
+.m-img{width:100%;height:220px;object-fit:cover;display:block;margin-bottom:1.2rem;}
+.m-fallback{width:100%;height:220px;display:flex;align-items:center;justify-content:center;font-size:4rem;background:var(--surface);margin-bottom:1.2rem;}
 .m-name{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--text);line-height:1.1;margin-bottom:.2rem;}
 .m-latin{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--text3);font-style:italic;margin-bottom:1.2rem;}
 .m-sec{margin-bottom:1.2rem;padding-bottom:1.2rem;border-bottom:1px solid var(--border);}
@@ -62,9 +60,7 @@
 .m-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-top:.4rem;}
 .m-stat{background:var(--surface);padding:.65rem;text-align:center;border:1px solid var(--border);}
 .m-stat-v{font-family:'Bebas Neue',sans-serif;font-size:1.25rem;color:var(--accent);display:block;}
-.wiki-credit{font-size:.52rem;color:var(--text3);margin-top:1rem;opacity:.5;}
 .m-stat-l{font-family:'Space Mono',monospace;font-size:.54rem;color:var(--text3);}
-/* MORPH */
 .morph-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin-top:1.5rem;}
 .morph-card{background:var(--bg);padding:1.2rem;transition:background .2s;}
 .morph-card:hover{background:var(--bg3);}
@@ -144,7 +140,7 @@
   </div>
 </div>
 
-<div class="modal-overlay" id="spModal" onclick="closeModalOut(event)">
+<div class="modal-overlay" id="spModal" onclick="if(event.target===this)closeModal()">
   <div class="modal-box">
     <button class="modal-close" onclick="closeModal()">✕</button>
     <div id="modalContent"></div>
@@ -164,6 +160,7 @@
 </footer>
 
 <script>
+/* ===== DATA ===== */
 // REPTILE WORLD - Complete Species & Morph Database v2
 // Images: local SVG fallbacks + Wikimedia Commons (referrerpolicy=no-referrer)
 
@@ -503,158 +500,131 @@ const TAXON_IDS = {
   'アルダブラゾウガメ': 39565,
 };
 
-</script>
-<script>
+
+/* ===== UI ===== */
 function toggleDrawer(){document.getElementById('hamburger').classList.toggle('open');document.getElementById('navDrawer').classList.toggle('open');document.body.style.overflow=document.getElementById('navDrawer').classList.contains('open')?'hidden':'';}
 function closeDrawer(){document.getElementById('hamburger').classList.remove('open');document.getElementById('navDrawer').classList.remove('open');document.body.style.overflow='';}
 
-let activeCat='all',activeDiff=null;
-function setCat(cat,btn){activeCat=cat;document.querySelectorAll('.filter-btn:not(.diff-btn)').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderGrid();}
-function setDiff(diff,btn){if(activeDiff===diff){activeDiff=null;btn.classList.remove('active');}else{activeDiff=diff;document.querySelectorAll('.diff-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}renderGrid();}
+let activeCat='all', activeDiff=null;
 
+function setCat(cat,btn){
+  activeCat=cat;
+  document.querySelectorAll('.filter-btn:not(.diff-btn)').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderGrid();
+}
+function setDiff(diff,btn){
+  if(activeDiff===diff){activeDiff=null;btn.classList.remove('active');}
+  else{activeDiff=diff;document.querySelectorAll('.diff-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+  renderGrid();
+}
 function tagClass(t){if(t==='初心者向け')return'beginner';if(t==='中級者向け')return'intermediate';if(t==='上級者向け')return'advanced';return '';}
 
-function imgError(el){
-  const fb = el.getAttribute('data-fb') || '🦎';
-  const div = document.createElement('div');
-  div.className = 'sp-fallback';
-  div.textContent = fb;
-  el.parentElement.replaceChild(div, el);
-}
-
-function makeImgWrap(sp) {
-  const wrap = document.createElement('div');
-  wrap.className = 'sp-img-wrap';
-  const isWiki = sp.img && sp.img.startsWith('https://');
-  if (isWiki) {
-    const img = document.createElement('img');
-    img.src = sp.img;
-    img.alt = sp.name;
-    img.loading = 'lazy';
-    img.setAttribute('referrerpolicy', 'no-referrer');
-    img.setAttribute('data-fb', sp.icon || '🦎');
-    img.onerror = function(){ imgError(this); };
-    wrap.appendChild(img);
-  } else {
-    const fb = document.createElement('div');
-    fb.className = 'sp-fallback';
-    fb.textContent = sp.icon || '🦎';
-    wrap.appendChild(fb);
-  }
-  return wrap;
-}
-
 function renderGrid(){
-  const q = (document.getElementById('spSearch')?.value || '').toLowerCase();
-  const grid = document.getElementById('speciesGrid');
-  grid.innerHTML = '';
-  const list = SD.filter(sp => {
-    if (activeCat !== 'all' && sp.cat !== activeCat) return false;
-    if (activeDiff && sp.diff !== activeDiff) return false;
-    if (q && !sp.name.toLowerCase().includes(q) && !sp.latin.toLowerCase().includes(q)
-          && !sp.desc.toLowerCase().includes(q) && !sp.tags.join('').toLowerCase().includes(q)) return false;
+  const q=(document.getElementById('spSearch')?.value||'').toLowerCase();
+  const grid=document.getElementById('speciesGrid');
+  grid.innerHTML='';
+  const list=SD.filter(sp=>{
+    if(activeCat!=='all'&&sp.cat!==activeCat)return false;
+    if(activeDiff&&sp.diff!==activeDiff)return false;
+    if(q&&!sp.name.toLowerCase().includes(q)&&!sp.latin.toLowerCase().includes(q)&&!sp.desc.toLowerCase().includes(q)&&!sp.tags.join('').toLowerCase().includes(q))return false;
     return true;
   });
-  document.getElementById('countNum').textContent = list.length;
-  list.forEach(sp => {
-    const card = document.createElement('div');
-    card.className = 'species-card';
-    card.onclick = () => openModal(sp);
-
-    // Image wrap - pure DOM, no innerHTML
-    card.appendChild(makeImgWrap(sp));
-
-    // Card body - pure DOM
-    const body = document.createElement('div');
-    body.className = 'sp-body';
-
-    const cat = document.createElement('div'); cat.className = 'sp-cat'; cat.textContent = sp.cat.toUpperCase(); body.appendChild(cat);
-    const name = document.createElement('div'); name.className = 'sp-name'; name.textContent = sp.name; body.appendChild(name);
-    const latin = document.createElement('div'); latin.className = 'sp-latin'; latin.textContent = sp.latin; body.appendChild(latin);
-    const desc = document.createElement('p'); desc.className = 'sp-desc'; desc.textContent = sp.desc; body.appendChild(desc);
-
-    const tags = document.createElement('div'); tags.className = 'sp-tags';
-    sp.tags.forEach(t => {
-      const s = document.createElement('span');
-      s.className = 'tag ' + tagClass(t);
-      s.textContent = t;
-      tags.appendChild(s);
-    });
+  document.getElementById('countNum').textContent=list.length;
+  list.forEach(sp=>{
+    const card=document.createElement('div');
+    card.className='species-card';
+    card.onclick=()=>openModal(sp);
+    const wrap=document.createElement('div');
+    wrap.className='sp-img-wrap';
+    if(sp.img&&sp.img.startsWith('https://')){
+      const img=document.createElement('img');
+      img.src=sp.img; img.alt=sp.name; img.loading='lazy';
+      img.setAttribute('referrerpolicy','no-referrer');
+      img.onerror=function(){const fb=document.createElement('div');fb.className='sp-fallback';fb.textContent=sp.icon||'🦎';this.parentElement.replaceChild(fb,this);};
+      wrap.appendChild(img);
+    }else{
+      const fb=document.createElement('div');fb.className='sp-fallback';fb.textContent=sp.icon||'🦎';wrap.appendChild(fb);
+    }
+    card.appendChild(wrap);
+    const body=document.createElement('div');body.className='sp-body';
+    const c=document.createElement('div');c.className='sp-cat';c.textContent=sp.cat.toUpperCase();body.appendChild(c);
+    const n=document.createElement('div');n.className='sp-name';n.textContent=sp.name;body.appendChild(n);
+    const l=document.createElement('div');l.className='sp-latin';l.textContent=sp.latin;body.appendChild(l);
+    const d=document.createElement('p');d.className='sp-desc';d.textContent=sp.desc;body.appendChild(d);
+    const tags=document.createElement('div');tags.className='sp-tags';
+    sp.tags.forEach(t=>{const s=document.createElement('span');s.className='tag '+tagClass(t);s.textContent=t;tags.appendChild(s);});
     body.appendChild(tags);
     card.appendChild(body);
     grid.appendChild(card);
   });
 }
 
-
 function openModal(sp){
-  const box = document.getElementById('modalContent');
-  box.innerHTML = '';
-
-  // Image
-  const imgWrap = document.createElement('div');
-  imgWrap.className = 'm-img-wrap';
-  const isWiki = sp.img && sp.img.startsWith('https://');
-  if (isWiki) {
-    const img = document.createElement('img');
-    img.src = sp.img;
-    img.alt = sp.name;
-    img.setAttribute('referrerpolicy', 'no-referrer');
-    img.setAttribute('data-fb', sp.icon || '🦎');
-    img.onerror = function(){ imgError(this); };
-    imgWrap.appendChild(img);
-  } else {
-    const fb = document.createElement('div'); fb.className = 'sp-fallback'; fb.textContent = sp.icon || '🦎'; imgWrap.appendChild(fb);
+  const box=document.getElementById('modalContent');
+  box.innerHTML='';
+  const wrap=document.createElement('div');
+  if(sp.img&&sp.img.startsWith('https://')){
+    const img=document.createElement('img');
+    img.src=sp.img;img.alt=sp.name;img.className='m-img';
+    img.setAttribute('referrerpolicy','no-referrer');
+    img.onerror=function(){const fb=document.createElement('div');fb.className='m-fallback';fb.textContent=sp.icon||'🦎';this.parentElement.replaceChild(fb,this);};
+    box.appendChild(img);
+  }else{
+    const fb=document.createElement('div');fb.className='m-fallback';fb.textContent=sp.icon||'🦎';box.appendChild(fb);
   }
-  box.appendChild(imgWrap);
-
-  // Text content
-  function addDiv(cls, text){ const d=document.createElement('div'); d.className=cls; d.textContent=text; box.appendChild(d); }
-  function addSec(label, text){
-    const sec=document.createElement('div'); sec.className='m-sec';
-    const lbl=document.createElement('div'); lbl.className='m-stitle'; lbl.textContent=label; sec.appendChild(lbl);
-    const p=document.createElement('p'); p.className='m-text'; p.textContent=text; sec.appendChild(p);
-    box.appendChild(sec);
-  }
-  addDiv('m-name', sp.name);
-  addDiv('m-latin', sp.latin);
-
-  // Stats
-  const statSec = document.createElement('div'); statSec.className='m-sec';
-  const stitle = document.createElement('div'); stitle.className='m-stitle'; stitle.textContent='// データ'; statSec.appendChild(stitle);
-  const stats = document.createElement('div'); stats.className='m-stats';
-  [[sp.s.sz,'全長'],[sp.s.li,'寿命'],[sp.s.t,'温度目安']].forEach(([v,l])=>{
-    const d=document.createElement('div'); d.className='m-stat';
-    const vEl=document.createElement('span'); vEl.className='m-stat-v'; vEl.textContent=v; d.appendChild(vEl);
-    const lEl=document.createElement('span'); lEl.className='m-stat-l'; lEl.textContent=l; d.appendChild(lEl);
-    stats.appendChild(d);
-  });
-  statSec.appendChild(stats); box.appendChild(statSec);
-
-  addSec('// 基本情報', sp.desc);
-  addSec('// 生息地', sp.h);
-  addSec('// 食性・餌', sp.d);
-  addSec('// 飼育のコツ', sp.tip);
-
-  const credit=document.createElement('p'); credit.style.cssText='font-size:.52rem;color:var(--text3);margin-top:1rem;opacity:.5;'; credit.textContent='Photo: Wikimedia Commons (CC)'; box.appendChild(credit);
-
+  const nm=document.createElement('div');nm.className='m-name';nm.textContent=sp.name;box.appendChild(nm);
+  const lt=document.createElement('div');lt.className='m-latin';lt.textContent=sp.latin;box.appendChild(lt);
+  function sec(label,text){const s=document.createElement('div');s.className='m-sec';const t=document.createElement('div');t.className='m-stitle';t.textContent=label;s.appendChild(t);const p=document.createElement('p');p.className='m-text';p.textContent=text;s.appendChild(p);box.appendChild(s);}
+  const ss=document.createElement('div');ss.className='m-sec';
+  const st=document.createElement('div');st.className='m-stitle';st.textContent='// データ';ss.appendChild(st);
+  const sg=document.createElement('div');sg.className='m-stats';
+  [[sp.s.sz,'全長'],[sp.s.li,'寿命'],[sp.s.t,'温度目安']].forEach(([v,l])=>{const d=document.createElement('div');d.className='m-stat';const ve=document.createElement('span');ve.className='m-stat-v';ve.textContent=v;d.appendChild(ve);const le=document.createElement('span');le.className='m-stat-l';le.textContent=l;d.appendChild(le);sg.appendChild(d);});
+  ss.appendChild(sg);box.appendChild(ss);
+  sec('// 基本情報',sp.desc);sec('// 生息地',sp.h);sec('// 食性・餌',sp.d);sec('// 飼育のコツ',sp.tip);
   document.getElementById('spModal').classList.add('open');
   document.body.style.overflow='hidden';
 }
+function closeModal(){document.getElementById('spModal').classList.remove('open');document.body.style.overflow='';}
 
+/* ===== MORPH ===== */
+let activeMorphSp='all';
+function buildMorphFilter(){
+  const bar=document.getElementById('morphFilter');
+  bar.innerHTML='';
+  const sps=[...new Set(MORPHS.map(m=>m.sp))];
+  const labels={leopard:'レオパ',ball:'ボールパイソン',corn:'コーンスネーク'};
+  function mkBtn(label,sp){
+    const btn=document.createElement('button');btn.className='filter-btn'+(sp==='all'?' active':'');
+    btn.textContent=label;
+    btn.onclick=()=>{activeMorphSp=sp;bar.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderMorphs();};
+    bar.appendChild(btn);
+  }
+  mkBtn('すべて','all');
+  sps.forEach(sp=>mkBtn(labels[sp]||sp,sp));
+}
+function renderMorphs(){
+  const rl={common:'流通多',rare:'希少',ultra:'超希少'};
+  document.getElementById('morphGrid').innerHTML=MORPHS
+    .filter(m=>activeMorphSp==='all'||m.sp===activeMorphSp)
+    .map(m=>`<div class="morph-card">
+      <div class="morph-swatch" style="background:linear-gradient(135deg,${m.c1} 0%,${m.c2} 100%);"></div>
+      <div class="morph-sp">${m.sn.toUpperCase()}</div>
+      <div class="morph-name">${m.name}</div>
+      <div class="morph-gene">${m.gene}</div>
+      ${m.price?'<div class="morph-price">¥'+m.price+'</div>':''}
+      <div class="morph-desc">${m.desc}</div>
+      <span class="morph-rarity ${m.rarity}">${rl[m.rarity]||m.rarity}</span>
+    </div>`).join('');
+}
 
-function init(){
-  buildMorphFilter();
-  renderMorphs();
-  renderGrid();
-  const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);obs.unobserve(e.target);}})},{threshold:0.07});
-  document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
-}
-if(document.readyState==='loading'){
-  document.addEventListener('DOMContentLoaded',init);
-}else{
-  init();
-}
+/* ===== INIT ===== */
+buildMorphFilter();
+renderMorphs();
+renderGrid();
+
+const _obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);_obs.unobserve(e.target);}})},{threshold:0.07});
+document.querySelectorAll('.fade-in').forEach(el=>_obs.observe(el));
 </script>
 <script src="common.js"></script>
 </body>
