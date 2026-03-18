@@ -515,100 +515,134 @@ function setDiff(diff,btn){if(activeDiff===diff){activeDiff=null;btn.classList.r
 function tagClass(t){if(t==='初心者向け')return'beginner';if(t==='中級者向け')return'intermediate';if(t==='上級者向け')return'advanced';return '';}
 
 function imgError(el){
-  const fb=el.getAttribute('data-fb')||'🦎';
-  el.parentElement.innerHTML='<div class="sp-fallback">'+fb+'</div>';
+  const fb = el.getAttribute('data-fb') || '🦎';
+  const div = document.createElement('div');
+  div.className = 'sp-fallback';
+  div.textContent = fb;
+  el.parentElement.replaceChild(div, el);
+}
+
+function makeImgWrap(sp) {
+  const wrap = document.createElement('div');
+  wrap.className = 'sp-img-wrap';
+  const isWiki = sp.img && sp.img.startsWith('https://');
+  if (isWiki) {
+    const img = document.createElement('img');
+    img.src = sp.img;
+    img.alt = sp.name;
+    img.loading = 'lazy';
+    img.setAttribute('referrerpolicy', 'no-referrer');
+    img.setAttribute('data-fb', sp.icon || '🦎');
+    img.onerror = function(){ imgError(this); };
+    wrap.appendChild(img);
+  } else {
+    const fb = document.createElement('div');
+    fb.className = 'sp-fallback';
+    fb.textContent = sp.icon || '🦎';
+    wrap.appendChild(fb);
+  }
+  return wrap;
 }
 
 function renderGrid(){
-  const q=(document.getElementById('spSearch')?.value||'').toLowerCase();
-  const grid=document.getElementById('speciesGrid');
-  grid.innerHTML='';
-  const list=SD.filter(sp=>{
-    if(activeCat!=='all'&&sp.cat!==activeCat)return false;
-    if(activeDiff&&sp.diff!==activeDiff)return false;
-    if(q&&!sp.name.toLowerCase().includes(q)&&!sp.latin.toLowerCase().includes(q)&&!sp.desc.toLowerCase().includes(q)&&!sp.tags.join('').toLowerCase().includes(q))return false;
+  const q = (document.getElementById('spSearch')?.value || '').toLowerCase();
+  const grid = document.getElementById('speciesGrid');
+  grid.innerHTML = '';
+  const list = SD.filter(sp => {
+    if (activeCat !== 'all' && sp.cat !== activeCat) return false;
+    if (activeDiff && sp.diff !== activeDiff) return false;
+    if (q && !sp.name.toLowerCase().includes(q) && !sp.latin.toLowerCase().includes(q)
+          && !sp.desc.toLowerCase().includes(q) && !sp.tags.join('').toLowerCase().includes(q)) return false;
     return true;
   });
-  document.getElementById('countNum').textContent=list.length;
-  list.forEach(sp=>{
-    const card=document.createElement('div');
-    card.className='species-card';
-    card.onclick=()=>openModal(sp);
-    const isWiki=sp.img&&sp.img.startsWith('https://');
-    const imgHtml=isWiki
-      ?'<img src="'+sp.img+'" alt="'+sp.name+'" loading="lazy" referrerpolicy="no-referrer" data-fb="'+(sp.icon||'🦎')+'" onerror="imgError(this)">'
-      :'<div class="sp-fallback">'+(sp.icon||'🦎')+'</div>';
-    card.innerHTML=
-      '<div class="sp-img-wrap">'+imgHtml+'</div>'+
-      '<div class="sp-body">'+
-        '<div class="sp-cat">'+sp.cat.toUpperCase()+'</div>'+
-        '<div class="sp-name">'+sp.name+'</div>'+
-        '<div class="sp-latin">'+sp.latin+'</div>'+
-        '<p class="sp-desc">'+sp.desc+'</p>'+
-        '<div class="sp-tags">'+sp.tags.map(t=>'<span class="tag '+tagClass(t)+'">'+t+'</span>').join('')+'</div>'+
-      '</div>';
+  document.getElementById('countNum').textContent = list.length;
+  list.forEach(sp => {
+    const card = document.createElement('div');
+    card.className = 'species-card';
+    card.onclick = () => openModal(sp);
+
+    // Image wrap - pure DOM, no innerHTML
+    card.appendChild(makeImgWrap(sp));
+
+    // Card body - pure DOM
+    const body = document.createElement('div');
+    body.className = 'sp-body';
+
+    const cat = document.createElement('div'); cat.className = 'sp-cat'; cat.textContent = sp.cat.toUpperCase(); body.appendChild(cat);
+    const name = document.createElement('div'); name.className = 'sp-name'; name.textContent = sp.name; body.appendChild(name);
+    const latin = document.createElement('div'); latin.className = 'sp-latin'; latin.textContent = sp.latin; body.appendChild(latin);
+    const desc = document.createElement('p'); desc.className = 'sp-desc'; desc.textContent = sp.desc; body.appendChild(desc);
+
+    const tags = document.createElement('div'); tags.className = 'sp-tags';
+    sp.tags.forEach(t => {
+      const s = document.createElement('span');
+      s.className = 'tag ' + tagClass(t);
+      s.textContent = t;
+      tags.appendChild(s);
+    });
+    body.appendChild(tags);
+    card.appendChild(body);
     grid.appendChild(card);
   });
 }
 
+
 function openModal(sp){
-  const isWiki=sp.img&&sp.img.startsWith('https://');
-  const icon=sp.icon||'🦎';
-  const mImg=isWiki
-    ?'<img src="'+sp.img+'" alt="" referrerpolicy="no-referrer" data-fb="'+icon+'" onerror="imgError(this)">'
-    :'<div class="sp-fallback">'+icon+'</div>';
-  const content=
-    '<div class="m-img-wrap">'+mImg+'</div>'+
-    '<div class="m-name">'+sp.name+'</div>'+
-    '<div class="m-latin">'+sp.latin+'</div>'+
-    '<div class="m-sec"><div class="m-stitle">// 基本情報</div><p class="m-text">'+sp.desc+'</p></div>'+
-    '<div class="m-sec"><div class="m-stitle">// データ</div>'+
-      '<div class="m-stats">'+
-        '<div class="m-stat"><span class="m-stat-v">'+sp.s.sz+'</span><span class="m-stat-l">全長</span></div>'+
-        '<div class="m-stat"><span class="m-stat-v">'+sp.s.li+'</span><span class="m-stat-l">寿命</span></div>'+
-        '<div class="m-stat"><span class="m-stat-v">'+sp.s.t+'</span><span class="m-stat-l">温度目安</span></div>'+
-      '</div></div>'+
-    '<div class="m-sec"><div class="m-stitle">// 生息地</div><p class="m-text">'+sp.h+'</p></div>'+
-    '<div class="m-sec"><div class="m-stitle">// 食性・餌</div><p class="m-text">'+sp.d+'</p></div>'+
-    '<div class="m-sec"><div class="m-stitle">// 飼育のコツ</div><p class="m-text">'+sp.tip+'</p></div>'+
-    '<p class="wiki-credit">Photo: Wikimedia Commons (CC)</p>';
-  document.getElementById('modalContent').innerHTML=content;
+  const box = document.getElementById('modalContent');
+  box.innerHTML = '';
+
+  // Image
+  const imgWrap = document.createElement('div');
+  imgWrap.className = 'm-img-wrap';
+  const isWiki = sp.img && sp.img.startsWith('https://');
+  if (isWiki) {
+    const img = document.createElement('img');
+    img.src = sp.img;
+    img.alt = sp.name;
+    img.setAttribute('referrerpolicy', 'no-referrer');
+    img.setAttribute('data-fb', sp.icon || '🦎');
+    img.onerror = function(){ imgError(this); };
+    imgWrap.appendChild(img);
+  } else {
+    const fb = document.createElement('div'); fb.className = 'sp-fallback'; fb.textContent = sp.icon || '🦎'; imgWrap.appendChild(fb);
+  }
+  box.appendChild(imgWrap);
+
+  // Text content
+  function addDiv(cls, text){ const d=document.createElement('div'); d.className=cls; d.textContent=text; box.appendChild(d); }
+  function addSec(label, text){
+    const sec=document.createElement('div'); sec.className='m-sec';
+    const lbl=document.createElement('div'); lbl.className='m-stitle'; lbl.textContent=label; sec.appendChild(lbl);
+    const p=document.createElement('p'); p.className='m-text'; p.textContent=text; sec.appendChild(p);
+    box.appendChild(sec);
+  }
+  addDiv('m-name', sp.name);
+  addDiv('m-latin', sp.latin);
+
+  // Stats
+  const statSec = document.createElement('div'); statSec.className='m-sec';
+  const stitle = document.createElement('div'); stitle.className='m-stitle'; stitle.textContent='// データ'; statSec.appendChild(stitle);
+  const stats = document.createElement('div'); stats.className='m-stats';
+  [[sp.s.sz,'全長'],[sp.s.li,'寿命'],[sp.s.t,'温度目安']].forEach(([v,l])=>{
+    const d=document.createElement('div'); d.className='m-stat';
+    const vEl=document.createElement('span'); vEl.className='m-stat-v'; vEl.textContent=v; d.appendChild(vEl);
+    const lEl=document.createElement('span'); lEl.className='m-stat-l'; lEl.textContent=l; d.appendChild(lEl);
+    stats.appendChild(d);
+  });
+  statSec.appendChild(stats); box.appendChild(statSec);
+
+  addSec('// 基本情報', sp.desc);
+  addSec('// 生息地', sp.h);
+  addSec('// 食性・餌', sp.d);
+  addSec('// 飼育のコツ', sp.tip);
+
+  const credit=document.createElement('p'); credit.style.cssText='font-size:.52rem;color:var(--text3);margin-top:1rem;opacity:.5;'; credit.textContent='Photo: Wikimedia Commons (CC)'; box.appendChild(credit);
+
   document.getElementById('spModal').classList.add('open');
   document.body.style.overflow='hidden';
 }
-function closeModal(){document.getElementById('spModal').classList.remove('open');document.body.style.overflow='';}
-function closeModalOut(e){if(e.target===document.getElementById('spModal'))closeModal();}
 
-/* MORPH */
-let activeMorphSp='all';
-function buildMorphFilter(){
-  const bar=document.getElementById('morphFilter');
-  const sps=[...new Set(MORPHS.map(m=>m.sp))];
-  const labels={leopard:'レオパ',ball:'ボールパイソン',corn:'コーンスネーク'};
-  const allBtn=document.createElement('button');
-  allBtn.className='filter-btn active';allBtn.textContent='すべて';
-  allBtn.onclick=()=>{activeMorphSp='all';bar.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));allBtn.classList.add('active');renderMorphs();};
-  bar.appendChild(allBtn);
-  sps.forEach(sp=>{
-    const btn=document.createElement('button');btn.className='filter-btn';btn.textContent=labels[sp]||sp;
-    btn.onclick=()=>{activeMorphSp=sp;bar.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderMorphs();};
-    bar.appendChild(btn);
-  });
-}
-function renderMorphs(){
-  const rl={common:'流通多',rare:'希少',ultra:'超希少'};
-  document.getElementById('morphGrid').innerHTML=MORPHS
-    .filter(m=>activeMorphSp==='all'||m.sp===activeMorphSp)
-    .map(m=>`<div class="morph-card">
-      <div class="morph-swatch" style="background:linear-gradient(135deg,${m.c1} 0%,${m.c2} 100%);"></div>
-      <div class="morph-sp">${m.sn.toUpperCase()}</div>
-      <div class="morph-name">${m.name}</div>
-      <div class="morph-gene">${m.gene}</div>
-      ${m.price?`<div class="morph-price">¥${m.price}</div>`:''}
-      <div class="morph-desc">${m.desc}</div>
-      <span class="morph-rarity ${m.rarity}">${rl[m.rarity]||m.rarity}</span>
-    </div>`).join('');
-}
+
 buildMorphFilter();renderMorphs();
 renderGrid();
 
