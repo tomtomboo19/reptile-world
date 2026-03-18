@@ -1,16 +1,41 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" height="320" viewBox="0 0 480 320">
-  <rect width="480" height="320" fill="#1a0d0a"/>
-  <rect x="0" y="0" width="480" height="320" fill="none" stroke="#c8a84b" stroke-width="1" opacity="0.3"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320">
+  <rect width="480" height="320" fill="#120e05"/>
+  <!-- Body - large lizard -->
+  <ellipse cx="210" cy="190" rx="105" ry="55" fill="#7a6020"/>
+  <!-- Belly -->
+  <ellipse cx="210" cy="205" rx="82" ry="38" fill="#c0a050"/>
+  <!-- Neck -->
+  <path d="M295 175 Q330 165 355 168 Q365 170 355 182 Q335 192 305 195Z" fill="#7a6020"/>
+  <!-- Head -->
+  <ellipse cx="370" cy="178" rx="55" ry="38" fill="#7a6020"/>
+  <!-- Forked tongue -->
+  <path d="M418 180 L432 174 M418 180 L432 186" stroke="#c03030" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Snout -->
+  <ellipse cx="415" cy="180" rx="22" ry="16" fill="#6a5018"/>
+  <!-- Nostril -->
+  <circle cx="412" cy="173" r="3" fill="#2a1808"/>
+  <!-- Eye -->
+  <ellipse cx="388" cy="167" rx="12" ry="11" fill="#c8a020"/>
+  <ellipse cx="388" cy="167" rx="4" ry="9" fill="#080808"/>
+  <circle cx="385" cy="164" r="2" fill="rgba(255,255,255,0.35)"/>
+  <!-- Tail - long -->
+  <path d="M112 195 Q75 200 48 215 Q28 228 22 242 Q20 252 30 250 Q45 245 58 232 Q82 215 115 207Z" fill="#6a5018"/>
+  <!-- Front legs -->
+  <path d="M290 235 Q300 260 288 282 Q283 290 277 283 Q280 265 274 247Z" fill="#6a5018"/>
+  <path d="M260 240 Q268 265 256 285 Q251 293 245 286 Q249 268 244 250Z" fill="#6a5018"/>
+  <!-- Back legs -->
+  <path d="M175 238 Q185 263 173 283 Q168 291 162 284 Q165 266 160 248Z" fill="#6a5018"/>
+  <path d="M148 236 Q157 260 146 280 Q141 288 135 281 Q138 263 134 245Z" fill="#6a5018"/>
   <!-- Scale pattern -->
-  <pattern id="scales" x="0" y="0" width="30" height="26" patternUnits="userSpaceOnUse">
-    <ellipse cx="15" cy="13" rx="13" ry="10" fill="none" stroke="#c8a84b" stroke-width="0.4" opacity="0.15"/>
-  </pattern>
-  <rect width="480" height="320" fill="url(#scales)"/>
-  <!-- Center icon -->
-  <text x="240" y="155" font-family="sans-serif" font-size="72" text-anchor="middle" dominant-baseline="middle" opacity="0.6">🦕</text>
-  <!-- Species name -->
-  <text x="240" y="225" font-family="monospace" font-size="13" text-anchor="middle" fill="#c8a84b" letter-spacing="2" opacity="0.8">SAVANNAH MONITOR</text>
-  <!-- Decorative lines -->
-  <line x1="80" y1="250" x2="200" y2="250" stroke="#c8a84b" stroke-width="0.5" opacity="0.3"/>
-  <line x1="280" y1="250" x2="400" y2="250" stroke="#c8a84b" stroke-width="0.5" opacity="0.3"/>
+  <circle cx="190" cy="183" r="5" fill="#5a4810" opacity="0.5"/>
+  <circle cx="210" cy="178" r="5" fill="#5a4810" opacity="0.5"/>
+  <circle cx="232" cy="183" r="5" fill="#5a4810" opacity="0.5"/>
+  <circle cx="252" cy="178" r="4" fill="#5a4810" opacity="0.5"/>
+  <circle cx="200" cy="195" r="4" fill="#5a4810" opacity="0.4"/>
+  <circle cx="222" cy="192" r="4" fill="#5a4810" opacity="0.4"/>
+  <circle cx="242" cy="195" r="4" fill="#5a4810" opacity="0.4"/>
+  <!-- Claws -->
+  <path d="M283 281 L276 292 M277 284 L269 294 M271 285 L264 294" stroke="#4a3810" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Label -->
+  <text x="240" y="308" font-family="monospace" font-size="11" fill="#c8a050" text-anchor="middle" letter-spacing="3" opacity="0.7">SAVANNAH MONITOR</text>
 </svg>

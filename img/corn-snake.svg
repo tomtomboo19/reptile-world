@@ -1,16 +1,28 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" height="320" viewBox="0 0 480 320">
-  <rect width="480" height="320" fill="#260a0a"/>
-  <rect x="0" y="0" width="480" height="320" fill="none" stroke="#e57373" stroke-width="1" opacity="0.3"/>
-  <!-- Scale pattern -->
-  <pattern id="scales" x="0" y="0" width="30" height="26" patternUnits="userSpaceOnUse">
-    <ellipse cx="15" cy="13" rx="13" ry="10" fill="none" stroke="#e57373" stroke-width="0.4" opacity="0.15"/>
-  </pattern>
-  <rect width="480" height="320" fill="url(#scales)"/>
-  <!-- Center icon -->
-  <text x="240" y="155" font-family="sans-serif" font-size="72" text-anchor="middle" dominant-baseline="middle" opacity="0.6">🐍</text>
-  <!-- Species name -->
-  <text x="240" y="225" font-family="monospace" font-size="13" text-anchor="middle" fill="#e57373" letter-spacing="2" opacity="0.8">CORN SNAKE</text>
-  <!-- Decorative lines -->
-  <line x1="80" y1="250" x2="200" y2="250" stroke="#e57373" stroke-width="0.5" opacity="0.3"/>
-  <line x1="280" y1="250" x2="400" y2="250" stroke="#e57373" stroke-width="0.5" opacity="0.3"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320">
+  <rect width="480" height="320" fill="#120808"/>
+  <!-- Snake body - S curve -->
+  <path d="M60 280 Q80 260 120 245 Q160 230 200 235 Q240 240 270 220 Q300 200 330 185 Q360 170 390 155 Q420 142 440 130" 
+        stroke="#c84820" stroke-width="28" fill="none" stroke-linecap="round"/>
+  <!-- Saddle pattern overlay -->
+  <path d="M60 280 Q80 260 120 245 Q160 230 200 235 Q240 240 270 220 Q300 200 330 185 Q360 170 390 155 Q420 142 440 130" 
+        stroke="#8a1010" stroke-width="28" fill="none" stroke-dasharray="22 16" stroke-linecap="round" opacity="0.6"/>
+  <!-- Belly -->
+  <path d="M62 282 Q82 262 122 247 Q162 232 202 237 Q242 242 272 222 Q302 202 332 187 Q362 172 392 157 Q422 144 442 132" 
+        stroke="#f0d0a0" stroke-width="12" fill="none" stroke-linecap="round" opacity="0.6"/>
+  <!-- Black border of saddles -->
+  <path d="M60 280 Q80 260 120 245 Q160 230 200 235 Q240 240 270 220 Q300 200 330 185 Q360 170 390 155 Q420 142 440 130" 
+        stroke="#1a0505" stroke-width="2" fill="none" stroke-dasharray="22 16" stroke-linecap="round" opacity="0.4"/>
+  <!-- Head -->
+  <ellipse cx="446" cy="126" rx="28" ry="20" fill="#c84820"/>
+  <ellipse cx="444" cy="127" rx="22" ry="16" fill="#d85830"/>
+  <!-- Eye -->
+  <ellipse cx="452" cy="118" rx="8" ry="7" fill="#c8a020"/>
+  <ellipse cx="452" cy="118" rx="2.5" ry="5.5" fill="#080808"/>
+  <circle cx="450" cy="116" r="1.5" fill="rgba(255,255,255,0.4)"/>
+  <!-- Forked tongue -->
+  <path d="M468 128 L478 124 M468 128 L478 132" stroke="#e04040" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Snout -->
+  <ellipse cx="468" cy="128" rx="12" ry="9" fill="#b83818"/>
+  <!-- Label -->
+  <text x="240" y="308" font-family="monospace" font-size="11" fill="#e06040" text-anchor="middle" letter-spacing="3" opacity="0.7">CORN SNAKE</text>
 </svg>

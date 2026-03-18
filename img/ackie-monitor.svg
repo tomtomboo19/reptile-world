@@ -1,16 +1,28 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" height="320" viewBox="0 0 480 320">
-  <rect width="480" height="320" fill="#1a0a0a"/>
-  <rect x="0" y="0" width="480" height="320" fill="none" stroke="#e57373" stroke-width="1" opacity="0.3"/>
-  <!-- Scale pattern -->
-  <pattern id="scales" x="0" y="0" width="30" height="26" patternUnits="userSpaceOnUse">
-    <ellipse cx="15" cy="13" rx="13" ry="10" fill="none" stroke="#e57373" stroke-width="0.4" opacity="0.15"/>
-  </pattern>
-  <rect width="480" height="320" fill="url(#scales)"/>
-  <!-- Center icon -->
-  <text x="240" y="155" font-family="sans-serif" font-size="72" text-anchor="middle" dominant-baseline="middle" opacity="0.6">🦕</text>
-  <!-- Species name -->
-  <text x="240" y="225" font-family="monospace" font-size="13" text-anchor="middle" fill="#e57373" letter-spacing="2" opacity="0.8">ACKIE MONITOR</text>
-  <!-- Decorative lines -->
-  <line x1="80" y1="250" x2="200" y2="250" stroke="#e57373" stroke-width="0.5" opacity="0.3"/>
-  <line x1="280" y1="250" x2="400" y2="250" stroke="#e57373" stroke-width="0.5" opacity="0.3"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320">
+  <rect width="480" height="320" fill="#120805"/>
+  <ellipse cx="225" cy="280" rx="130" ry="18" fill="#0a0503" opacity="0.6"/>
+  <ellipse cx="215" cy="195" rx="80" ry="42" fill="#8a3810"/>
+  <ellipse cx="215" cy="205" rx="62" ry="30" fill="#c05818"/>
+  <path d="M298 178 Q325 170 345 172 Q353 174 344 184 Q328 192 308 196Z" fill="#8a3810"/>
+  <ellipse cx="358" cy="176" rx="48" ry="34" fill="#8a3810"/>
+  <path d="M400 178 L415 173 M400 178 L415 183" stroke="#c03030" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <ellipse cx="398" cy="178" rx="19" ry="14" fill="#7a3008"/>
+  <circle cx="395" cy="172" r="2.5" fill="#2a0f05"/>
+  <ellipse cx="375" cy="166" rx="10" ry="9" fill="#c8a020"/>
+  <ellipse cx="375" cy="166" rx="3.5" ry="7.5" fill="#080808"/>
+  <circle cx="373" cy="163" r="1.8" fill="rgba(255,255,255,0.4)"/>
+  <path d="M138 198 Q105 205 82 218 Q65 230 68 242 Q75 248 84 238 Q103 222 132 210Z" fill="#7a3008"/>
+  <path d="M280 232 Q290 255 280 272 Q275 280 270 273 Q273 257 268 240Z" fill="#7a3008"/>
+  <path d="M252 236 Q260 259 250 276 Q245 284 240 277 Q243 261 238 244Z" fill="#7a3008"/>
+  <path d="M173 234 Q182 257 172 274 Q167 282 162 275 Q165 259 160 242Z" fill="#7a3008"/>
+  <!-- Ocelli spots - distinctive ackie pattern -->
+  <circle cx="195" cy="183" r="7" fill="#e07030" opacity="0.7"/>
+  <circle cx="195" cy="183" r="3.5" fill="#c8a020" opacity="0.8"/>
+  <circle cx="215" cy="177" r="7" fill="#e07030" opacity="0.7"/>
+  <circle cx="215" cy="177" r="3.5" fill="#c8a020" opacity="0.8"/>
+  <circle cx="235" cy="182" r="7" fill="#e07030" opacity="0.7"/>
+  <circle cx="235" cy="182" r="3.5" fill="#c8a020" opacity="0.8"/>
+  <circle cx="254" cy="177" r="6" fill="#e07030" opacity="0.6"/>
+  <circle cx="254" cy="177" r="3" fill="#c8a020" opacity="0.7"/>
+  <text x="240" y="308" font-family="monospace" font-size="11" fill="#e07030" text-anchor="middle" letter-spacing="3" opacity="0.7">ACKIE MONITOR</text>
 </svg>

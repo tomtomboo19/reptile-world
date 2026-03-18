@@ -238,24 +238,42 @@ function doSearch(q){
 document.addEventListener('click',e=>{if(!e.target.closest('.hero-search'))document.getElementById('hDrop').classList.remove('show');});
 
 const FEAT=[
-  {name:'ヒョウモントカゲモドキ',cat:'gecko',diff:'beginner',img:'img/leopard-gecko.svg',icon:'🦎'},
-  {name:'ボールパイソン',cat:'boa',diff:'beginner',img:'img/ball-python.svg',icon:'⚫'},
-  {name:'フトアゴヒゲトカゲ',cat:'agama',diff:'intermediate',img:'img/bearded-dragon.svg',icon:'🦖'},
-  {name:'コーンスネーク',cat:'snake',diff:'beginner',img:'img/corn-snake.svg',icon:'🐍'},
-  {name:'クレステッドゲッコー',cat:'gecko',diff:'beginner',img:'img/crested-gecko.svg',icon:'🦎'},
-  {name:'ロシアリクガメ',cat:'tortoise',diff:'beginner',img:'img/russian-tortoise.svg',icon:'🐢'},
+  {name:'ヒョウモントカゲモドキ',cat:'gecko',diff:'beginner',img:'img/leopard-gecko.svg',icon:'🦎',tid:35194},
+  {name:'ボールパイソン',cat:'boa',diff:'beginner',img:'img/ball-python.svg',icon:'⚫',tid:35530},
+  {name:'フトアゴヒゲトカゲ',cat:'agama',diff:'intermediate',img:'img/bearded-dragon.svg',icon:'🦖',tid:35526},
+  {name:'コーンスネーク',cat:'snake',diff:'beginner',img:'img/corn-snake.svg',icon:'🐍',tid:35561},
+  {name:'クレステッドゲッコー',cat:'gecko',diff:'beginner',img:'img/crested-gecko.svg',icon:'🦎',tid:73574},
+  {name:'ロシアリクガメ',cat:'tortoise',diff:'beginner',img:'img/russian-tortoise.svg',icon:'🐢',tid:39583},
 ];
 const dL={beginner:'初心者向け',intermediate:'中級者向け',advanced:'上級者向け'};
 const dC={beginner:'diff-b',intermediate:'diff-i',advanced:'diff-a'};
-document.getElementById('featuredGrid').innerHTML=FEAT.map(s=>`
+
+// Render with local SVG first, then swap to real photo
+document.getElementById('featuredGrid').innerHTML=FEAT.map((s,i)=>`
   <a href="species.html" class="feat-card">
-    <img src="${s.img}" alt="${s.name}" class="feat-thumb" loading="lazy" onerror="this.outerHTML='<div class=\'feat-fallback\'>${s.icon}</div>'">
+    <img id="fi${i}" src="${s.img}" alt="${s.name}" class="feat-thumb" loading="lazy"
+      onerror="this.outerHTML='<div class=\'feat-fallback\'>${s.icon}</div>'">
     <div class="feat-info">
       <div class="feat-cat">${s.cat.toUpperCase()}</div>
       <div class="feat-name">${s.name}</div>
       <span class="feat-diff ${dC[s.diff]}">${dL[s.diff]}</span>
     </div>
   </a>`).join('');
+
+// Load real photos from iNaturalist (CC license, free public API)
+FEAT.forEach(async (s, i) => {
+  try {
+    const r = await fetch(`https://api.inaturalist.org/v1/taxa/${s.tid}`,
+      { signal: AbortSignal.timeout(8000) });
+    if (!r.ok) return;
+    const d = await r.json();
+    const url = d.results?.[0]?.default_photo?.medium_url;
+    if (url) {
+      const el = document.getElementById(`fi${i}`);
+      if (el) { el.src = url; el.style.objectFit = 'cover'; }
+    }
+  } catch(e) {}
+});
 </script>
 </body>
 </html>

@@ -1,16 +1,39 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" height="320" viewBox="0 0 480 320">
-  <rect width="480" height="320" fill="#1c261c"/>
-  <rect x="0" y="0" width="480" height="320" fill="none" stroke="#4caf50" stroke-width="1" opacity="0.3"/>
-  <!-- Scale pattern -->
-  <pattern id="scales" x="0" y="0" width="30" height="26" patternUnits="userSpaceOnUse">
-    <ellipse cx="15" cy="13" rx="13" ry="10" fill="none" stroke="#4caf50" stroke-width="0.4" opacity="0.15"/>
-  </pattern>
-  <rect width="480" height="320" fill="url(#scales)"/>
-  <!-- Center icon -->
-  <text x="240" y="155" font-family="sans-serif" font-size="72" text-anchor="middle" dominant-baseline="middle" opacity="0.6">🦎</text>
-  <!-- Species name -->
-  <text x="240" y="225" font-family="monospace" font-size="13" text-anchor="middle" fill="#4caf50" letter-spacing="2" opacity="0.8">LEOPARD GECKO</text>
-  <!-- Decorative lines -->
-  <line x1="80" y1="250" x2="200" y2="250" stroke="#4caf50" stroke-width="0.5" opacity="0.3"/>
-  <line x1="280" y1="250" x2="400" y2="250" stroke="#4caf50" stroke-width="0.5" opacity="0.3"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320">
+  <rect width="480" height="320" fill="#0f1a0f"/>
+  <rect x="0" y="260" width="480" height="60" fill="#0a120a"/>
+  <!-- Ground shadow -->
+  <ellipse cx="240" cy="270" rx="120" ry="18" fill="#051005" opacity="0.6"/>
+  <!-- Body -->
+  <ellipse cx="220" cy="195" rx="78" ry="42" fill="#2d5a1e"/>
+  <!-- Belly -->
+  <ellipse cx="220" cy="205" rx="58" ry="28" fill="#4a7a30"/>
+  <!-- Head -->
+  <ellipse cx="310" cy="190" rx="52" ry="38" fill="#2d5a1e"/>
+  <!-- Snout -->
+  <ellipse cx="358" cy="196" rx="22" ry="18" fill="#2d5a1e"/>
+  <!-- Eye -->
+  <ellipse cx="325" cy="178" rx="12" ry="10" fill="#c8a84b"/>
+  <ellipse cx="325" cy="178" rx="4" ry="8" fill="#0a0a0a"/>
+  <circle cx="322" cy="175" r="2" fill="rgba(255,255,255,0.4)"/>
+  <!-- Tail - curved -->
+  <path d="M148 200 Q110 215 85 240 Q70 255 80 265 Q90 270 100 258 Q120 238 145 218 Q170 205 148 200Z" fill="#2d5a1e"/>
+  <!-- Legs front right -->
+  <path d="M285 225 Q295 255 285 275 Q280 282 275 275 Q278 258 272 240 Q275 228 285 225Z" fill="#254a18"/>
+  <!-- Legs front left -->
+  <path d="M255 228 Q248 258 238 278 Q233 285 228 278 Q235 260 230 242 Q238 230 255 228Z" fill="#254a18"/>
+  <!-- Legs back right -->
+  <path d="M195 230 Q205 260 195 280 Q190 287 185 280 Q188 262 182 244 Q185 232 195 230Z" fill="#254a18"/>
+  <!-- Legs back left -->
+  <path d="M168 228 Q162 258 152 278 Q147 285 142 278 Q148 260 144 242 Q152 230 168 228Z" fill="#254a18"/>
+  <!-- Spots -->
+  <circle cx="200" cy="185" r="7" fill="#1a3a10" opacity="0.8"/>
+  <circle cx="225" cy="178" r="6" fill="#1a3a10" opacity="0.8"/>
+  <circle cx="250" cy="188" r="7" fill="#1a3a10" opacity="0.8"/>
+  <circle cx="210" cy="200" r="5" fill="#1a3a10" opacity="0.7"/>
+  <circle cx="240" cy="195" r="6" fill="#1a3a10" opacity="0.7"/>
+  <circle cx="185" cy="192" r="5" fill="#1a3a10" opacity="0.7"/>
+  <!-- Toes -->
+  <path d="M280 274 Q276 280 272 278 M275 276 Q270 283 266 281 M270 278 Q264 285 260 283" stroke="#1e4015" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Label -->
+  <text x="240" y="300" font-family="monospace" font-size="11" fill="#4caf50" text-anchor="middle" letter-spacing="3" opacity="0.7">LEOPARD GECKO</text>
 </svg>

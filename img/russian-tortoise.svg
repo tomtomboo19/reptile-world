@@ -1,16 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" height="320" viewBox="0 0 480 320">
-  <rect width="480" height="320" fill="#1a1a0a"/>
-  <rect x="0" y="0" width="480" height="320" fill="none" stroke="#a5d6a7" stroke-width="1" opacity="0.3"/>
-  <!-- Scale pattern -->
-  <pattern id="scales" x="0" y="0" width="30" height="26" patternUnits="userSpaceOnUse">
-    <ellipse cx="15" cy="13" rx="13" ry="10" fill="none" stroke="#a5d6a7" stroke-width="0.4" opacity="0.15"/>
-  </pattern>
-  <rect width="480" height="320" fill="url(#scales)"/>
-  <!-- Center icon -->
-  <text x="240" y="155" font-family="sans-serif" font-size="72" text-anchor="middle" dominant-baseline="middle" opacity="0.6">🐢</text>
-  <!-- Species name -->
-  <text x="240" y="225" font-family="monospace" font-size="13" text-anchor="middle" fill="#a5d6a7" letter-spacing="2" opacity="0.8">RUSSIAN TORTOISE</text>
-  <!-- Decorative lines -->
-  <line x1="80" y1="250" x2="200" y2="250" stroke="#a5d6a7" stroke-width="0.5" opacity="0.3"/>
-  <line x1="280" y1="250" x2="400" y2="250" stroke="#a5d6a7" stroke-width="0.5" opacity="0.3"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320">
+  <rect width="480" height="320" fill="#120e08"/>
+  <!-- Ground -->
+  <ellipse cx="240" cy="278" rx="145" ry="22" fill="#0e0a05" opacity="0.6"/>
+  <!-- Shell - main dome -->
+  <ellipse cx="240" cy="195" rx="118" ry="82" fill="#6a5518"/>
+  <!-- Shell highlight -->
+  <ellipse cx="215" cy="168" rx="75" ry="50" fill="#7a6528" opacity="0.5"/>
+  <!-- Shell scutes - central row -->
+  <path d="M240 125 Q260 135 272 155 Q278 170 272 185 Q260 198 240 202 Q220 198 208 185 Q202 170 208 155 Q220 135 240 125Z" fill="#5a4510" stroke="#3a2d08" stroke-width="2"/>
+  <path d="M240 202 Q260 205 270 220 Q274 235 265 248 Q252 256 240 257 Q228 256 215 248 Q206 235 210 220 Q220 205 240 202Z" fill="#5a4510" stroke="#3a2d08" stroke-width="2"/>
+  <!-- Shell scutes - left column -->
+  <path d="M208 155 Q185 158 172 172 Q165 183 168 196 Q175 207 190 210 Q205 210 208 198 Q210 182 208 155Z" fill="#5a4510" stroke="#3a2d08" stroke-width="2"/>
+  <!-- Shell scutes - right column -->
+  <path d="M272 155 Q295 158 308 172 Q315 183 312 196 Q305 207 290 210 Q275 210 272 198 Q270 182 272 155Z" fill="#5a4510" stroke="#3a2d08" stroke-width="2"/>
+  <!-- Shell marginal scutes -->
+  <path d="M172 172 Q155 165 145 178 Q142 192 155 200 Q168 205 168 196Z" fill="#4a3808" stroke="#3a2d08" stroke-width="1.5"/>
+  <path d="M308 172 Q325 165 335 178 Q338 192 325 200 Q312 205 312 196Z" fill="#4a3808" stroke="#3a2d08" stroke-width="1.5"/>
+  <!-- Head extended -->
+  <ellipse cx="320" cy="215" rx="42" ry="30" fill="#8a7028"/>
+  <ellipse cx="322" cy="217" rx="33" ry="23" fill="#a08038"/>
+  <!-- Eye -->
+  <ellipse cx="330" cy="207" rx="9" ry="8" fill="#c8a020"/>
+  <ellipse cx="330" cy="207" rx="4" ry="6" fill="#0a0808"/>
+  <circle cx="328" cy="205" r="2" fill="rgba(255,255,255,0.35)"/>
+  <!-- Snout / beak -->
+  <path d="M350 214 Q358 218 356 225 Q350 230 344 226 Q340 220 344 215Z" fill="#7a5820"/>
+  <!-- Front leg -->
+  <path d="M195 240 Q182 262 178 280 Q176 288 182 288 Q188 285 188 276 Q192 260 198 245Z" fill="#7a6020"/>
+  <!-- Back leg -->
+  <path d="M285 242 Q295 262 296 280 Q297 288 291 288 Q285 285 284 276 Q282 260 280 246Z" fill="#7a6020"/>
+  <!-- Claws -->
+  <path d="M178 287 L172 295 M182 288 L178 296 M188 287 L185 295" stroke="#5a4818" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Label -->
+  <text x="240" y="308" font-family="monospace" font-size="11" fill="#a08038" text-anchor="middle" letter-spacing="3" opacity="0.7">RUSSIAN TORTOISE</text>
 </svg>

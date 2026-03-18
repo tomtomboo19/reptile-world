@@ -167,6 +167,115 @@
 function toggleDrawer(){document.getElementById('hamburger').classList.toggle('open');document.getElementById('navDrawer').classList.toggle('open');document.body.style.overflow=document.getElementById('navDrawer').classList.contains('open')?'hidden':'';}
 function closeDrawer(){document.getElementById('hamburger').classList.remove('open');document.getElementById('navDrawer').classList.remove('open');document.body.style.overflow='';}
 
+/* ─────────────────────────────────────────
+   iNaturalist Photo Loader
+   API: https://api.inaturalist.org/v1/taxa/:id
+   License: CC (citizen science photos)
+   ───────────────────────────────────────── */
+const photoCache = {};
+let _fetchQueue = 0;
+const MAX_CONCURRENT = 4; // Rate limit: max 4 simultaneous requests
+
+async function getPhoto(name) {
+  if (photoCache[name] !== undefined) return photoCache[name];
+  const taxonId = window.TAXON_IDS && TAXON_IDS[name];
+  if (!taxonId) { photoCache[name] = null; return null; }
+
+  // Wait if too many concurrent requests
+  while (_fetchQueue >= MAX_CONCURRENT) {
+    await new Promise(r => setTimeout(r, 200));
+  }
+  _fetchQueue++;
+
+  try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 8000);
+    const res = await fetch(
+      `https://api.inaturalist.org/v1/taxa/${taxonId}`,
+      { signal: controller.signal }
+    );
+    clearTimeout(timer);
+    if (!res.ok) { photoCache[name] = null; return null; }
+    const data = await res.json();
+    const taxon = data.results?.[0];
+    const url = taxon?.default_photo?.medium_url || null;
+    photoCache[name] = url;
+    return url;
+  } catch(e) {
+    photoCache[name] = null;
+    return null;
+  } finally {
+    _fetchQueue--;
+  }
+}
+
+/* Skeleton loading style */
+const _skelStyle = document.createElement('style');
+_skelStyle.textContent = `
+.sp-thumb-wrap{position:relative;background:var(--surface);}
+.sp-thumb-skel{position:absolute;inset:0;background:linear-gradient(90deg,var(--surface) 25%,var(--bg3) 50%,var(--surface) 75%);background-size:200% 100%;animation:skel 1.5s infinite;}
+@keyframes skel{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+.sp-thumb-wrap img{position:relative;z-index:1;transition:opacity .4s;}
+.sp-thumb-wrap img.loading{opacity:0;}
+.sp-thumb-wrap img.loaded{opacity:1;}
+.inat-credit{font-family:'Space Mono',monospace;font-size:.52rem;color:var(--text3);margin-top:.4rem;opacity:.55;}
+`;
+document.head.appendChild(_skelStyle);
+
+function makeCard(sp) {
+  const card = document.createElement('div');
+  card.className = 'species-card';
+  card.onclick = () => openModal(sp);
+  const localImg = sp.img || 'img/leopard-gecko.svg';
+  const tagHtml = sp.tags.map(t => {
+    let c = '';
+    if(t === '初心者向け') c = 'beginner';
+    else if(t === '中級者向け') c = 'intermediate';
+    else if(t === '上級者向け') c = 'advanced';
+    return `<span class="tag ${c}">${t}</span>`;
+  }).join('');
+  const imgId = 'i' + Date.now() + Math.random().toString(36).slice(2,6);
+  const hasTaxon = window.TAXON_IDS && TAXON_IDS[sp.name];
+
+  card.innerHTML = `
+    <div class="sp-thumb-wrap">
+      ${hasTaxon ? '<div class="sp-thumb-skel"></div>' : ''}
+      <img id="${imgId}" src="${localImg}" alt="${sp.name}" loading="lazy"
+        class="${hasTaxon ? 'loading' : 'loaded'}"
+        onerror="this.src='${localImg}';this.classList.replace('loading','loaded');">
+    </div>
+    <div class="sp-cat">${sp.cat.toUpperCase()}</div>
+    <div class="sp-name">${sp.name}</div>
+    <div class="sp-latin">${sp.latin}</div>
+    <p class="sp-desc">${sp.desc}</p>
+    <div class="sp-tags">${tagHtml}</div>`;
+
+  // Async: fetch real photo and swap in
+  if (hasTaxon) {
+    getPhoto(sp.name).then(url => {
+      const el = document.getElementById(imgId);
+      if (!el) return;
+      if (url) {
+        const tmp = new Image();
+        tmp.onload = () => {
+          el.src = url;
+          el.classList.replace('loading', 'loaded');
+          // Remove skeleton
+          const skel = el.parentElement.querySelector('.sp-thumb-skel');
+          if (skel) skel.remove();
+        };
+        tmp.onerror = () => el.classList.replace('loading', 'loaded');
+        tmp.src = url;
+      } else {
+        el.classList.replace('loading', 'loaded');
+        const skel = el.parentElement.querySelector('.sp-thumb-skel');
+        if (skel) skel.remove();
+      }
+    });
+  }
+  return card;
+}
+
 let activeCat='all', activeDiff=null;
 function setCat(cat,btn){activeCat=cat;document.querySelectorAll('.filter-btn:not(.diff-btn)').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderGrid();}
 function setDiff(diff,btn){if(activeDiff===diff){activeDiff=null;btn.classList.remove('active');}else{activeDiff=diff;document.querySelectorAll('.diff-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}renderGrid();}
@@ -175,30 +284,27 @@ function renderGrid(){
   const q=(document.getElementById('spSearch')?.value||'').toLowerCase();
   const grid=document.getElementById('speciesGrid');
   grid.innerHTML='';
-  let count=0;
-  SD.forEach(sp=>{
-    if(activeCat!=='all'&&sp.cat!==activeCat)return;
-    if(activeDiff&&sp.diff!==activeDiff)return;
-    if(q&&!sp.name.toLowerCase().includes(q)&&!sp.latin.toLowerCase().includes(q)&&!sp.desc.toLowerCase().includes(q)&&!sp.tags.join('').toLowerCase().includes(q))return;
-    count++;
-    const card=document.createElement('div');
-    card.className='species-card';
-    card.onclick=()=>openModal(sp);
-    const imgH=sp.img
-      ?`<div class="sp-thumb-wrap"><img src="${sp.img}" alt="${sp.name}" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentElement.outerHTML='<div class=\\'sp-fallback\\'>${sp.icon||'🦎'}</div>'"></div>`
-      :`<div class="sp-fallback">${sp.icon||'🦎'}</div>`;
-    card.innerHTML=`${imgH}<div class="sp-cat">${sp.cat.toUpperCase()}</div><div class="sp-name">${sp.name}</div><div class="sp-latin">${sp.latin}</div><p class="sp-desc">${sp.desc}</p><div class="sp-tags">${sp.tags.map(t=>{let c='';if(t==='初心者向け')c='beginner';else if(t==='中級者向け')c='intermediate';else if(t==='上級者向け')c='advanced';return`<span class="tag ${c}">${t}</span>`;}).join('')}</div>`;
-    grid.appendChild(card);
+  const filtered = SD.filter(sp=>{
+    if(activeCat!=='all'&&sp.cat!==activeCat)return false;
+    if(activeDiff&&sp.diff!==activeDiff)return false;
+    if(q&&!sp.name.toLowerCase().includes(q)&&!sp.latin.toLowerCase().includes(q)&&!sp.desc.toLowerCase().includes(q)&&!sp.tags.join('').toLowerCase().includes(q))return false;
+    return true;
   });
-  document.getElementById('countNum').textContent=count;
+  document.getElementById('countNum').textContent = filtered.length;
+  filtered.forEach(sp => grid.appendChild(makeCard(sp)));
 }
 
 function openModal(sp){
-  const imgH=sp.img
-    ?`<img src="${sp.img}" alt="${sp.name}" class="m-thumb" referrerpolicy="no-referrer" onerror="this.outerHTML='<div class=\\'m-fallback\\'>${sp.icon||'🦎'}</div>'">`
-    :`<div class="m-fallback">${sp.icon||'🦎'}</div>`;
+  const localImg = sp.img || 'img/leopard-gecko.svg';
+  const cached = photoCache[sp.name];
+  const showUrl = (cached && cached !== null) ? cached : localImg;
   document.getElementById('modalContent').innerHTML=`
-    ${imgH}
+    <div style="position:relative;width:100%;background:var(--surface);margin-bottom:1.2rem;">
+      ${(!cached && TAXON_IDS?.[sp.name]) ? '<div class="sp-thumb-skel" style="position:absolute;inset:0;height:220px;z-index:0;"></div>' : ''}
+      <img id="modal_photo" src="${showUrl}" alt="${sp.name}" class="m-thumb"
+        style="position:relative;z-index:1;transition:opacity .4s;${(!cached && TAXON_IDS?.[sp.name]) ? 'opacity:0.6;' : ''}"
+        onerror="this.src='${localImg}';this.style.opacity='1';">
+    </div>
     <div class="m-name">${sp.name}</div>
     <div class="m-latin">${sp.latin}</div>
     <div class="m-sec"><div class="m-stitle">// 基本情報</div><p class="m-text">${sp.desc}</p></div>
@@ -211,7 +317,25 @@ function openModal(sp){
     </div>
     <div class="m-sec"><div class="m-stitle">// 生息地</div><p class="m-text">${sp.h}</p></div>
     <div class="m-sec"><div class="m-stitle">// 食性・餌</div><p class="m-text">${sp.d}</p></div>
-    <div class="m-sec"><div class="m-stitle">// 飼育のコツ</div><p class="m-text">${sp.tip}</p></div>`;
+    <div class="m-sec"><div class="m-stitle">// 飼育のコツ</div><p class="m-text">${sp.tip}</p></div>
+    <p class="inat-credit">📷 Photo: iNaturalist.org (CC license) — 市民科学者による生態写真</p>`;
+
+  // Fetch photo if not cached
+  if (!cached) {
+    getPhoto(sp.name).then(url => {
+      if (!url) return;
+      const el = document.getElementById('modal_photo');
+      if (!el) return;
+      const tmp = new Image();
+      tmp.onload = () => {
+        el.src = url;
+        el.style.opacity = '1';
+        const skel = el.parentElement.querySelector('.sp-thumb-skel');
+        if (skel) skel.remove();
+      };
+      tmp.src = url;
+    });
+  }
   document.getElementById('spModal').classList.add('open');
   document.body.style.overflow='hidden';
 }

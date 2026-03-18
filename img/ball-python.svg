@@ -1,16 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" height="320" viewBox="0 0 480 320">
-  <rect width="480" height="320" fill="#1a1a0a"/>
-  <rect x="0" y="0" width="480" height="320" fill="none" stroke="#81c784" stroke-width="1" opacity="0.3"/>
-  <!-- Scale pattern -->
-  <pattern id="scales" x="0" y="0" width="30" height="26" patternUnits="userSpaceOnUse">
-    <ellipse cx="15" cy="13" rx="13" ry="10" fill="none" stroke="#81c784" stroke-width="0.4" opacity="0.15"/>
-  </pattern>
-  <rect width="480" height="320" fill="url(#scales)"/>
-  <!-- Center icon -->
-  <text x="240" y="155" font-family="sans-serif" font-size="72" text-anchor="middle" dominant-baseline="middle" opacity="0.6">🐍</text>
-  <!-- Species name -->
-  <text x="240" y="225" font-family="monospace" font-size="13" text-anchor="middle" fill="#81c784" letter-spacing="2" opacity="0.8">BALL PYTHON</text>
-  <!-- Decorative lines -->
-  <line x1="80" y1="250" x2="200" y2="250" stroke="#81c784" stroke-width="0.5" opacity="0.3"/>
-  <line x1="280" y1="250" x2="400" y2="250" stroke="#81c784" stroke-width="0.5" opacity="0.3"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320">
+  <rect width="480" height="320" fill="#0f1208"/>
+  <!-- Coiled body - outer rings -->
+  <ellipse cx="240" cy="175" rx="145" ry="110" fill="none" stroke="#3a2a0a" stroke-width="38"/>
+  <ellipse cx="240" cy="175" rx="145" ry="110" fill="none" stroke="#c8a020" stroke-width="12" stroke-dasharray="40 20" opacity="0.3"/>
+  <!-- Middle ring -->
+  <ellipse cx="240" cy="175" rx="95" ry="70" fill="none" stroke="#2e2008" stroke-width="36"/>
+  <ellipse cx="240" cy="175" rx="95" ry="70" fill="none" stroke="#c8a020" stroke-width="10" stroke-dasharray="35 18" opacity="0.25"/>
+  <!-- Inner coil -->
+  <ellipse cx="240" cy="175" rx="48" ry="35" fill="#2e2008"/>
+  <!-- Head resting on coil -->
+  <ellipse cx="190" cy="132" rx="42" ry="30" fill="#3a2a0a"/>
+  <ellipse cx="188" cy="134" rx="32" ry="22" fill="#5a4010"/>
+  <!-- Eye -->
+  <ellipse cx="200" cy="126" rx="9" ry="8" fill="#c8a84b"/>
+  <ellipse cx="200" cy="126" rx="3" ry="6" fill="#080808"/>
+  <circle cx="198" cy="124" r="1.5" fill="rgba(255,255,255,0.35)"/>
+  <!-- Snout -->
+  <ellipse cx="168" cy="138" rx="18" ry="14" fill="#3a2a0a"/>
+  <!-- Heat pits -->
+  <circle cx="175" cy="143" r="2" fill="#1a1005" opacity="0.8"/>
+  <circle cx="168" cy="145" r="2" fill="#1a1005" opacity="0.8"/>
+  <!-- Scale pattern on body -->
+  <ellipse cx="240" cy="175" rx="145" ry="110" fill="none" stroke="#6a5015" stroke-width="3" opacity="0.15"/>
+  <!-- Belly scales hint -->
+  <path d="M145 220 Q170 235 200 230 Q230 225 260 228 Q290 231 320 220" stroke="#d0b040" stroke-width="1.5" fill="none" opacity="0.2"/>
+  <!-- Label -->
+  <text x="240" y="308" font-family="monospace" font-size="11" fill="#c8a84b" text-anchor="middle" letter-spacing="3" opacity="0.7">BALL PYTHON</text>
 </svg>
