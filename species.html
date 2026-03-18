@@ -643,13 +643,18 @@ function openModal(sp){
 }
 
 
-document.addEventListener('DOMContentLoaded', function(){
+function init(){
   buildMorphFilter();
   renderMorphs();
   renderGrid();
   const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);obs.unobserve(e.target);}})},{threshold:0.07});
   document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
-});
+}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',init);
+}else{
+  init();
+}
 </script>
 <script src="common.js"></script>
 </body>
