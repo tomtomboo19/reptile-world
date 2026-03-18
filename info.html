@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情報・ショップ | REPTILE WORLD</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.geo-btn{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.06em;padding:.65rem 1.4rem;background:var(--accent);color:#0a1a0a;border:none;cursor:pointer;font-weight:700;transition:all .2s;display:inline-flex;align-items:center;gap:.5rem;}
+.geo-btn:hover{background:var(--accent2);}
+.geo-btn:disabled{opacity:.5;cursor:not-allowed;}
+.geo-status{font-family:'Space Mono',monospace;font-size:.68rem;color:var(--text3);margin-top:.6rem;}
+.geo-status.ok{color:var(--accent2);}
+.geo-status.err{color:var(--red);}
+.map-wrap{margin-top:1.5rem;border:1px solid var(--border);overflow:hidden;}
+.map-wrap iframe{width:100%;height:400px;border:none;filter:invert(88%) hue-rotate(175deg) saturate(0.55) brightness(.9);}
+.map-placeholder{width:100%;height:400px;background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;}
+.map-placeholder p{font-family:'Space Mono',monospace;font-size:.75rem;color:var(--text3);}
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1rem;margin-top:2rem;}
+.shop-card{background:var(--surface);border:1px solid var(--border);padding:1.4rem;transition:border-color .2s;}
+.shop-card:hover{border-color:var(--border2);}
+.shop-badge{display:inline-block;font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.09em;padding:.18rem .55rem;background:rgba(76,175,80,.1);color:var(--accent2);border:1px solid var(--border2);margin-bottom:.7rem;}
+.shop-name{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--text);margin-bottom:.25rem;}
+.shop-addr{font-size:.74rem;color:var(--text3);margin-bottom:.5rem;}
+.shop-hours{font-size:.74rem;color:var(--text2);margin-bottom:.45rem;}
+.shop-rating{display:flex;align-items:center;gap:.4rem;}
+.shop-stars{color:var(--gold);font-size:.75rem;}
+.shop-rnum{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--text3);}
+.shop-tel{font-family:'Space Mono',monospace;font-size:.66rem;color:var(--accent3);margin-top:.45rem;}
+.shop-note{font-size:.74rem;color:var(--text2);margin-top:.5rem;font-weight:300;line-height:1.55;}
+.shop-dist{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--gold);margin-top:.4rem;}
+.events-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1rem;}
+.event-card{background:var(--surface);border:1px solid var(--border);padding:1.5rem;transition:border-color .2s;}
+.event-card:hover{border-color:var(--border2);}
+.event-badge{display:inline-block;font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.08em;padding:.15rem .5rem;background:rgba(76,175,80,.1);color:var(--accent2);border:1px solid var(--border2);margin-bottom:.6rem;}
+.event-date{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--accent);line-height:1;margin-bottom:.15rem;}
+.event-freq{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:var(--accent3);margin-bottom:.6rem;}
+.event-name{font-family:'Space Mono',monospace;font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.3rem;}
+.event-place{font-size:.76rem;color:var(--text3);margin-bottom:.4rem;}
+.event-desc{font-size:.76rem;color:var(--text2);font-weight:300;line-height:1.55;}
+.yt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;}
+.yt-card{background:var(--surface);border:1px solid var(--border);}
+.yt-frame{position:relative;width:100%;padding-top:56.25%;}
+.yt-frame iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;}
+.yt-info{padding:.9rem 1.1rem;}
+.yt-ch{font-family:'Space Mono',monospace;font-size:.57rem;letter-spacing:.14em;color:var(--accent3);margin-bottom:.25rem;}
+.yt-ttl{font-size:.86rem;font-weight:700;color:var(--text);margin-bottom:.25rem;}
+.yt-txt{font-size:.76rem;color:var(--text2);font-weight:300;line-height:1.55;}
+.danger-intro{font-size:.84rem;color:var(--red);padding:1rem 1.2rem;background:rgba(229,115,115,.08);border:1px solid rgba(229,115,115,.3);margin-bottom:2rem;font-weight:300;}
+.danger-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;}
+.danger-card{background:var(--surface);border:1px solid rgba(229,115,115,.25);padding:1.5rem;border-left:3px solid var(--red);}
+.danger-level{font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.18em;padding:.18rem .55rem;border:1px solid;display:inline-block;margin-bottom:.7rem;}
+.lv1{color:#e57373;border-color:rgba(229,115,115,.4);}
+.lv2{color:#ff7043;border-color:rgba(255,112,67,.5);}
+.lv3{color:#ef5350;border-color:rgba(239,83,80,.6);}
+.danger-name{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--text);margin-bottom:.2rem;}
+.danger-latin{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--text3);font-style:italic;margin-bottom:.6rem;}
+.danger-desc{font-size:.8rem;color:var(--text2);font-weight:300;line-height:1.6;margin-bottom:.7rem;}
+.danger-aid{font-size:.78rem;padding:.6rem .8rem;background:rgba(229,115,115,.06);border-left:2px solid var(--red);}
+.danger-aid strong{color:var(--red);font-size:.7rem;font-family:'Space Mono',monospace;letter-spacing:.1em;display:block;margin-bottom:.3rem;}
+.facts-grid{display:grid;grid-template-columns:1fr 1fr;background:var(--border);border:1px solid var(--border);}
+.fact-item{background:var(--bg);padding:2.2rem;border-bottom:1px solid var(--border);}
+.fact-item:nth-child(odd){border-right:1px solid var(--border);}
+.fact-num{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--accent);line-height:1;margin-bottom:.4rem;}
+.fact-unit{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--text3);letter-spacing:.14em;display:block;margin-bottom:.6rem;}
+.fact-desc{font-size:.85rem;color:var(--text2);font-weight:300;line-height:1.65;}
+@media(max-width:600px){.facts-grid{grid-template-columns:1fr;}.fact-item:nth-child(odd){border-right:none;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">REPTILE<span>WORLD</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">TOP</a></li>
+    <li><a href="species.html">図鑑</a></li>
+    <li><a href="care.html">飼育・繁殖</a></li>
+    <li><a href="info.html" class="active">情報・ショップ</a></li>
+    <li><a href="community.html">コミュニティ</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleDrawer()"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-drawer" id="navDrawer">
+  <a href="index.html" onclick="closeDrawer()">TOP</a>
+  <a href="species.html" onclick="closeDrawer()">図鑑</a>
+  <a href="care.html" onclick="closeDrawer()">飼育・繁殖</a>
+  <a href="info.html" onclick="closeDrawer()">情報・ショップ</a>
+  <a href="community.html" onclick="closeDrawer()">コミュニティ</a>
+</div>
+
+<div class="page-hero">
+  <div class="page-hero-label">// 03. INFO & SHOPS</div>
+  <h1 class="page-hero-title">情報・<span>ショップ</span></h1>
+  <p class="page-hero-desc">近くの爬虫類ショップ・イベント情報・おすすめ動画・危険種ガイドをまとめて掲載。</p>
+</div>
+
+<!-- SHOP FINDER -->
+<div class="section fade-in">
+  <p class="sec-label">// SHOP FINDER</p>
+  <h2 class="sec-title">近くのショップを探す</h2>
+  <p class="sec-desc">現在地を取得して周辺の爬虫類ショップを地図上に表示します。</p>
+  <button class="geo-btn" id="geoBtn" onclick="getLocation()">📍 現在地から近くのショップを探す</button>
+  <div class="geo-status" id="geoStatus">位置情報の取得を許可してください</div>
+  <div class="map-wrap">
+    <div class="map-placeholder" id="mapPlaceholder">
+      <p>📍 「現在地から探す」ボタンを押すと地図が表示されます</p>
+      <p style="font-size:.6rem;opacity:.5;">位置情報はブラウザ内のみで使用されます</p>
+    </div>
+    <div id="shopMap" style="display:none;"></div>
+  </div>
+  <div id="shopDistList"></div>
+
+  <p class="sec-label" style="margin-top:3rem;">// RECOMMENDED SHOPS</p>
+  <h3 style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--text);margin-bottom:2rem;">西東京・多摩エリアのおすすめ店舗</h3>
+  <div class="shop-grid">
+    <div class="shop-card"><div class="shop-badge">爬虫類専門 ★おすすめ</div><div class="shop-name">Tsuchinoko</div><div class="shop-addr">東京都昭島市緑町5-7-17</div><div class="shop-hours">月～木 18～21時 / 土 15～21時（火・金・日定休）</div><div class="shop-rating"><span class="shop-stars">★★★★☆</span><span class="shop-rnum">4.3（52件）</span></div><div class="shop-tel">☎ 090-4748-7706</div><p class="shop-note">レオパ・血統アナコンダ等を専門に扱う地域密着型。購入後のアフターフォローが手厚いと評判。</p></div>
+    <div class="shop-card"><div class="shop-badge">爬虫類専門 ★高評価</div><div class="shop-name">LUCK UP Reptiles</div><div class="shop-addr">東京都杉並区阿佐谷北3-13-13</div><div class="shop-hours">月・火・木～日 12～20時（水定休）</div><div class="shop-rating"><span class="shop-stars">★★★★★</span><span class="shop-rnum">4.9（110件）</span></div><div class="shop-tel">☎ 03-4361-7794</div><p class="shop-note">都内屈指の高評価爬虫類専門店。レオパの自家繁殖個体が豊富。店内清潔で初心者にも入りやすい。</p></div>
+    <div class="shop-card"><div class="shop-badge">爬虫類取扱あり</div><div class="shop-name">TropiLand（東村山）</div><div class="shop-addr">東京都東村山市恩多町2-41-7</div><div class="shop-hours">月・水～金 13～20:30 / 土日 11～19時（火定休）</div><div class="shop-rating"><span class="shop-stars">★★★★☆</span><span class="shop-rnum">4.0（959件）</span></div><div class="shop-tel">☎ 042-390-0708</div><p class="shop-note">小平市から最も近い大型ペットショップのひとつ。爬虫類コーナーも充実。スタッフの知識が高い。</p></div>
+    <div class="shop-card"><div class="shop-badge">爬虫類取扱あり</div><div class="shop-name">KENNY 多摩平の森</div><div class="shop-addr">東京都日野市多摩平2-4-1</div><div class="shop-hours">毎日 11～21時</div><div class="shop-rating"><span class="shop-stars">★★★☆☆</span><span class="shop-rnum">3.6（58件）</span></div><div class="shop-tel">☎ 042-506-2326</div><p class="shop-note">KENNYグループ多摩平店。レオパ・ボールパイソン・モニター・カメ類など幅広く取扱い。</p></div>
+    <div class="shop-card"><div class="shop-badge">総合ペット</div><div class="shop-name">ペットフォレスト小平店</div><div class="shop-addr">東京都小平市小川東町3-7-1</div><div class="shop-hours">毎日 10～20時</div><div class="shop-rating"><span class="shop-stars">★★★★★</span><span class="shop-rnum">5.0</span></div><div class="shop-tel">☎ 042-312-3337</div><p class="shop-note">小平市内で最も近い総合ペットショップ。消耗品の急な調達に便利。</p></div>
+    <div class="shop-card"><div class="shop-badge">爬虫類取扱あり</div><div class="shop-name">BORNtoBONE（所沢）</div><div class="shop-addr">埼玉県所沢市山口1517-2</div><div class="shop-hours">火・水・金～日 16～20時（月・木定休）</div><div class="shop-rating"><span class="shop-stars">★★★★☆</span><span class="shop-rnum">4.3（27件）</span></div><div class="shop-tel">☎ 080-4470-5549</div><p class="shop-note">所沢市の爬虫類取扱ショップ。オーナーが親切で初心者サポートも充実。Instagram情報発信も活発。</p></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- EVENTS -->
+<div class="section-alt fade-in">
+  <div class="container">
+    <p class="sec-label">// EVENTS</p>
+    <h2 class="sec-title">爬虫類イベント情報</h2>
+    <p class="sec-desc">即売会・展示会・オフ会など。最新情報は各主催の公式SNSで必ず確認を。</p>
+    <div class="events-grid">
+      <div class="event-card"><div class="event-badge">大型即売会</div><div class="event-date">年2回</div><div class="event-freq">春・秋開催</div><div class="event-name">東京レプタイルズワールド</div><div class="event-place">東京ビッグサイト（江東区）</div><p class="event-desc">日本最大級の爬虫類即売会。全国のブリーダー・ショップが集結。生体・用品・グッズまで網羅。入場料あり。</p></div>
+      <div class="event-card"><div class="event-badge">大型即売会</div><div class="event-date">年複数回</div><div class="event-freq">不定期開催</div><div class="event-name">ジャパンレプタイルズショー（JRS）</div><div class="event-place">浜松市・幕張メッセ（会場変動あり）</div><p class="event-desc">東海～関東を中心に開催される大型爬虫類ショー。海外ブリーダーの参加もあり希少種との出会いも。</p></div>
+      <div class="event-card"><div class="event-badge">中型イベント</div><div class="event-date">年複数回</div><div class="event-freq">関東各地で開催</div><div class="event-name">レプタイルズフィーバー</div><div class="event-place">関東各会場（公式SNSで告知）</div><p class="event-desc">比較的こぢんまりした即売会。初心者も入りやすい雰囲気でブリーダーと直接話せる機会が多い。</p></div>
+      <div class="event-card"><div class="event-badge">中型イベント</div><div class="event-date">年複数回</div><div class="event-freq">大阪・東京</div><div class="event-name">ヒョウモントカゲモドキオンリー</div><div class="event-place">大阪・東京の会場（変動あり）</div><p class="event-desc">レオパ専門の即売会。希少モルフの取引が活発で、モルフコレクターには見逃せないイベント。</p></div>
+      <div class="event-card"><div class="event-badge">オンライン</div><div class="event-date">随時</div><div class="event-freq">通年</div><div class="event-name">爬虫類オフ会（X / Discord）</div><div class="event-place">各地・オンライン</div><p class="event-desc">X（旧Twitter）やDiscordのコミュニティが主催するオフ会。飼育者同士の情報交換・自慢個体の持ち寄りなど。</p></div>
+      <div class="event-card"><div class="event-badge">展示・体験</div><div class="event-date">通年</div><div class="event-freq">常設展示</div><div class="event-name">爬虫類カフェ・触れ合いスポット</div><div class="event-place">東京・大阪・名古屋など全国</div><p class="event-desc">爬虫類と触れ合えるカフェやスポット。飼育前に実際に触れることができ、初心者の入門体験に最適。</p></div>
+    </div>
+    <p style="font-size:.72rem;color:var(--text3);margin-top:1.5rem;font-family:'Space Mono',monospace;">※ イベント情報は変更・中止になる場合があります。必ず各主催の公式SNS・HPで最新情報を確認してください。</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- VIDEOS -->
+<div class="section fade-in">
+  <p class="sec-label">// VIDEO LIBRARY</p>
+  <h2 class="sec-title">おすすめ動画</h2>
+  <p class="sec-desc">飼育・繁殖・生態に役立つYouTube動画を厳選。</p>
+  <div class="yt-grid">
+    <div class="yt-card"><div class="yt-frame"><iframe src="https://www.youtube.com/embed/DlxHoafnpfE" allowfullscreen loading="lazy"></iframe></div><div class="yt-info"><div class="yt-ch">// ボールパイソン</div><div class="yt-ttl">ボールパイソン飼育セットアップ解説</div><p class="yt-txt">ケージ設置から温度・湿度管理、モルフの基礎知識まで丁寧に解説した入門動画。</p></div></div>
+    <div class="yt-card"><div class="yt-frame"><iframe src="https://www.youtube.com/embed/pIlR_6yfpxo" allowfullscreen loading="lazy"></iframe></div><div class="yt-info"><div class="yt-ch">// フトアゴ</div><div class="yt-ttl">フトアゴヒゲトカゲの飼育環境構築</div><p class="yt-txt">UVBランプの選び方・バスキングスポットの作り方など、フトアゴ飼育で最も重要な温度管理を詳解。</p></div></div>
+    <div class="yt-card"><div class="yt-frame"><iframe src="https://www.youtube.com/embed/oAlLqYMwVi4" allowfullscreen loading="lazy"></iframe></div><div class="yt-info"><div class="yt-ch">// リクガメ飼育</div><div class="yt-ttl">リクガメ飼育の基本と注意点</div><p class="yt-txt">ロシアリクガメ・ヘルマンリクガメの飼育方法。床材・給餌・UVB管理を徹底解説。</p></div></div>
+    <div class="yt-card"><div class="yt-frame"><iframe src="https://www.youtube.com/embed/Vq0GzB3KDFU" allowfullscreen loading="lazy"></iframe></div><div class="yt-info"><div class="yt-ch">// カメレオン</div><div class="yt-ttl">エボシカメレオンの飼育セットアップ</div><p class="yt-txt">最も難しい部類のカメレオン飼育。点滴システム・霧吹き装置の設置方法を実演。</p></div></div>
+    <div class="yt-card"><div class="yt-frame"><iframe src="https://www.youtube.com/embed/z5R8Yh8FGQY" allowfullscreen loading="lazy"></iframe></div><div class="yt-info"><div class="yt-ch">// モニター・テグー</div><div class="yt-ttl">大型トカゲの飼育と社会化</div><p class="yt-txt">サバンナモニター・テグーなど大型トカゲをなつかせるための社会化・ハンドリング入門。</p></div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- DANGER -->
+<div class="section-alt fade-in">
+  <div class="container">
+    <p class="sec-label">// DANGEROUS SPECIES</p>
+    <h2 class="sec-title">危険種・毒ヘビと応急処置</h2>
+    <p class="sec-desc">飼育・遭遇時に知っておくべき危険な爬虫類。万が一に備えた知識を。</p>
+    <div class="danger-intro">⚠ このページは教育・情報提供を目的としています。毒ヘビ・危険種に咬まれた場合は直ちに救急車（119番）を呼び、自己処置を最小限にして病院へ搬送してください。</div>
+    <div class="danger-grid">
+      <div class="danger-card"><div class="danger-level lv3">DEADLY / 致死的</div><div class="danger-name">ガブーンバイパー</div><div class="danger-latin">Bitis gabonica</div><p class="danger-desc">アフリカ産の大型毒ヘビ。世界最長の牙（5cm超）と強力な出血毒を持つ。飼育には都道府県知事の許可が必要（特定動物）。</p><div class="danger-aid"><strong>// 応急処置</strong>絶対に安静にし動かない。患部を心臓より低く保つ。切開・吸引・縛るのは禁忌。119番通報後、咬んだヘビの種類を記録して病院へ。抗毒素血清が必要。</div></div>
+      <div class="danger-card"><div class="danger-level lv3">DEADLY / 致死的</div><div class="danger-name">コモドドラゴン</div><div class="danger-latin">Varanus komodoensis</div><p class="danger-desc">世界最大のトカゲ。毒腺と口腔内細菌により咬傷から重篤な感染症・毒素中毒を引き起こす。飼育は特定動物指定のため許可制。</p><div class="danger-aid"><strong>// 応急処置</strong>深い咬傷を受けた場合は出血を抑えながら直ちに救急搬送。細菌感染予防のため病院での抗生物質投与が必須。</div></div>
+      <div class="danger-card"><div class="danger-level lv2">VENOMOUS / 強毒</div><div class="danger-name">タイパン</div><div class="danger-latin">Oxyuranus scutellatus</div><p class="danger-desc">オーストラリア産の世界最強クラスの神経毒を持つヘビ。一回の咬傷で複数人を殺傷できる量の毒を持つ。飼育は事実上不可。</p><div class="danger-aid"><strong>// 応急処置</strong>神経毒のため症状発現が早い。意識・呼吸の確認を続けながら即搬送。圧迫固定法（バンデージで患部から心臓方向に巻く）が有効。</div></div>
+      <div class="danger-card"><div class="danger-level lv2">VENOMOUS / 強毒</div><div class="danger-name">ラッセルクサリヘビ</div><div class="danger-latin">Daboia russelii</div><p class="danger-desc">インド～東南アジア産。強力な出血毒・腎毒性を持ち、世界で最も多くの人間を死亡させるヘビのひとつ。特定動物指定。</p><div class="danger-aid"><strong>// 応急処置</strong>出血毒のため内出血・腎不全が危険。患部を動かさず即搬送。縛るのは禁忌。</div></div>
+      <div class="danger-card"><div class="danger-level lv1">CAUTION / 要注意</div><div class="danger-name">ダイヤモンドバックガラガラヘビ</div><div class="danger-latin">Crotalus atrox</div><p class="danger-desc">北米産のガラガラヘビ。出血毒・壊死毒を持つ。尾の「ラトル」音が警戒サイン。特定動物指定のため飼育には許可が必要。</p><div class="danger-aid"><strong>// 応急処置</strong>安静を保ち119番へ。腫れが広がるため指輪・時計等は早めに外す。抗毒素血清の投与が治療の基本。</div></div>
+      <div class="danger-card"><div class="danger-level lv1">CAUTION / 要注意</div><div class="danger-name">マムシ（日本産）</div><div class="danger-latin">Gloydius blomhoffii</div><p class="danger-desc">日本全国に分布する唯一の危険な毒ヘビ。山道・草むらで遭遇リスクあり。重篤な組織壊死を起こす。</p><div class="danger-aid"><strong>// 応急処置</strong>安静・保温して119番へ。咬まれた部位を心臓より低くする。吸引・切開は感染リスクで推奨されない。病院でのセロバマ投与が標準治療。</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- FACTS -->
+<div class="section fade-in">
+  <p class="sec-label">// FASCINATING FACTS</p>
+  <h2 class="sec-title">爬虫類の驚異</h2>
+  <p class="sec-desc">3億年以上の歴史が生み出した驚くべき能力とデータ。</p>
+  <div class="facts-grid">
+    <div class="fact-item"><div class="fact-num">300</div><span class="fact-unit">MILLION YEARS</span><p class="fact-desc">爬虫類の登場は約3億年前。大量絶滅も乗り越え現在10,000種以上が生息する。</p></div>
+    <div class="fact-item"><div class="fact-num">70+</div><span class="fact-unit">YEARS MAX LIFESPAN</span><p class="fact-desc">ボールパイソンは飼育下で70年以上の記録あり。ガラパゴスゾウガメは200年近く生きる。</p></div>
+    <div class="fact-item"><div class="fact-num">600kg</div><span class="fact-unit">BITE FORCE (CROC)</span><p class="fact-desc">ナイルワニの咬合力は約600kgf。ヘビは顎の骨が分離し自分の頭より大きな獲物を丸呑みできる。</p></div>
+    <div class="fact-item"><div class="fact-num">360°</div><span class="fact-unit">VISUAL FIELD</span><p class="fact-desc">カメレオンは左右の目を独立して動かし約360度の視野を持つ。体色変化の主目的は社会的コミュニケーション。</p></div>
+    <div class="fact-item"><div class="fact-num">5,000+</div><span class="fact-unit">BALL PYTHON MORPHS</span><p class="fact-desc">ボールパイソンに登録されたモルフは世界最多クラス。希少モルフは1個体100万円超の値がつくことも。</p></div>
+    <div class="fact-item"><div class="fact-num">10,000+</div><span class="fact-unit">SPECIES ON EARTH</span><p class="fact-desc">現生爬虫類は4目に分類。毎年数十種の新種が発見され続けており、まだ見ぬ爬虫類が世界中に眠っている。</p></div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">REPTILE WORLD</div>
+  <ul class="footer-nav">
+    <li><a href="index.html">TOP</a></li>
+    <li><a href="species.html">図鑑</a></li>
+    <li><a href="care.html">飼育・繁殖</a></li>
+    <li><a href="info.html">情報・ショップ</a></li>
+    <li><a href="community.html">コミュニティ</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 REPTILE WORLD</p>
+</footer>
+
+<script>
+function toggleDrawer(){document.getElementById('hamburger').classList.toggle('open');document.getElementById('navDrawer').classList.toggle('open');document.body.style.overflow=document.getElementById('navDrawer').classList.contains('open')?'hidden':'';}
+function closeDrawer(){document.getElementById('hamburger').classList.remove('open');document.getElementById('navDrawer').classList.remove('open');document.body.style.overflow='';}
+
+function getLocation(){
+  const btn=document.getElementById('geoBtn');
+  const status=document.getElementById('geoStatus');
+  if(!navigator.geolocation){status.textContent='位置情報をサポートしていません';status.className='geo-status err';return;}
+  btn.disabled=true;status.textContent='📡 位置情報を取得中...';status.className='geo-status';
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const lat=pos.coords.latitude,lng=pos.coords.longitude;
+    status.textContent=`✅ 取得完了（緯度 ${lat.toFixed(4)}、経度 ${lng.toFixed(4)}）`;
+    status.className='geo-status ok';btn.textContent='📍 現在地を再取得';btn.disabled=false;
+    document.getElementById('mapPlaceholder').style.display='none';
+    const mapDiv=document.getElementById('shopMap');mapDiv.style.display='block';
+    const q=encodeURIComponent('爬虫類 ペットショップ');
+    mapDiv.innerHTML=`<iframe src="https://maps.google.com/maps?q=${q}&ll=${lat},${lng}&z=12&output=embed" width="100%" height="400" style="border:none;filter:invert(88%) hue-rotate(175deg) saturate(0.55) brightness(.9);" allowfullscreen loading="lazy"></iframe>`;
+    const shops=[
+      {name:'Tsuchinoko',addr:'昭島市緑町5-7-17',lat:35.7130,lng:139.3395,badge:'爬虫類専門',rating:'4.3',hours:'月～木 18～21時 / 土 15～21時',tel:'090-4748-7706'},
+      {name:'LUCK UP Reptiles',addr:'杉並区阿佐谷北3-13-13',lat:35.7100,lng:139.6340,badge:'爬虫類専門',rating:'4.9',hours:'月・火・木～日 12～20時（水休）',tel:'03-4361-7794'},
+      {name:'TropiLand（東村山）',addr:'東村山市恩多町2-41-7',lat:35.7467,lng:139.4856,badge:'爬虫類取扱あり',rating:'4.0',hours:'月・水～金 13～20:30 / 土日 11～19時',tel:'042-390-0708'},
+      {name:'KENNY 多摩平の森',addr:'日野市多摩平2-4-1',lat:35.6616,lng:139.3803,badge:'爬虫類取扱あり',rating:'3.6',hours:'毎日 11～21時',tel:'042-506-2326'},
+      {name:'ペットフォレスト小平店',addr:'小平市小川東町3-7-1',lat:35.7422,lng:139.4724,badge:'総合ペット',rating:'5.0',hours:'毎日 10～20時',tel:'042-312-3337'},
+      {name:'BORNtoBONE（所沢）',addr:'所沢市山口1517-2',lat:35.7785,lng:139.4349,badge:'爬虫類取扱あり',rating:'4.3',hours:'火・水・金～日 16～20時（月・木休）',tel:'080-4470-5549'},
+    ];
+    function calcDist(la1,lo1,la2,lo2){const R=6371,dL=(la2-la1)*Math.PI/180,dLo=(lo2-lo1)*Math.PI/180,a=Math.sin(dL/2)**2+Math.cos(la1*Math.PI/180)*Math.cos(la2*Math.PI/180)*Math.sin(dLo/2)**2;return(R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a))).toFixed(1);}
+    const wd=shops.map(s=>({...s,dist:parseFloat(calcDist(lat,lng,s.lat,s.lng))})).sort((a,b)=>a.dist-b.dist);
+    document.getElementById('shopDistList').innerHTML=`<p style="font-family:'Space Mono',monospace;font-size:.65rem;color:var(--text3);margin:1.5rem 0 .8rem;">// 現在地からの距離順</p><div class="shop-grid">${wd.map(s=>`<div class="shop-card"><div class="shop-badge">${s.badge}</div><div class="shop-name">${s.name}</div><div class="shop-addr">${s.addr}</div><div class="shop-hours">${s.hours}</div><div class="shop-rating"><span class="shop-stars">★ ${s.rating}</span></div><div class="shop-tel">☎ ${s.tel}</div><div class="shop-dist">📍 約 ${s.dist} km</div></div>`).join('')}</div>`;
+  },err=>{btn.disabled=false;const msg={1:'位置情報のアクセスが拒否されました。',2:'位置情報を取得できませんでした。',3:'タイムアウトしました。'};status.textContent='❌ '+(msg[err.code]||'取得に失敗しました。');status.className='geo-status err';},{timeout:10000,enableHighAccuracy:false});
+}
+
+const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);obs.unobserve(e.target);}});},{threshold:0.07});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

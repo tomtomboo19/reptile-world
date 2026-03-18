@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>コミュニティ | REPTILE WORLD</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.faq-list{margin-top:2rem;}
+.faq-item{border-bottom:1px solid var(--border);overflow:hidden;}
+.faq-q{width:100%;background:none;border:none;color:var(--text);font-family:'Noto Sans JP',sans-serif;font-size:.92rem;font-weight:700;padding:1.2rem 1rem;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;transition:color .2s;}
+.faq-q:hover{color:var(--accent2);}
+.faq-icon{font-family:'Space Mono',monospace;font-size:.9rem;color:var(--accent);flex-shrink:0;transition:transform .25s;}
+.faq-item.open .faq-icon{transform:rotate(45deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+.faq-item.open .faq-a{max-height:400px;}
+.faq-a-inner{padding:.2rem 1rem 1.2rem;font-size:.86rem;color:var(--text2);font-weight:300;line-height:1.8;}
+.post-form{background:var(--surface);border:1px solid var(--border);padding:1.8rem;margin-bottom:2rem;}
+.post-form-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--accent2);margin-bottom:1rem;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:.8rem;}
+.form-input{background:var(--bg);border:1px solid var(--border);color:var(--text);font-family:'Noto Sans JP',sans-serif;font-size:.85rem;padding:.65rem 1rem;width:100%;outline:none;transition:border-color .2s;}
+.form-input:focus{border-color:var(--border2);}
+.form-select{background:var(--bg);border:1px solid var(--border);color:var(--text);font-family:'Space Mono',monospace;font-size:.72rem;padding:.65rem 1rem;width:100%;outline:none;}
+.form-textarea{background:var(--bg);border:1px solid var(--border);color:var(--text);font-family:'Noto Sans JP',sans-serif;font-size:.85rem;padding:.65rem 1rem;width:100%;min-height:90px;resize:vertical;outline:none;transition:border-color .2s;}
+.form-textarea:focus{border-color:var(--border2);}
+.form-submit{font-family:'Space Mono',monospace;font-size:.75rem;letter-spacing:.08em;padding:.7rem 1.8rem;background:var(--accent);color:#0a1a0a;border:none;cursor:pointer;font-weight:700;transition:all .2s;margin-top:.6rem;}
+.form-submit:hover{background:var(--accent2);}
+.posts-list{display:flex;flex-direction:column;gap:.8rem;}
+.post-card{background:var(--surface);border:1px solid var(--border);padding:1.2rem 1.4rem;}
+.post-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.5rem;gap:.5rem;flex-wrap:wrap;}
+.post-author{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--accent2);font-weight:700;}
+.post-tag{font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.08em;padding:.15rem .45rem;background:rgba(76,175,80,.1);color:var(--accent3);border:1px solid var(--border);}
+.post-time{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--text3);}
+.post-body{font-size:.86rem;color:var(--text2);font-weight:300;line-height:1.7;}
+.posts-empty{font-family:'Space Mono',monospace;font-size:.75rem;color:var(--text3);text-align:center;padding:2.5rem;border:1px dashed var(--border);}
+.taxonomy-wrap{overflow-x:auto;padding-bottom:1rem;}
+.tax-tree{display:flex;min-width:680px;}
+.tax-col{flex:1;border-right:1px solid var(--border);}
+.tax-col:last-child{border-right:none;}
+.tax-head{padding:.7rem .9rem;background:var(--surface);border-bottom:1px solid var(--border);font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.18em;color:var(--accent3);}
+.tax-item{padding:.65rem .9rem;font-size:.78rem;color:var(--text2);border-bottom:1px solid rgba(76,175,80,.06);font-weight:300;transition:background .15s,color .15s;}
+.tax-item:hover{background:var(--surface);color:var(--accent2);}
+.tax-hl{color:var(--accent);font-weight:700;}
+@media(max-width:600px){.form-row{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">REPTILE<span>WORLD</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">TOP</a></li>
+    <li><a href="species.html">図鑑</a></li>
+    <li><a href="care.html">飼育・繁殖</a></li>
+    <li><a href="info.html">情報・ショップ</a></li>
+    <li><a href="community.html" class="active">コミュニティ</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleDrawer()"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-drawer" id="navDrawer">
+  <a href="index.html" onclick="closeDrawer()">TOP</a>
+  <a href="species.html" onclick="closeDrawer()">図鑑</a>
+  <a href="care.html" onclick="closeDrawer()">飼育・繁殖</a>
+  <a href="info.html" onclick="closeDrawer()">情報・ショップ</a>
+  <a href="community.html" onclick="closeDrawer()">コミュニティ</a>
+</div>
+
+<div class="page-hero">
+  <div class="page-hero-label">// 04. COMMUNITY</div>
+  <h1 class="page-hero-title">コミュ<span>ニティ</span></h1>
+  <p class="page-hero-desc">飼育の悩みや自慢の子を投稿できる掲示板と、よくある質問（FAQ）をまとめました。</p>
+</div>
+
+<!-- BOARD -->
+<div class="section fade-in">
+  <p class="sec-label">// COMMUNITY BOARD</p>
+  <h2 class="sec-title">みんなの掲示板</h2>
+  <p class="sec-desc">飼育の悩み・自慢の子の紹介・情報交換など気軽に投稿してください。</p>
+  <div class="post-form">
+    <div class="post-form-title">投稿する</div>
+    <div class="form-row">
+      <input class="form-input" id="postName" placeholder="ニックネーム（任意）" maxlength="30">
+      <select class="form-select" id="postTag">
+        <option value="質問">質問</option>
+        <option value="飼育報告">飼育報告</option>
+        <option value="繁殖">繁殖</option>
+        <option value="自慢の子">自慢の子</option>
+        <option value="用品レビュー">用品レビュー</option>
+        <option value="イベント">イベント</option>
+        <option value="雑談">雑談</option>
+      </select>
+    </div>
+    <textarea class="form-textarea" id="postBody" placeholder="内容を書いてください（500文字以内）" maxlength="500"></textarea>
+    <div><button class="form-submit" onclick="submitPost()">投稿する →</button></div>
+  </div>
+  <div class="posts-list" id="postsList"></div>
+</div>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<div class="section-alt fade-in">
+  <div class="container">
+    <p class="sec-label">// FAQ</p>
+    <h2 class="sec-title">よくある質問</h2>
+    <p class="sec-desc">初心者から上級者まで寄せられる質問をまとめました。クリックで回答を表示。</p>
+    <div class="faq-list" id="faqList"></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- TAXONOMY -->
+<div class="section fade-in">
+  <p class="sec-label">// TAXONOMY</p>
+  <h2 class="sec-title">爬虫類の分類</h2>
+  <p class="sec-desc">爬虫綱（Reptilia）現生4目の分類体系。</p>
+  <div class="taxonomy-wrap">
+    <div class="tax-tree">
+      <div class="tax-col"><div class="tax-head">CLASS</div><div class="tax-item tax-hl">爬虫綱</div><div class="tax-item tax-hl">爬虫綱</div><div class="tax-item tax-hl">爬虫綱</div><div class="tax-item tax-hl">爬虫綱</div></div>
+      <div class="tax-col"><div class="tax-head">ORDER</div><div class="tax-item">有鱗目 Squamata</div><div class="tax-item">有鱗目 Squamata</div><div class="tax-item">カメ目 Testudines</div><div class="tax-item">ワニ目 Crocodilia</div></div>
+      <div class="tax-col"><div class="tax-head">SUBORDER</div><div class="tax-item">トカゲ亜目 Lacertilia</div><div class="tax-item">ヘビ亜目 Serpentes</div><div class="tax-item">—</div><div class="tax-item">—</div></div>
+      <div class="tax-col"><div class="tax-head">主な科</div><div class="tax-item">ヤモリ科・アガマ科・イグアナ科・カメレオン科・オオトカゲ科・スキンク科 他</div><div class="tax-item">ナミヘビ科・ニシキヘビ科・ボア科・コブラ科・クサリヘビ科 他</div><div class="tax-item">リクガメ科・ウミガメ科・イシガメ科・スッポン科 他</div><div class="tax-item">クロコダイル科・アリゲーター科・ガビアル科</div></div>
+      <div class="tax-col"><div class="tax-head">種数</div><div class="tax-item">約7,000種以上</div><div class="tax-item">約3,700種以上</div><div class="tax-item">約360種</div><div class="tax-item">約25種</div></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">REPTILE WORLD</div>
+  <ul class="footer-nav">
+    <li><a href="index.html">TOP</a></li>
+    <li><a href="species.html">図鑑</a></li>
+    <li><a href="care.html">飼育・繁殖</a></li>
+    <li><a href="info.html">情報・ショップ</a></li>
+    <li><a href="community.html">コミュニティ</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 REPTILE WORLD</p>
+</footer>
+
+<script src="data.js"></script>
+<script>
+function toggleDrawer(){document.getElementById('hamburger').classList.toggle('open');document.getElementById('navDrawer').classList.toggle('open');document.body.style.overflow=document.getElementById('navDrawer').classList.contains('open')?'hidden':'';}
+function closeDrawer(){document.getElementById('hamburger').classList.remove('open');document.getElementById('navDrawer').classList.remove('open');document.body.style.overflow='';}
+
+/* BOARD */
+const KEY='rw_posts_v1';
+function loadPosts(){try{return JSON.parse(localStorage.getItem(KEY)||'[]');}catch(e){return[];}}
+function savePosts(p){try{localStorage.setItem(KEY,JSON.stringify(p.slice(0,100)));}catch(e){}}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function renderPosts(){
+  const posts=loadPosts();
+  const c=document.getElementById('postsList');
+  if(!posts.length){c.innerHTML='<div class="posts-empty">まだ投稿がありません。最初の投稿をしてみましょう！</div>';return;}
+  c.innerHTML=posts.map(p=>`<div class="post-card"><div class="post-header"><div><span class="post-author">${esc(p.name||'匿名')}</span><span class="post-tag" style="margin-left:.5rem;">${esc(p.tag)}</span></div><span class="post-time">${p.time}</span></div><div class="post-body">${esc(p.body)}</div></div>`).join('');
+}
+function submitPost(){
+  const name=document.getElementById('postName').value.trim();
+  const tag=document.getElementById('postTag').value;
+  const body=document.getElementById('postBody').value.trim();
+  if(!body){alert('内容を入力してください');return;}
+  const now=new Date();
+  const time=`${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+  const posts=loadPosts();
+  posts.unshift({name:name||'匿名',tag,body,time});
+  savePosts(posts);
+  document.getElementById('postName').value='';
+  document.getElementById('postBody').value='';
+  renderPosts();
+}
+renderPosts();
+
+/* FAQ */
+const FAQS=[
+  {q:'爬虫類を飼い始めるのに最適な種は？',a:'初心者には「ヒョウモントカゲモドキ（レオパ）」が最もおすすめです。温和で丈夫、ハンドリングしやすく、人工飼料にも慣れやすいです。ヘビならコーンスネーク、カメならロシアリクガメが入門種として定評があります。'},
+  {q:'ケージのサイズはどれくらい必要ですか？',a:'目安は成体の全長の1.5～2倍の幅が理想です。レオパなら幅45～60cm、フトアゴなら幅90～120cm、ボールパイソンなら幅90～120cmが適切。小さすぎるケージはストレスの原因になります。'},
+  {q:'冷凍マウスはどうやって解凍すればいいですか？',a:'冷凍マウスは冷蔵庫で一晩かけてゆっくり解凍するのが理想です。急ぐ場合はジップロックに入れてぬるま湯（40℃程度）に15～20分浸けます。電子レンジでの解凍は内部が加熱されすぎて危険なため禁止です。与える前に内部まで室温以上に温まっているか確認してください。'},
+  {q:'爬虫類の脱皮がうまくいかない（脱皮不全）はどうすればいい？',a:'まず湿度を上げることが最優先です。30～35℃のぬるま湯に10～15分つけて皮を柔らかくし、綿棒や濡れたティッシュでそっと剥がします。目の周りや趾（ゆび）は特に注意が必要。頻繁に脱皮不全が起きる場合はシェルターの質・湿度設定・水入れの見直しを。'},
+  {q:'突然ご飯を食べなくなりました（拒食）。どうすれば？',a:'拒食の原因は多岐にわたります。①環境変化によるストレス（ケージ移動直後など）、②繁殖期のホルモン変化、③脱皮前の食欲低下、④温度・湿度が不適切、⑤餌の種類や与え方が合わない、などが主な原因です。体重が著しく落ちない限り1～2週間様子を見て、改善しない場合は爬虫類専門の獣医への相談をおすすめします。'},
+  {q:'爬虫類を診られる病院はどうやって探せばいいですか？',a:'「エキゾチックアニマル 爬虫類 動物病院 ○○市」で検索するのが基本です。爬虫類に詳しい獣医師が在籍しているかは事前に電話確認することをおすすめします。日本エキゾチック動物医療センター（JEAM）のウェブサイトや、各爬虫類コミュニティの地域情報も参考になります。'},
+  {q:'カルシウムサプリはどうやって使いますか？',a:'コオロギやデュビアなどの餌昆虫を容器に入れ、カルシウムパウダーを振りかけて軽くまぶします（ダスティング）。カルシウムは週3～5回、マルチビタミンは週1～2回が一般的な目安です。与えすぎも過剰症の原因になるため注意。爬虫類専用のD3入りカルシウムは屋内飼育種に特に有効です。'},
+  {q:'爬虫類の法律上の規制（特定動物・CITES）とは？',a:'日本では「特定動物」に指定された種（毒ヘビ・大型ワニ・大型ニシキヘビ等）は都道府県知事の許可なく飼育できません。またCITES（ワシントン条約）附属書掲載種は国際取引に規制があり、繁殖個体でも書類が必要です。購入前に必ずショップや行政に確認しましょう。'},
+  {q:'爬虫類は人になつきますか？',a:'哺乳類のような「感情的な愛着」は異なりますが、多くの種が「慣れ」ます。レオパ・フトアゴ・テグーなどはハンドリングに非常に慣れ、飼い主を認識するような行動を見せます。毎日丁寧に関わることが大切で、特に幼体からの社会化が深い「なつき」につながります。'},
+  {q:'複数のケージを効率よく管理するコツは？',a:'①ラック式の収納で縦に積み重ねてスペース効率を上げる、②サーモスタットを集約して温度管理を一元化する、③給餌・清掃スケジュールをカレンダー管理する、④個体ごとの体重・脱皮・給餌履歴を記録する（スマホアプリ「Reptile Tracker」等が便利）のが効果的です。'},
+];
+function buildFAQ(){
+  const c=document.getElementById('faqList');
+  FAQS.forEach((item,i)=>{
+    const el=document.createElement('div');
+    el.className='faq-item';
+    el.innerHTML=`<button class="faq-q" onclick="toggleFAQ(${i})"><span>Q. ${item.q}</span><span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">${item.a}</div></div>`;
+    c.appendChild(el);
+  });
+}
+function toggleFAQ(i){document.querySelectorAll('.faq-item')[i].classList.toggle('open');}
+buildFAQ();
+
+const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);obs.unobserve(e.target);}});},{threshold:0.07});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>飼育・繁殖ガイド | REPTILE WORLD</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.care-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.3rem;}
+.care-card{background:var(--surface);border:1px solid var(--border);padding:1.6rem;position:relative;}
+.care-num{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;line-height:1;color:rgba(76,175,80,.1);position:absolute;top:.3rem;right:.8rem;}
+.care-ico{width:42px;height:42px;background:rgba(76,175,80,.1);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;margin-bottom:.8rem;font-size:1.2rem;}
+.care-title{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.04em;color:var(--accent2);margin-bottom:.4rem;}
+.care-text{font-size:.82rem;color:var(--text2);font-weight:300;line-height:1.65;}
+.breed-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.3rem;}
+.breed-card{background:var(--surface);border:1px solid var(--border);padding:1.8rem;border-left:3px solid var(--accent);}
+.breed-phase{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.2em;color:var(--accent3);margin-bottom:.4rem;}
+.breed-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--text);margin-bottom:.7rem;}
+.breed-text{font-size:.82rem;color:var(--text2);font-weight:300;line-height:1.65;margin-bottom:.8rem;}
+.breed-steps{list-style:none;}
+.breed-steps li{font-size:.78rem;color:var(--text2);padding:.35rem 0;border-bottom:1px solid rgba(76,175,80,.07);display:flex;gap:.5rem;}
+.breed-steps li::before{content:'›';color:var(--accent);flex-shrink:0;}
+.breed-tip{margin-top:.9rem;padding:.7rem .9rem;background:rgba(76,175,80,.06);border-left:2px solid var(--accent3);font-size:.76rem;color:var(--accent3);font-weight:300;}
+.cal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);}
+.cal-card{background:var(--bg);padding:1.6rem;position:relative;overflow:hidden;}
+.cal-month{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;line-height:1;color:rgba(76,175,80,.12);position:absolute;top:.2rem;right:.8rem;}
+.cal-label{font-family:'Space Mono',monospace;font-size:.57rem;letter-spacing:.22em;color:var(--accent3);margin-bottom:.4rem;}
+.cal-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--accent2);margin-bottom:.6rem;}
+.cal-items{list-style:none;}
+.cal-items li{font-size:.79rem;color:var(--text2);padding:.3rem 0;border-bottom:1px solid rgba(76,175,80,.07);display:flex;gap:.5rem;font-weight:300;}
+.cal-items li::before{content:'▸';color:var(--accent);font-size:.7rem;flex-shrink:0;margin-top:.15rem;}
+.season-warn{font-size:.75rem;color:var(--red);margin-top:.7rem;padding:.5rem .7rem;background:rgba(229,115,115,.07);border-left:2px solid var(--red);}
+.checker-wrap{background:var(--surface);border:1px solid var(--border);padding:1.5rem;margin-bottom:2rem;}
+.checker-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--accent2);margin-bottom:.8rem;}
+.checker-options{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1rem;}
+.checker-cb{display:none;}
+.checker-label{font-family:'Space Mono',monospace;font-size:.63rem;letter-spacing:.05em;padding:.38rem .78rem;border:1px solid var(--border);color:var(--text3);cursor:pointer;transition:all .2s;user-select:none;}
+.checker-cb:checked+.checker-label{border-color:var(--accent);color:var(--accent);background:rgba(76,175,80,.08);}
+.checker-result{font-size:.84rem;color:var(--text2);font-weight:300;line-height:1.75;padding:.8rem 1rem;border:1px solid var(--border);min-height:60px;background:var(--bg);}
+.disease-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1rem;}
+.disease-card{background:var(--surface);border:1px solid var(--border);padding:1.4rem;}
+.disease-hd{display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem;margin-bottom:.7rem;}
+.disease-name{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--text);}
+.d-badge{font-family:'Space Mono',monospace;font-size:.54rem;padding:.14rem .42rem;border:1px solid;flex-shrink:0;}
+.d-high{color:var(--red);border-color:rgba(229,115,115,.4);}
+.d-mid{color:var(--gold);border-color:rgba(200,168,75,.4);}
+.d-low{color:var(--accent2);border-color:rgba(76,175,80,.4);}
+.disease-symp{font-size:.8rem;color:var(--text2);font-weight:300;line-height:1.65;margin-bottom:.65rem;}
+.disease-tx{font-size:.77rem;padding:.55rem .8rem;background:rgba(76,175,80,.05);border-left:2px solid var(--accent3);}
+.disease-tx strong{display:block;font-family:'Space Mono',monospace;font-size:.57rem;letter-spacing:.12em;color:var(--accent3);margin-bottom:.3rem;}
+.equip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1rem;}
+.equip-card{display:flex;gap:.9rem;background:var(--surface);border:1px solid var(--border);padding:1.3rem;transition:border-color .2s;}
+.equip-card:hover{border-color:var(--border2);}
+.equip-ico{font-size:1.5rem;flex-shrink:0;}
+.equip-name{font-family:'Space Mono',monospace;font-size:.75rem;font-weight:700;color:var(--text);margin-bottom:.25rem;}
+.equip-desc{font-size:.78rem;color:var(--text2);font-weight:300;line-height:1.55;}
+.equip-price{font-family:'Space Mono',monospace;font-size:.66rem;color:var(--gold);margin-top:.4rem;}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">REPTILE<span>WORLD</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">TOP</a></li>
+    <li><a href="species.html">図鑑</a></li>
+    <li><a href="care.html" class="active">飼育・繁殖</a></li>
+    <li><a href="info.html">情報・ショップ</a></li>
+    <li><a href="community.html">コミュニティ</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleDrawer()"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-drawer" id="navDrawer">
+  <a href="index.html" onclick="closeDrawer()">TOP</a>
+  <a href="species.html" onclick="closeDrawer()">図鑑</a>
+  <a href="care.html" onclick="closeDrawer()">飼育・繁殖</a>
+  <a href="info.html" onclick="closeDrawer()">情報・ショップ</a>
+  <a href="community.html" onclick="closeDrawer()">コミュニティ</a>
+</div>
+
+<div class="page-hero">
+  <div class="page-hero-label">// 02. CARE & BREEDING</div>
+  <h1 class="page-hero-title">飼育・<span>繁殖ガイド</span></h1>
+  <p class="page-hero-desc">温度・湿度・給餌の基本から繁殖の全フェーズ、病気チェッカー、季節カレンダーまで。</p>
+</div>
+
+<!-- CARE BASICS -->
+<div class="section fade-in">
+  <p class="sec-label">// CARE BASICS</p>
+  <h2 class="sec-title">飼育の基本</h2>
+  <p class="sec-desc">爬虫類を健康に長く飼育するための8つの必須ポイント。</p>
+  <div class="care-grid">
+    <div class="care-card"><div class="care-num">01</div><div class="care-ico">🌡️</div><div class="care-title">温度勾配</div><p class="care-text">変温動物は外気温で体温が変わる。ホット（35～45℃）とクール（22～26℃）の勾配を作り自己調節できる環境を。パネルヒーター＋保温球を組み合わせ。</p></div>
+    <div class="care-card"><div class="care-num">02</div><div class="care-ico">💧</div><div class="care-title">湿度管理</div><p class="care-text">砂漠種30～40%、熱帯種70～90%が目安。脱皮不全は湿度不足が原因の多くを占める。ウェットシェルター・霧吹き・自動散水装置を活用。</p></div>
+    <div class="care-card"><div class="care-num">03</div><div class="care-ico">☀️</div><div class="care-title">紫外線 UVB</div><p class="care-text">昼行性のトカゲ・カメはビタミンD3合成にUVB必須。Arcadia 6～12%・Zoo Med ReptiSun 10.0が定評。6～12ヶ月で交換。クル病（MBD）予防の要。</p></div>
+    <div class="care-card"><div class="care-num">04</div><div class="care-ico">🍖</div><div class="care-title">給餌・栄養</div><p class="care-text">肉食種はカルシウムダスティング（週3～5回）必須。コオロギ・デュビア・ピンクマウスが主な活餌。草食種は野草・葉物野菜・専用ペレットを組み合わせ。</p></div>
+    <div class="care-card"><div class="care-num">05</div><div class="care-ico">🏠</div><div class="care-title">シェルター</div><p class="care-text">隠れ家がないと慢性ストレスで死亡することも。ウェットシェルターは局所的高湿度で脱皮を助ける。樹上種にはコルク流木・枝で立体空間を。</p></div>
+    <div class="care-card"><div class="care-num">06</div><div class="care-ico">🧹</div><div class="care-title">清掃・衛生</div><p class="care-text">排泄物はこまめに除去。床材は月1～2回全交換。水入れは毎日洗浄。サルモネラ菌対策として世話後は必ず石鹸手洗い。Virkon等爬虫類用消毒液で月次除菌。</p></div>
+    <div class="care-card"><div class="care-num">07</div><div class="care-ico">🏥</div><div class="care-title">健康管理・獣医</div><p class="care-text">エキゾチック動物専門獣医を事前に探す。食欲不振・脱皮不全・マウスロット・プロラプスは早期受診。月1回の体重測定で異常を早期発見。</p></div>
+    <div class="care-card"><div class="care-num">08</div><div class="care-ico">😴</div><div class="care-title">ブルメーション</div><p class="care-text">熱帯種でも冬に活性が落ちる「ブルメーション」が起こることがある。無理に給餌せず温度・水分管理のみ維持。温帯種の本格冬眠は初心者は室内越冬が安全。</p></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- BREEDING -->
+<div class="section-alt fade-in">
+  <div class="container">
+    <p class="sec-label">// BREEDING GUIDE</p>
+    <h2 class="sec-title">繁殖情報</h2>
+    <p class="sec-desc">クーリングからベビーの育成まで5フェーズで解説。</p>
+    <div class="breed-grid">
+      <div class="breed-card"><div class="breed-phase">// PHASE 01</div><div class="breed-title">クーリング</div><p class="breed-text">多くの種で繁殖トリガーとなる低温処理。ホルモン分泌を促すため冬季に温度を段階的に下げる。</p><ul class="breed-steps"><li>秋（10～11月）から徐々に温度を下げる（28℃→22℃程度）</li><li>期間は種によって2～8週間が目安</li><li>体重十分な健康個体のみ実施（脂肪蓄積15～20%以上）</li><li>クーリング中も水は切らさない</li><li>給餌は停止または大幅減少</li></ul><div class="breed-tip">⚠ 病気・痩せ個体のクーリングは死亡リスクあり。必ず健康確認を。</div></div>
+      <div class="breed-card"><div class="breed-phase">// PHASE 02</div><div class="breed-title">ペアリング・交尾</div><p class="breed-text">温度回復後にオスとメスを同居させる。過度な交尾はメスの体力を消耗させるため管理が必要。</p><ul class="breed-steps"><li>温度回復後1～2週間で食欲が戻ったら開始</li><li>オスのケージにメスを入れる（縄張り争い防止）</li><li>交尾確認後は速やかに隔離しメスに栄養補給</li><li>複数回の場合は2～3日おきに同居</li><li>攻撃性が見られたらすぐに隔離</li></ul><div class="breed-tip">💡 ボールパイソンは交尾確認後24時間で隔離が基本。</div></div>
+      <div class="breed-card"><div class="breed-phase">// PHASE 03</div><div class="breed-title">産卵・出産</div><p class="breed-text">卵胎生種（ガーターヘビ等）は出産、卵生種は産卵床が必要。産卵床を掘る行動が産卵直前のサイン。</p><ul class="breed-steps"><li>交尾から産卵まで3～8週間（種により異なる）</li><li>産卵床素材：バーミキュライト・湿らせたスファグナムモス</li><li>産卵後は速やかに卵を回収しインキュベーターへ</li><li>卵の向きは変えない（マーキングして同じ向きを維持）</li><li>白く張りがある→有精卵、萎んで透明→無精卵の可能性</li></ul><div class="breed-tip">💡 卵の凹みはすぐ無精卵ではない。加湿で回復することも多い。</div></div>
+      <div class="breed-card"><div class="breed-phase">// PHASE 04</div><div class="breed-title">インキュベーション</div><p class="breed-text">温度・湿度管理が孵化率を左右する最重要工程。多くの種は温度依存型性別決定（TSD）を持つ。</p><ul class="breed-steps"><li>レオパ：28～30℃、40～65日孵化</li><li>ボールパイソン：31～32℃、55～65日孵化</li><li>フトアゴ：28～30℃（32℃超でメス増加）、55～75日</li><li>コーンスネーク：27～29℃、60～70日孵化</li><li>湿度80～90%維持。バーミキュライトに適量加水。</li></ul><div class="breed-tip">🌡 TSD：多くの種は高温→メス、低温→オスになる傾向がある。</div></div>
+      <div class="breed-card"><div class="breed-phase">// PHASE 05</div><div class="breed-title">ベビーの育成</div><p class="breed-text">幼体は環境変化に敏感。孵化後の初給餌・最初の脱皮完了までが最も重要な時期。</p><ul class="breed-steps"><li>孵化後24～48時間は臍が閉じるまで安静に</li><li>ヘビ系の初給餌は孵化後7～10日・最初の脱皮後が理想</li><li>初給餌はSSピンクマウス・またはSSコオロギから</li><li>成体よりやや高い温度（30～32℃）と高湿度を維持</li><li>同腹でも個別管理推奨（共食い・ストレスリスク）</li></ul><div class="breed-tip">⚠ 幼体の販売・譲渡は動物取扱業登録が必要な場合あり。要確認。</div></div>
+      <div class="breed-card"><div class="breed-phase">// REFERENCE DATA</div><div class="breed-title">主要種の繁殖データ</div><p class="breed-text">各種の繁殖基本データの参考指標。個体差・環境差があるため目安として活用。</p><ul class="breed-steps"><li>レオパ：年4～8クラッチ（2卵/回）</li><li>ボールパイソン：1クラッチ4～12卵</li><li>フトアゴ：1クラッチ15～35卵</li><li>コーンスネーク：1クラッチ10～30卵</li><li>エボシカメレオン：1クラッチ30～85卵（孵化180～240日）</li><li>リクガメ：1クラッチ2～15卵（孵化60～300日）</li></ul><div class="breed-tip">💡 モルフ掛け合わせにはメンデルの法則と爬虫類遺伝学の知識が必要。</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CALENDAR -->
+<div class="section fade-in">
+  <p class="sec-label">// SEASONAL CALENDAR</p>
+  <h2 class="sec-title">季節の飼育カレンダー</h2>
+  <p class="sec-desc">月別の飼育管理ポイント。季節の変化に合わせて適切にケアしよう。</p>
+  <div class="cal-grid">
+    <div class="cal-card"><div class="cal-month">1-2</div><div class="cal-label">// 冬</div><div class="cal-title">厳冬期の管理</div><ul class="cal-items"><li>保温器具の故障に注意。バックアップヒーター準備推奨</li><li>温帯種のブルメーション（擬似冬眠）を邪魔しない</li><li>乾燥対策：湿度が下がりやすいため霧吹き頻度を上げる</li><li>消費電力が増えるため電気代を計算し直す</li><li>給餌量は活性に合わせて減らしてOK</li></ul></div>
+    <div class="cal-card"><div class="cal-month">3-4</div><div class="cal-label">// 春</div><div class="cal-title">繁殖スタート・温度上昇</div><ul class="cal-items"><li>クーリング明け個体の温度を徐々に元に戻す</li><li>発情したオスの攻撃性が高まる種に注意</li><li>ペアリング開始のタイミング。体重を確認してから</li><li>UVBランプの交換チェック（年度初めに交換推奨）</li><li>春に食欲が急増する種が多い。給餌量を戻す</li></ul></div>
+    <div class="cal-card"><div class="cal-month">5-6</div><div class="cal-label">// 初夏</div><div class="cal-title">産卵期・梅雨対策</div><ul class="cal-items"><li>産卵床の準備。ケージ内に湿った産卵スペースを確保</li><li>梅雨時期の過湿度に注意（砂漠種は除湿が必要な場合も）</li><li>インキュベーターの温度設定を見直す</li><li>エアコン管理の開始を検討（特に高温弱種）</li></ul><div class="season-warn">⚠ カメレオン・ニューカレドニア産ヤモリは25℃超で危険。エアコン必須。</div></div>
+    <div class="cal-card"><div class="cal-month">7-8</div><div class="cal-label">// 真夏</div><div class="cal-title">熱中症対策が最重要</div><ul class="cal-items"><li>室温が30℃を超えるとほぼすべての種に悪影響</li><li>エアコン24時間稼働推奨（停電対策も忘れずに）</li><li>水入れの水は1日2回交換。細菌繁殖しやすい</li><li>停電対策：保冷剤・ポータブル電源の準備</li></ul><div class="season-warn">⚠ 真夏の直射日光・車内放置は即死リスク。絶対にNG。</div></div>
+    <div class="cal-card"><div class="cal-month">9-10</div><div class="cal-label">// 秋</div><div class="cal-title">クーリング準備・食欲旺盛期</div><ul class="cal-items"><li>繁殖予定種のクーリング開始（体重確認後）</li><li>この時期は多くの種で食欲が最高潮。栄養補給のチャンス</li><li>温帯種の越冬準備（室内越冬 or 冬眠）の判断</li><li>ヒーター類の動作確認・消耗品の買い置き</li></ul></div>
+    <div class="cal-card"><div class="cal-month">11-12</div><div class="cal-label">// 初冬</div><div class="cal-title">越冬体制・保温強化</div><ul class="cal-items"><li>保温球・パネルヒーターを増設し温度勾配を維持</li><li>サーモスタットの設定を冬季モードに変更</li><li>乾燥する季節。ウェットシェルターの水を毎日補充</li><li>拒食が増える時期。体重管理を徹底</li></ul></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- DISEASE CHECKER -->
+<div class="section-alt fade-in">
+  <div class="container">
+    <p class="sec-label">// DISEASE CHECKER</p>
+    <h2 class="sec-title">病気・症状チェッカー</h2>
+    <p class="sec-desc">気になる症状を選んで考えられる原因を確認。早期発見・早期対処のために。</p>
+    <div class="checker-wrap">
+      <div class="checker-title">症状を選んでください（複数選択可）</div>
+      <div class="checker-options" id="checkerOptions"></div>
+      <div class="checker-result" id="checkerResult">症状を選ぶと考えられる疾患・原因が表示されます。</div>
+    </div>
+    <div class="disease-grid" id="diseaseGrid"></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- EQUIPMENT -->
+<div class="section fade-in">
+  <p class="sec-label">// EQUIPMENT</p>
+  <h2 class="sec-title">おすすめ用品</h2>
+  <p class="sec-desc">飼育に必要な器材をカテゴリ別に。価格帯は参考値。</p>
+  <div class="equip-grid">
+    <div class="equip-card"><div class="equip-ico">🏗️</div><div><div class="equip-name">ガラスケージ</div><p class="equip-desc">前面開き扉タイプが管理しやすい。幅60cm以上を推奨。GEX・Exo Terra・Zoo Medが定番。</p><div class="equip-price">¥8,000～¥35,000</div></div></div>
+    <div class="equip-card"><div class="equip-ico">🔆</div><div><div class="equip-name">UVBランプ</div><p class="equip-desc">昼行性種に必須。Arcadia 12% / Zoo Med ReptiSun 10.0が定評。6～12ヶ月で交換。</p><div class="equip-price">¥3,000～¥12,000</div></div></div>
+    <div class="equip-card"><div class="equip-ico">🌡️</div><div><div class="equip-name">サーモスタット</div><p class="equip-desc">温度を自動制御。過電流を防ぎ安全性向上。ジェックス・みどりカミハタが人気。</p><div class="equip-price">¥3,500～¥12,000</div></div></div>
+    <div class="equip-card"><div class="equip-ico">🔥</div><div><div class="equip-name">パネルヒーター</div><p class="equip-desc">ケージ底面を加温。夜行性地表棲種（レオパ・コーン等）に特に有効。</p><div class="equip-price">¥1,500～¥6,000</div></div></div>
+    <div class="equip-card"><div class="equip-ico">🌿</div><div><div class="equip-name">床材（サブストレート）</div><p class="equip-desc">砂漠種はカルシウムサンド・デザートソイル、熱帯種はハスクチップ・バーミキュライト。誤飲注意。</p><div class="equip-price">¥800～¥3,000</div></div></div>
+    <div class="equip-card"><div class="equip-ico">🏘️</div><div><div class="equip-name">シェルター</div><p class="equip-desc">睡眠・脱皮・ストレス解消に必須。ウェットシェルターは局所高湿度を作れる。</p><div class="equip-price">¥600～¥3,000</div></div></div>
+    <div class="equip-card"><div class="equip-ico">📡</div><div><div class="equip-name">デジタル温湿度計</div><p class="equip-desc">最高・最低記録付きタイプが便利。温度勾配把握のため2個設置が理想。</p><div class="equip-price">¥800～¥2,500</div></div></div>
+    <div class="equip-card"><div class="equip-ico">💊</div><div><div class="equip-name">カルシウム・ビタミン</div><p class="equip-desc">餌にダスティング。カルシウムは週3～5回、マルチビタミンは週1～2回が目安。</p><div class="equip-price">¥1,000～¥3,000</div></div></div>
+    <div class="equip-card"><div class="equip-ico">🥚</div><div><div class="equip-name">インキュベーター</div><p class="equip-desc">繁殖時の卵管理に必須。DIYスティロフォームから専用機まで。温度精度が重要。</p><div class="equip-price">¥0～¥30,000</div></div></div>
+    <div class="equip-card"><div class="equip-ico">🌫️</div><div><div class="equip-name">自動霧吹き装置</div><p class="equip-desc">カメレオン・熱帯系種の湿度管理に。タイマー設定で朝夕自動散水。Mist Kingが定番。</p><div class="equip-price">¥5,000～¥20,000</div></div></div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">REPTILE WORLD</div>
+  <ul class="footer-nav">
+    <li><a href="index.html">TOP</a></li>
+    <li><a href="species.html">図鑑</a></li>
+    <li><a href="care.html">飼育・繁殖</a></li>
+    <li><a href="info.html">情報・ショップ</a></li>
+    <li><a href="community.html">コミュニティ</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 REPTILE WORLD</p>
+</footer>
+
+<script src="data.js"></script>
+<script>
+function toggleDrawer(){document.getElementById('hamburger').classList.toggle('open');document.getElementById('navDrawer').classList.toggle('open');document.body.style.overflow=document.getElementById('navDrawer').classList.contains('open')?'hidden':'';}
+function closeDrawer(){document.getElementById('hamburger').classList.remove('open');document.getElementById('navDrawer').classList.remove('open');document.body.style.overflow='';}
+
+const SYMPTOMS=['食欲不振・拒食','体重減少','脱皮不全','口を開けたまま','目が開かない・濁り','体が震える（トレマー）','鼻水・くしゃみ','腫れ・膨らみ','下痢・軟便','総排泄腔から何かが出ている（プロラプス）','皮膚が変色・腐敗臭','元気がない・動かない'];
+const DISEASE_MAP={'食欲不振・拒食':['ストレス（環境変化）','繁殖期（ホルモン）','脱皮前','温度・湿度不足','内部寄生虫','口内炎（スタマティス）'],'体重減少':['内部寄生虫','クリプトスポリジウム（治療困難）','感染症','給餌頻度・量の不足'],'脱皮不全':['湿度不足','シェルター不足','栄養不足（ビタミンA欠乏）','皮膚感染'],'口を開けたまま':['口内炎（スタマティス）—要受診','呼吸器感染症','熱中症'],'目が開かない・濁り':['脱皮前の白濁（正常）','アイキャップ脱皮不全','感染症'],'体が震える（トレマー）':['代謝性骨疾患（MBD）—カルシウム不足','低温症','神経障害（スパイダーモルフ等）','感染症'],'鼻水・くしゃみ':['呼吸器感染症（RI）—要受診','低温・湿度不足','アレルギー（床材）'],'腫れ・膨らみ':['膿瘍（アブセス）—要受診','腫瘍','骨折','ヘルニア'],'下痢・軟便':['内部寄生虫','細菌感染','給餌しすぎ','温度不足で消化不良'],'総排泄腔から何かが出ている（プロラプス）':['プロラプス（脱腸・脱卵管）—緊急受診','便秘'],'皮膚が変色・腐敗臭':['スケールロット（皮膚壊死）—要受診','熱傷（ヒーター直接接触）'],'元気がない・動かない':['低体温（環境温度不足）','脱水','感染症','ブルメーション（正常な場合も）']};
+const DISEASES=[{name:'代謝性骨疾患（MBD）',urgency:'high',symp:'四肢の変形・骨折・震え・口が開かない。カルシウム・ビタミンD3不足が主な原因。昼行性種に多い。',tx:'カルシウムダスティングの徹底・UVBランプの見直し。重症は獣医でのカルシウム注射が必要。'},{name:'口内炎（スタマティス）',urgency:'high',symp:'口の周りに白い膿・出血・口を開けたまま・食欲不振。細菌感染が主因。ストレスや外傷がきっかけになることが多い。',tx:'早期なら洗浄・ベタジン消毒で改善することもあるが、重症は抗生物質が必要。獣医受診推奨。'},{name:'呼吸器感染症（RI）',urgency:'high',symp:'口呼吸・ゼーゼーとした呼吸音・鼻水・食欲不振・元気消失。低温・低湿度がリスクを高める。',tx:'まず保温を強化し温度を適正に戻す。改善しない場合は抗生物質の投与が必要で獣医受診が必須。'},{name:'内部寄生虫',urgency:'mid',symp:'体重減少・拒食・下痢・軟便・腹部膨満。ワイルド個体（野外採集・輸入個体）に多い。',tx:'糞便検査で虫卵を確認してから駆虫薬投与。自己判断での薬物投与は禁止。獣医受診が必要。'},{name:'脱皮不全',urgency:'low',symp:'皮が部分的に残る（特に目・趾が危険）。湿度不足・栄養不足が主な原因。',tx:'ぬるま湯に10～15分つけて皮を柔らかくし綿棒で優しく除去。趾の脱皮不全は壊死・切断につながるため早めに対処。'},{name:'プロラプス（脱腸）',urgency:'high',symp:'総排泄腔から赤い組織が出たまま戻らない。緊急事態。乾燥・感染が急速に進む。',tx:'患部を濡らしたガーゼで保護してすぐに救急受診。押し込もうとしないこと。'},{name:'スケールロット（皮膚壊死）',urgency:'high',symp:'皮膚の黒変・悪臭・組織の崩壊。過湿度・不衛生な床材・熱傷が主因。',tx:'患部の洗浄・消毒と床材の即時全交換。広範囲の場合は抗生物質が必要で獣医受診を。'}];
+
+function buildChecker(){
+  const opts=document.getElementById('checkerOptions');
+  SYMPTOMS.forEach((s,i)=>{
+    const id='sym_'+i;
+    opts.innerHTML+=`<input type="checkbox" class="checker-cb" id="${id}" value="${s}" onchange="updateChecker()"><label class="checker-label" for="${id}">${s}</label>`;
+  });
+}
+function updateChecker(){
+  const checked=[...document.querySelectorAll('.checker-cb:checked')].map(c=>c.value);
+  if(!checked.length){document.getElementById('checkerResult').textContent='症状を選ぶと考えられる疾患・原因が表示されます。';return;}
+  const causes=new Set();
+  checked.forEach(s=>{(DISEASE_MAP[s]||[]).forEach(c=>causes.add(c));});
+  const urgentKw=['スタマティス','呼吸器','プロラプス','クリプト','スケール'];
+  let txt='考えられる原因・疾患：<br><br>';
+  [...causes].forEach(c=>{const u=urgentKw.some(k=>c.includes(k));txt+=`• ${c}${u?' <span style="color:var(--red);font-size:.72rem;">[要受診]</span>':''}<br>`;});
+  txt+='<br><small style="color:var(--text3);">※ 参考情報です。症状が続く場合は必ず爬虫類専門の獣医に相談してください。</small>';
+  document.getElementById('checkerResult').innerHTML=txt;
+}
+function buildDiseaseGrid(){
+  const ul={high:'緊急',mid:'要注意',low:'経過観察'};
+  document.getElementById('diseaseGrid').innerHTML=DISEASES.map(d=>`<div class="disease-card"><div class="disease-hd"><div class="disease-name">${d.name}</div><span class="d-badge d-${d.urgency}">${ul[d.urgency]}</span></div><div class="disease-symp">${d.symp}</div><div class="disease-tx"><strong>// 対処法</strong>${d.tx}</div></div>`).join('');
+}
+buildChecker();buildDiseaseGrid();
+
+const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);obs.unobserve(e.target);}});},{threshold:0.07});
+document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
