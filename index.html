@@ -29,12 +29,12 @@
 .hero-title span{color:var(--accent);display:block;}
 .hero-sub{font-size:.92rem;color:var(--text2);max-width:480px;margin:1.4rem auto 2.2rem;font-weight:300;line-height:2;}
 .hero-cta{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center;margin-bottom:1.8rem;}
-.hero-search{position:relative;width:100%;max-width:460px;margin:0 auto;}
+.hero-search{position:relative;width:100%;max-width:460px;margin:0 auto;z-index:9999;}
 .hero-search input{width:100%;background:rgba(28,38,28,.9);border:1px solid var(--border2);color:var(--text);font-family:"Noto Sans JP",sans-serif;font-size:.88rem;padding:.72rem 2.8rem .72rem 1.1rem;outline:none;transition:border-color .2s;}
 .hero-search input:focus{border-color:var(--accent);}
 .hero-search input::placeholder{color:var(--text3);opacity:.7;}
 .hs-ico{position:absolute;right:.9rem;top:50%;transform:translateY(-50%);color:var(--accent);font-size:.95rem;pointer-events:none;}
-.sdrop{display:none;position:absolute;width:100%;background:var(--surface);border:1px solid var(--border2);border-top:none;max-height:300px;overflow-y:auto;z-index:50;text-align:left;}
+.sdrop{display:none;position:absolute;width:100%;background:var(--surface);border:1px solid var(--border2);border-top:none;max-height:300px;overflow-y:auto;z-index:9999;text-align:left;}
 .sdrop.show{display:block;}
 .sdi{padding:.6rem .9rem;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;display:flex;gap:.7rem;align-items:center;}
 .sdi:hover{background:var(--bg3);}
@@ -115,6 +115,7 @@
     <li><a href="care.html">飼育・繁殖</a></li>
     <li><a href="info.html">情報・ショップ</a></li>
     <li><a href="community.html">コミュニティ</a></li>
+    <li><a href="faq.html">FAQ</a></li>
   </ul>
   <button class="nav-hamburger" id="hamburger" onclick="toggleDrawer()">
     <span></span><span></span><span></span>
@@ -126,6 +127,7 @@
   <a href="care.html" onclick="closeDrawer()">飼育・繁殖</a>
   <a href="info.html" onclick="closeDrawer()">情報・ショップ</a>
   <a href="community.html" onclick="closeDrawer()">コミュニティ</a>
+  <a href="faq.html" onclick="closeDrawer()">FAQ</a>
 </div>
 
 <section class="hero">
@@ -214,6 +216,7 @@
     <li><a href="care.html">飼育・繁殖</a></li>
     <li><a href="info.html">情報・ショップ</a></li>
     <li><a href="community.html">コミュニティ</a></li>
+    <li><a href="faq.html">FAQ</a></li>
   </ul>
   <p class="footer-copy">© 2026 REPTILE WORLD — FOR REPTILE ENTHUSIASTS</p>
 </footer>

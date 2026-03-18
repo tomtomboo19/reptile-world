@@ -63,6 +63,7 @@
     <li><a href="care.html">飼育・繁殖</a></li>
     <li><a href="info.html">情報・ショップ</a></li>
     <li><a href="community.html" class="active">コミュニティ</a></li>
+    <li><a href="faq.html">FAQ</a></li>
   </ul>
   <button class="nav-hamburger" id="hamburger" onclick="toggleDrawer()"><span></span><span></span><span></span></button>
 </nav>
@@ -115,11 +116,11 @@
     <li><a href="care.html">飼育・繁殖</a></li>
     <li><a href="info.html">情報・ショップ</a></li>
     <li><a href="community.html">コミュニティ</a></li>
+    <li><a href="faq.html">FAQ</a></li>
   </ul>
   <p class="footer-copy">© 2026 REPTILE WORLD</p>
 </footer>
 
-<script src="data.js"></script>
 <script>
 function toggleDrawer(){document.getElementById('hamburger').classList.toggle('open');document.getElementById('navDrawer').classList.toggle('open');document.body.style.overflow=document.getElementById('navDrawer').classList.contains('open')?'hidden':'';}
 function closeDrawer(){document.getElementById('hamburger').classList.remove('open');document.getElementById('navDrawer').classList.remove('open');document.body.style.overflow='';}
@@ -150,31 +151,6 @@ function submitPost(){
   renderPosts();
 }
 renderPosts();
-
-/* FAQ */
-const FAQS=[
-  {q:'爬虫類を飼い始めるのに最適な種は？',a:'初心者には「ヒョウモントカゲモドキ（レオパ）」が最もおすすめです。温和で丈夫、ハンドリングしやすく、人工飼料にも慣れやすいです。ヘビならコーンスネーク、カメならロシアリクガメが入門種として定評があります。'},
-  {q:'ケージのサイズはどれくらい必要ですか？',a:'目安は成体の全長の1.5～2倍の幅が理想です。レオパなら幅45～60cm、フトアゴなら幅90～120cm、ボールパイソンなら幅90～120cmが適切。小さすぎるケージはストレスの原因になります。'},
-  {q:'冷凍マウスはどうやって解凍すればいいですか？',a:'冷凍マウスは冷蔵庫で一晩かけてゆっくり解凍するのが理想です。急ぐ場合はジップロックに入れてぬるま湯（40℃程度）に15～20分浸けます。電子レンジでの解凍は内部が加熱されすぎて危険なため禁止です。与える前に内部まで室温以上に温まっているか確認してください。'},
-  {q:'爬虫類の脱皮がうまくいかない（脱皮不全）はどうすればいい？',a:'まず湿度を上げることが最優先です。30～35℃のぬるま湯に10～15分つけて皮を柔らかくし、綿棒や濡れたティッシュでそっと剥がします。目の周りや趾（ゆび）は特に注意が必要。頻繁に脱皮不全が起きる場合はシェルターの質・湿度設定・水入れの見直しを。'},
-  {q:'突然ご飯を食べなくなりました（拒食）。どうすれば？',a:'拒食の原因は多岐にわたります。①環境変化によるストレス（ケージ移動直後など）、②繁殖期のホルモン変化、③脱皮前の食欲低下、④温度・湿度が不適切、⑤餌の種類や与え方が合わない、などが主な原因です。体重が著しく落ちない限り1～2週間様子を見て、改善しない場合は爬虫類専門の獣医への相談をおすすめします。'},
-  {q:'爬虫類を診られる病院はどうやって探せばいいですか？',a:'「エキゾチックアニマル 爬虫類 動物病院 ○○市」で検索するのが基本です。爬虫類に詳しい獣医師が在籍しているかは事前に電話確認することをおすすめします。日本エキゾチック動物医療センター（JEAM）のウェブサイトや、各爬虫類コミュニティの地域情報も参考になります。'},
-  {q:'カルシウムサプリはどうやって使いますか？',a:'コオロギやデュビアなどの餌昆虫を容器に入れ、カルシウムパウダーを振りかけて軽くまぶします（ダスティング）。カルシウムは週3～5回、マルチビタミンは週1～2回が一般的な目安です。与えすぎも過剰症の原因になるため注意。爬虫類専用のD3入りカルシウムは屋内飼育種に特に有効です。'},
-  {q:'爬虫類の法律上の規制（特定動物・CITES）とは？',a:'日本では「特定動物」に指定された種（毒ヘビ・大型ワニ・大型ニシキヘビ等）は都道府県知事の許可なく飼育できません。またCITES（ワシントン条約）附属書掲載種は国際取引に規制があり、繁殖個体でも書類が必要です。購入前に必ずショップや行政に確認しましょう。'},
-  {q:'爬虫類は人になつきますか？',a:'哺乳類のような「感情的な愛着」は異なりますが、多くの種が「慣れ」ます。レオパ・フトアゴ・テグーなどはハンドリングに非常に慣れ、飼い主を認識するような行動を見せます。毎日丁寧に関わることが大切で、特に幼体からの社会化が深い「なつき」につながります。'},
-  {q:'複数のケージを効率よく管理するコツは？',a:'①ラック式の収納で縦に積み重ねてスペース効率を上げる、②サーモスタットを集約して温度管理を一元化する、③給餌・清掃スケジュールをカレンダー管理する、④個体ごとの体重・脱皮・給餌履歴を記録する（スマホアプリ「Reptile Tracker」等が便利）のが効果的です。'},
-];
-function buildFAQ(){
-  const c=document.getElementById('faqList');
-  FAQS.forEach((item,i)=>{
-    const el=document.createElement('div');
-    el.className='faq-item';
-    el.innerHTML=`<button class="faq-q" onclick="toggleFAQ(${i})"><span>Q. ${item.q}</span><span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">${item.a}</div></div>`;
-    c.appendChild(el);
-  });
-}
-function toggleFAQ(i){document.querySelectorAll('.faq-item')[i].classList.toggle('open');}
-buildFAQ();
 
 const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);obs.unobserve(e.target);}});},{threshold:0.07});
 document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
