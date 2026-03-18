@@ -238,45 +238,33 @@ function doSearch(q){
 document.addEventListener('click',e=>{if(!e.target.closest('.hero-search'))document.getElementById('hDrop').classList.remove('show');});
 
 const FEAT=[
-  {name:'ヒョウモントカゲモドキ',cat:'gecko',diff:'beginner',img:'img/leopard-gecko.svg',icon:'🦎',tid:35194},
-  {name:'ボールパイソン',cat:'boa',diff:'beginner',img:'img/ball-python.svg',icon:'⚫',tid:35530},
-  {name:'フトアゴヒゲトカゲ',cat:'agama',diff:'intermediate',img:'img/bearded-dragon.svg',icon:'🦖',tid:35526},
-  {name:'コーンスネーク',cat:'snake',diff:'beginner',img:'img/corn-snake.svg',icon:'🐍',tid:35561},
-  {name:'クレステッドゲッコー',cat:'gecko',diff:'beginner',img:'img/crested-gecko.svg',icon:'🦎',tid:73574},
-  {name:'ロシアリクガメ',cat:'tortoise',diff:'beginner',img:'img/russian-tortoise.svg',icon:'🐢',tid:39583},
+  {name:'ヒョウモントカゲモドキ',cat:'gecko',diff:'beginner',icon:'🦎',
+   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Eublepharis_macularius_2009_G01.jpg/480px-Eublepharis_macularius_2009_G01.jpg'},
+  {name:'ボールパイソン',cat:'boa',diff:'beginner',icon:'⚫',
+   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Python_regius_1.jpg/480px-Python_regius_1.jpg'},
+  {name:'フトアゴヒゲトカゲ',cat:'agama',diff:'intermediate',icon:'🦖',
+   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Pogona_vitticeps_2009_G01.jpg/480px-Pogona_vitticeps_2009_G01.jpg'},
+  {name:'コーンスネーク',cat:'snake',diff:'beginner',icon:'🐍',
+   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Pantherophis_guttatus_2009_G02.jpg/480px-Pantherophis_guttatus_2009_G02.jpg'},
+  {name:'クレステッドゲッコー',cat:'gecko',diff:'beginner',icon:'🦎',
+   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Correlophus_ciliatus_-_Zurich_Zoo_-_2010-10-07_%28cropped%29.jpg/480px-Correlophus_ciliatus_-_Zurich_Zoo_-_2010-10-07_%28cropped%29.jpg'},
+  {name:'ロシアリクガメ',cat:'tortoise',diff:'beginner',icon:'🐢',
+   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Agrionemys_horsfieldii_2009_G02.jpg/480px-Agrionemys_horsfieldii_2009_G02.jpg'},
 ];
 const dL={beginner:'初心者向け',intermediate:'中級者向け',advanced:'上級者向け'};
 const dC={beginner:'diff-b',intermediate:'diff-i',advanced:'diff-a'};
 
-// Render with local SVG first, then swap to real photo
-document.getElementById('featuredGrid').innerHTML=FEAT.map((s,i)=>{
-  const safeId = 'fi_' + s.name.replace(/[^\w]/g,'_');
-  return `<a href="species.html" class="feat-card">
-    <img id="${safeId}" src="${s.img}" alt="${s.name}" class="feat-thumb" loading="lazy"
+document.getElementById('featuredGrid').innerHTML=FEAT.map(s=>`
+  <a href="species.html" class="feat-card">
+    <img src="${s.img}" alt="${s.name}" class="feat-thumb" loading="lazy"
+      referrerpolicy="no-referrer"
       onerror="this.outerHTML='<div class=\'feat-fallback\'>${s.icon}</div>'">
     <div class="feat-info">
       <div class="feat-cat">${s.cat.toUpperCase()}</div>
       <div class="feat-name">${s.name}</div>
       <span class="feat-diff ${dC[s.diff]}">${dL[s.diff]}</span>
     </div>
-  </a>`;
-}).join('');
-
-// Load real photos - each photo targets its own named element
-FEAT.forEach(async (s) => {
-  const safeId = 'fi_' + s.name.replace(/[^\w]/g,'_');
-  try {
-    const r = await fetch('https://api.inaturalist.org/v1/taxa/' + s.tid);
-    if (!r.ok) return;
-    const d = await r.json();
-    const url = d.results && d.results[0] && d.results[0].default_photo
-      ? d.results[0].default_photo.medium_url : null;
-    if (url) {
-      const el = document.getElementById(safeId);
-      if (el) { el.src = url; el.style.objectFit = 'cover'; }
-    }
-  } catch(e) {}
-});
+  </a>`).join('');
 </script>
 </body>
 </html>
