@@ -249,27 +249,30 @@ const dL={beginner:'初心者向け',intermediate:'中級者向け',advanced:'�
 const dC={beginner:'diff-b',intermediate:'diff-i',advanced:'diff-a'};
 
 // Render with local SVG first, then swap to real photo
-document.getElementById('featuredGrid').innerHTML=FEAT.map((s,i)=>`
-  <a href="species.html" class="feat-card">
-    <img id="fi${i}" src="${s.img}" alt="${s.name}" class="feat-thumb" loading="lazy"
+document.getElementById('featuredGrid').innerHTML=FEAT.map((s,i)=>{
+  const safeId = 'fi_' + s.name.replace(/[^\w]/g,'_');
+  return `<a href="species.html" class="feat-card">
+    <img id="${safeId}" src="${s.img}" alt="${s.name}" class="feat-thumb" loading="lazy"
       onerror="this.outerHTML='<div class=\'feat-fallback\'>${s.icon}</div>'">
     <div class="feat-info">
       <div class="feat-cat">${s.cat.toUpperCase()}</div>
       <div class="feat-name">${s.name}</div>
       <span class="feat-diff ${dC[s.diff]}">${dL[s.diff]}</span>
     </div>
-  </a>`).join('');
+  </a>`;
+}).join('');
 
-// Load real photos from iNaturalist (CC license, free public API)
-FEAT.forEach(async (s, i) => {
+// Load real photos - each photo targets its own named element
+FEAT.forEach(async (s) => {
+  const safeId = 'fi_' + s.name.replace(/[^\w]/g,'_');
   try {
-    const r = await fetch(`https://api.inaturalist.org/v1/taxa/${s.tid}`,
-      { signal: AbortSignal.timeout(8000) });
+    const r = await fetch('https://api.inaturalist.org/v1/taxa/' + s.tid);
     if (!r.ok) return;
     const d = await r.json();
-    const url = d.results?.[0]?.default_photo?.medium_url;
+    const url = d.results && d.results[0] && d.results[0].default_photo
+      ? d.results[0].default_photo.medium_url : null;
     if (url) {
-      const el = document.getElementById(`fi${i}`);
+      const el = document.getElementById(safeId);
       if (el) { el.src = url; el.style.objectFit = 'cover'; }
     }
   } catch(e) {}
