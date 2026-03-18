@@ -643,11 +643,13 @@ function openModal(sp){
 }
 
 
-buildMorphFilter();renderMorphs();
-renderGrid();
-
-const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);obs.unobserve(e.target);}})},{threshold:0.07});
-document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+document.addEventListener('DOMContentLoaded', function(){
+  buildMorphFilter();
+  renderMorphs();
+  renderGrid();
+  const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);obs.unobserve(e.target);}})},{threshold:0.07});
+  document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+});
 </script>
 <script src="common.js"></script>
 </body>
