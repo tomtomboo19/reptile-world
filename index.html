@@ -218,7 +218,6 @@
   <p class="footer-copy">© 2026 REPTILE WORLD — FOR REPTILE ENTHUSIASTS</p>
 </footer>
 
-<script src="data.js"></script>
 <script src="common.js"></script>
 <script>
 const TICKS=['<strong>🦎 図鑑</strong> レオパ・ボールパイソン他200種以上を収録','<strong>🧬 モルフ</strong> 遺伝形式・価格帯・希少度付きで50種以上網羅','<strong>📍 ショップ</strong> 現在地から近くの爬虫類ショップを距離順表示','<strong>🏆 イベント</strong> 東京レプタイルズワールド他即売会情報とURL','<strong>🌡️ 飼育</strong> 温度・湿度・UVB・給餌の基本を完全解説','<strong>🥚 繁殖</strong> クーリングから孵化まで5フェーズで解説','<strong>🏥 病気</strong> 症状チェッカーで考えられる疾患をすぐ確認','<strong>📅 カレンダー</strong> 月別の飼育ポイントを季節ごとに整理'];
@@ -254,17 +253,20 @@ const FEAT=[
 const dL={beginner:'初心者向け',intermediate:'中級者向け',advanced:'上級者向け'};
 const dC={beginner:'diff-b',intermediate:'diff-i',advanced:'diff-a'};
 
-document.getElementById('featuredGrid').innerHTML=FEAT.map(s=>`
-  <a href="species.html" class="feat-card">
-    <img src="${s.img}" alt="${s.name}" class="feat-thumb" loading="lazy"
-      referrerpolicy="no-referrer"
-      onerror="this.outerHTML='<div class=\'feat-fallback\'>${s.icon}</div>'">
-    <div class="feat-info">
-      <div class="feat-cat">${s.cat.toUpperCase()}</div>
-      <div class="feat-name">${s.name}</div>
-      <span class="feat-diff ${dC[s.diff]}">${dL[s.diff]}</span>
-    </div>
-  </a>`).join('');
+const fg=document.getElementById('featuredGrid');
+FEAT.forEach(s=>{
+  const a=document.createElement('a');a.href='species.html';a.className='feat-card';
+  const img=document.createElement('img');
+  img.src=s.img;img.alt=s.name;img.className='feat-thumb';img.loading='lazy';
+  img.setAttribute('referrerpolicy','no-referrer');
+  img.onerror=function(){const fb=document.createElement('div');fb.className='feat-fallback';fb.textContent=s.icon;this.parentElement.replaceChild(fb,this);};
+  a.appendChild(img);
+  const info=document.createElement('div');info.className='feat-info';
+  const cat=document.createElement('div');cat.className='feat-cat';cat.textContent=s.cat.toUpperCase();info.appendChild(cat);
+  const nm=document.createElement('div');nm.className='feat-name';nm.textContent=s.name;info.appendChild(nm);
+  const diff=document.createElement('span');diff.className='feat-diff '+dC[s.diff];diff.textContent=dL[s.diff];info.appendChild(diff);
+  a.appendChild(info);fg.appendChild(a);
+});
 </script>
 </body>
 </html>
