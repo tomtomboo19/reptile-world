@@ -559,6 +559,12 @@ const TAXON_IDS = {
   'アルダブラゾウガメ': 39565,
 };
 
+// Expose to window for cross-script access
+window.SD = SD;
+window.MORPHS = MORPHS;
+window.TAXON_IDS = TAXON_IDS;
+
+
 </script>
 <script>
 const TICKS=['<strong>🦎 図鑑</strong> レオパ・ボールパイソン他200種以上を収録','<strong>🧬 モルフ</strong> 遺伝形式・価格帯・希少度付きで50種以上網羅','<strong>📍 ショップ</strong> 現在地から近くの爬虫類ショップを距離順表示','<strong>🏆 イベント</strong> 東京レプタイルズワールド他即売会情報とURL','<strong>🌡️ 飼育</strong> 温度・湿度・UVB・給餌の基本を完全解説','<strong>🥚 繁殖</strong> クーリングから孵化まで5フェーズで解説','<strong>🏥 病気</strong> 症状チェッカーで考えられる疾患をすぐ確認','<strong>📅 カレンダー</strong> 月別の飼育ポイントを季節ごとに整理'];
@@ -569,7 +575,7 @@ function doSearch(q){
   const dd=document.getElementById('hDrop');
   const v=q.trim().toLowerCase();
   if(!v){dd.classList.remove('show');return;}
-  if(!window.SD||!SD.length){dd.innerHTML='<div class="sdi-none">読み込み中...</div>';dd.classList.add('show');return;}
+  if(typeof SD==='undefined'||!SD.length){dd.innerHTML='<div class="sdi-none">読み込み中...</div>';dd.classList.add('show');return;}
   const hits=SD.filter(s=>
     s.name.toLowerCase().includes(v)||
     s.latin.toLowerCase().includes(v)||
