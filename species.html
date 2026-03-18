@@ -62,6 +62,7 @@
 .m-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-top:.4rem;}
 .m-stat{background:var(--surface);padding:.65rem;text-align:center;border:1px solid var(--border);}
 .m-stat-v{font-family:'Bebas Neue',sans-serif;font-size:1.25rem;color:var(--accent);display:block;}
+.wiki-credit{font-size:.52rem;color:var(--text3);margin-top:1rem;opacity:.5;}
 .m-stat-l{font-family:'Space Mono',monospace;font-size:.54rem;color:var(--text3);}
 /* MORPH */
 .morph-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin-top:1.5rem;}
@@ -513,6 +514,11 @@ function setDiff(diff,btn){if(activeDiff===diff){activeDiff=null;btn.classList.r
 
 function tagClass(t){if(t==='初心者向け')return'beginner';if(t==='中級者向け')return'intermediate';if(t==='上級者向け')return'advanced';return '';}
 
+function imgError(el){
+  const fb=el.getAttribute('data-fb')||'🦎';
+  el.parentElement.innerHTML='<div class="sp-fallback">'+fb+'</div>';
+}
+
 function renderGrid(){
   const q=(document.getElementById('spSearch')?.value||'').toLowerCase();
   const grid=document.getElementById('speciesGrid');
@@ -529,47 +535,44 @@ function renderGrid(){
     card.className='species-card';
     card.onclick=()=>openModal(sp);
     const isWiki=sp.img&&sp.img.startsWith('https://');
-    card.innerHTML=`
-      <div class="sp-img-wrap">
-        ${isWiki
-          ?`<img src="${sp.img}" alt="${sp.name}" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentElement.innerHTML='<div class=\"sp-fallback\">${sp.icon||'🦎'}</div>'">`
-          :`<div class="sp-fallback">${sp.icon||'🦎'}</div>`
-        }
-      </div>
-      <div class="sp-body">
-        <div class="sp-cat">${sp.cat.toUpperCase()}</div>
-        <div class="sp-name">${sp.name}</div>
-        <div class="sp-latin">${sp.latin}</div>
-        <p class="sp-desc">${sp.desc}</p>
-        <div class="sp-tags">${sp.tags.map(t=>`<span class="tag ${tagClass(t)}">${t}</span>`).join('')}</div>
-      </div>`;
+    const imgHtml=isWiki
+      ?'<img src="'+sp.img+'" alt="'+sp.name+'" loading="lazy" referrerpolicy="no-referrer" data-fb="'+(sp.icon||'🦎')+'" onerror="imgError(this)">'
+      :'<div class="sp-fallback">'+(sp.icon||'🦎')+'</div>';
+    card.innerHTML=
+      '<div class="sp-img-wrap">'+imgHtml+'</div>'+
+      '<div class="sp-body">'+
+        '<div class="sp-cat">'+sp.cat.toUpperCase()+'</div>'+
+        '<div class="sp-name">'+sp.name+'</div>'+
+        '<div class="sp-latin">'+sp.latin+'</div>'+
+        '<p class="sp-desc">'+sp.desc+'</p>'+
+        '<div class="sp-tags">'+sp.tags.map(t=>'<span class="tag '+tagClass(t)+'">'+t+'</span>').join('')+'</div>'+
+      '</div>';
     grid.appendChild(card);
   });
 }
 
 function openModal(sp){
   const isWiki=sp.img&&sp.img.startsWith('https://');
-  document.getElementById('modalContent').innerHTML=`
-    <div class="m-img-wrap">
-      ${isWiki
-        ?`<img src="${sp.img}" alt="${sp.name}" referrerpolicy="no-referrer" onerror="this.parentElement.innerHTML='<div class=\"sp-fallback\">${sp.icon||'🦎'}</div>'">`
-        :`<div class="sp-fallback">${sp.icon||'🦎'}</div>`
-      }
-    </div>
-    <div class="m-name">${sp.name}</div>
-    <div class="m-latin">${sp.latin}</div>
-    <div class="m-sec"><div class="m-stitle">// 基本情報</div><p class="m-text">${sp.desc}</p></div>
-    <div class="m-sec"><div class="m-stitle">// データ</div>
-      <div class="m-stats">
-        <div class="m-stat"><span class="m-stat-v">${sp.s.sz}</span><span class="m-stat-l">全長</span></div>
-        <div class="m-stat"><span class="m-stat-v">${sp.s.li}</span><span class="m-stat-l">寿命</span></div>
-        <div class="m-stat"><span class="m-stat-v">${sp.s.t}</span><span class="m-stat-l">温度目安</span></div>
-      </div>
-    </div>
-    <div class="m-sec"><div class="m-stitle">// 生息地</div><p class="m-text">${sp.h}</p></div>
-    <div class="m-sec"><div class="m-stitle">// 食性・餌</div><p class="m-text">${sp.d}</p></div>
-    <div class="m-sec"><div class="m-stitle">// 飼育のコツ</div><p class="m-text">${sp.tip}</p></div>
-    <p style="font-family:'Space Mono',monospace;font-size:.52rem;color:var(--text3);margin-top:1rem;opacity:.5;">Photo: Wikimedia Commons (CC)</p>`;
+  const icon=sp.icon||'🦎';
+  const mImg=isWiki
+    ?'<img src="'+sp.img+'" alt="" referrerpolicy="no-referrer" data-fb="'+icon+'" onerror="imgError(this)">'
+    :'<div class="sp-fallback">'+icon+'</div>';
+  const content=
+    '<div class="m-img-wrap">'+mImg+'</div>'+
+    '<div class="m-name">'+sp.name+'</div>'+
+    '<div class="m-latin">'+sp.latin+'</div>'+
+    '<div class="m-sec"><div class="m-stitle">// 基本情報</div><p class="m-text">'+sp.desc+'</p></div>'+
+    '<div class="m-sec"><div class="m-stitle">// データ</div>'+
+      '<div class="m-stats">'+
+        '<div class="m-stat"><span class="m-stat-v">'+sp.s.sz+'</span><span class="m-stat-l">全長</span></div>'+
+        '<div class="m-stat"><span class="m-stat-v">'+sp.s.li+'</span><span class="m-stat-l">寿命</span></div>'+
+        '<div class="m-stat"><span class="m-stat-v">'+sp.s.t+'</span><span class="m-stat-l">温度目安</span></div>'+
+      '</div></div>'+
+    '<div class="m-sec"><div class="m-stitle">// 生息地</div><p class="m-text">'+sp.h+'</p></div>'+
+    '<div class="m-sec"><div class="m-stitle">// 食性・餌</div><p class="m-text">'+sp.d+'</p></div>'+
+    '<div class="m-sec"><div class="m-stitle">// 飼育のコツ</div><p class="m-text">'+sp.tip+'</p></div>'+
+    '<p class="wiki-credit">Photo: Wikimedia Commons (CC)</p>';
+  document.getElementById('modalContent').innerHTML=content;
   document.getElementById('spModal').classList.add('open');
   document.body.style.overflow='hidden';
 }
