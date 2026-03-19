@@ -530,7 +530,8 @@ function renderGrid(){
   const list=SD.filter(sp=>{
     if(activeCat!=='all'&&sp.cat!==activeCat)return false;
     if(activeDiff&&sp.diff!==activeDiff)return false;
-    if(q&&!sp.name.toLowerCase().includes(q)&&!sp.latin.toLowerCase().includes(q)&&!sp.desc.toLowerCase().includes(q)&&!sp.tags.join('').toLowerCase().includes(q))return false;
+    if(q&&!sp.name.toLowerCase().includes(q)&&!sp.latin.toLowerCase().includes(q)
+       &&!sp.desc.toLowerCase().includes(q)&&!sp.tags.join('').toLowerCase().includes(q))return false;
     return true;
   });
   document.getElementById('countNum').textContent=list.length;
@@ -538,18 +539,40 @@ function renderGrid(){
     const card=document.createElement('div');
     card.className='species-card';
     card.onclick=()=>openModal(sp);
+
+    // 画像エリア
     const wrap=document.createElement('div');
     wrap.className='sp-img-wrap';
-    if(sp.img&&sp.img.startsWith('https://')){
-      const img=document.createElement('img');
-      img.src=sp.img; img.alt=sp.name; img.loading='lazy';
-      img.setAttribute('referrerpolicy','no-referrer');
-      img.onerror=function(){const fb=document.createElement('div');fb.className='sp-fallback';fb.textContent=sp.icon||'🦎';this.parentElement.replaceChild(fb,this);};
-      wrap.appendChild(img);
+
+    const tid=window.TAXON_IDS&&TAXON_IDS[sp.name];
+    if(tid){
+      // まずプレースホルダー表示
+      const fb=document.createElement('div');
+      fb.className='sp-fallback';fb.textContent=sp.icon||'🦎';
+      wrap.appendChild(fb);
+      // iNaturalist APIから非同期取得
+      fetch('https://api.inaturalist.org/v1/taxa/'+tid)
+        .then(r=>r.ok?r.json():null)
+        .then(d=>{
+          const url=d&&d.results&&d.results[0]&&d.results[0].default_photo
+            ?d.results[0].default_photo.medium_url:null;
+          if(url&&wrap.isConnected){
+            const img=document.createElement('img');
+            img.src=url;img.alt=sp.name;
+            img.style.cssText='width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.88) saturate(.82);transition:all .4s;';
+            img.onerror=()=>{};
+            wrap.innerHTML='';
+            wrap.appendChild(img);
+          }
+        }).catch(()=>{});
     }else{
-      const fb=document.createElement('div');fb.className='sp-fallback';fb.textContent=sp.icon||'🦎';wrap.appendChild(fb);
+      const fb=document.createElement('div');
+      fb.className='sp-fallback';fb.textContent=sp.icon||'🦎';
+      wrap.appendChild(fb);
     }
     card.appendChild(wrap);
+
+    // テキストエリア
     const body=document.createElement('div');body.className='sp-body';
     const c=document.createElement('div');c.className='sp-cat';c.textContent=sp.cat.toUpperCase();body.appendChild(c);
     const n=document.createElement('div');n.className='sp-name';n.textContent=sp.name;body.appendChild(n);
@@ -566,16 +589,27 @@ function renderGrid(){
 function openModal(sp){
   const box=document.getElementById('modalContent');
   box.innerHTML='';
-  const wrap=document.createElement('div');
-  if(sp.img&&sp.img.startsWith('https://')){
-    const img=document.createElement('img');
-    img.src=sp.img;img.alt=sp.name;img.className='m-img';
-    img.setAttribute('referrerpolicy','no-referrer');
-    img.onerror=function(){const fb=document.createElement('div');fb.className='m-fallback';fb.textContent=sp.icon||'🦎';this.parentElement.replaceChild(fb,this);};
-    box.appendChild(img);
-  }else{
-    const fb=document.createElement('div');fb.className='m-fallback';fb.textContent=sp.icon||'🦎';box.appendChild(fb);
+
+  const wrap=document.createElement('div');wrap.className='m-img-wrap';
+  const tid=window.TAXON_IDS&&TAXON_IDS[sp.name];
+  const fb=document.createElement('div');fb.className='m-fallback';fb.textContent=sp.icon||'🦎';
+  wrap.appendChild(fb);
+  if(tid){
+    fetch('https://api.inaturalist.org/v1/taxa/'+tid)
+      .then(r=>r.ok?r.json():null)
+      .then(d=>{
+        const url=d&&d.results&&d.results[0]&&d.results[0].default_photo
+          ?d.results[0].default_photo.medium_url:null;
+        if(url&&wrap.isConnected){
+          const img=document.createElement('img');
+          img.src=url;img.alt=sp.name;img.className='m-img';
+          img.onerror=()=>{};
+          wrap.innerHTML='';wrap.appendChild(img);
+        }
+      }).catch(()=>{});
   }
+  box.appendChild(wrap);
+
   const nm=document.createElement('div');nm.className='m-name';nm.textContent=sp.name;box.appendChild(nm);
   const lt=document.createElement('div');lt.className='m-latin';lt.textContent=sp.latin;box.appendChild(lt);
   function sec(label,text){const s=document.createElement('div');s.className='m-sec';const t=document.createElement('div');t.className='m-stitle';t.textContent=label;s.appendChild(t);const p=document.createElement('p');p.className='m-text';p.textContent=text;s.appendChild(p);box.appendChild(s);}
