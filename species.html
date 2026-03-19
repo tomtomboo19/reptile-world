@@ -659,19 +659,6 @@ function makePhoto(sp, wrapEl, isMod) {
   }
 }
 
-function makePhoto(sp, wrapEl, isMod) {
-  const fb = document.createElement('div');
-  fb.className = isMod ? 'm-fallback' : 'sp-fallback';
-  fb.textContent = sp.icon || '🦎';
-  wrapEl.appendChild(fb);
-  const tid = TAXON_IDS[sp.name];
-  if (tid) {
-    wrapEl.dataset.tid = tid;
-    wrapEl.dataset.name = sp.name;
-    wrapEl.dataset.mod = isMod ? '1' : '0';
-    _visObs.observe(wrapEl);
-  }
-}
 
 /* ===== UI ===== */
 function toggleDrawer(){document.getElementById('hamburger').classList.toggle('open');document.getElementById('navDrawer').classList.toggle('open');document.body.style.overflow=document.getElementById('navDrawer').classList.contains('open')?'hidden':'';}
