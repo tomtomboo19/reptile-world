@@ -616,41 +616,42 @@ window.addEventListener('scroll', () => {
 document.addEventListener('click',e=>{if(!e.target.closest('.hero-search'))document.getElementById('hDrop').classList.remove('show');});
 
 const FEAT=[
-  {name:'ヒョウモントカゲモドキ',cat:'gecko',diff:'beginner',icon:'🦎',latin:'Eublepharis macularius'},
-  {name:'ボールパイソン',cat:'boa',diff:'beginner',icon:'⚫',latin:'Python regius'},
-  {name:'フトアゴヒゲトカゲ',cat:'agama',diff:'intermediate',icon:'🦖',latin:'Pogona vitticeps'},
-  {name:'コーンスネーク',cat:'snake',diff:'beginner',icon:'🐍',latin:'Pantherophis guttatus'},
-  {name:'クレステッドゲッコー',cat:'gecko',diff:'beginner',icon:'🦎',latin:'Correlophus ciliatus'},
-  {name:'ロシアリクガメ',cat:'tortoise',diff:'beginner',icon:'🐢',latin:'Agrionemys horsfieldii'},
+  {name:'ヒョウモントカゲモドキ',cat:'gecko',diff:'beginner',icon:'🦎',tid:35194},
+  {name:'ボールパイソン',cat:'boa',diff:'beginner',icon:'⚫',tid:35530},
+  {name:'フトアゴヒゲトカゲ',cat:'agama',diff:'intermediate',icon:'🦖',tid:35526},
+  {name:'コーンスネーク',cat:'snake',diff:'beginner',icon:'🐍',tid:35561},
+  {name:'クレステッドゲッコー',cat:'gecko',diff:'beginner',icon:'🦎',tid:73574},
+  {name:'ロシアリクガメ',cat:'tortoise',diff:'beginner',icon:'🐢',tid:39583},
 ];
 const dL={beginner:'初心者向け',intermediate:'中級者向け',advanced:'上級者向け'};
 const dC={beginner:'diff-b',intermediate:'diff-i',advanced:'diff-a'};
 
 const fg=document.getElementById('featuredGrid');
-FEAT.forEach((s,i)=>{
-  const a=document.createElement('a');a.href='species.html';a.className='feat-card';
-  const fb=document.createElement('div');fb.className='feat-fallback';fb.textContent=s.icon;
+FEAT.forEach(function(s,i){
+  var a=document.createElement('a');a.href='species.html';a.className='feat-card';
+  var fb=document.createElement('div');fb.className='feat-fallback';fb.textContent=s.icon;
   a.appendChild(fb);
-  const info=document.createElement('div');info.className='feat-info';
-  const cat=document.createElement('div');cat.className='feat-cat';cat.textContent=s.cat.toUpperCase();info.appendChild(cat);
-  const nm=document.createElement('div');nm.className='feat-name';nm.textContent=s.name;info.appendChild(nm);
-  const diff=document.createElement('span');diff.className='feat-diff '+dC[s.diff];diff.textContent=dL[s.diff];info.appendChild(diff);
+  var info=document.createElement('div');info.className='feat-info';
+  var cat=document.createElement('div');cat.className='feat-cat';cat.textContent=s.cat.toUpperCase();info.appendChild(cat);
+  var nm=document.createElement('div');nm.className='feat-name';nm.textContent=s.name;info.appendChild(nm);
+  var diff=document.createElement('span');diff.className='feat-diff '+dC[s.diff];diff.textContent=dL[s.diff];info.appendChild(diff);
   a.appendChild(info);fg.appendChild(a);
-  // 学名でiNaturalist検索（120ms間隔でレート制限回避）
-  setTimeout(()=>{
-    fetch('https://api.inaturalist.org/v1/taxa?name='+encodeURIComponent(s.latin)+'&rank=species&per_page=1')
-      .then(r=>r.ok?r.json():null)
-      .then(d=>{
-        const url=d&&d.results&&d.results[0]&&d.results[0].default_photo
-          ?d.results[0].default_photo.medium_url:null;
-        if(url){
-          const img=document.createElement('img');
-          img.src=url;img.alt=s.name;img.className='feat-thumb';
-          img.style.cssText='width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.88) saturate(.82);';
-          fb.parentElement.replaceChild(img,fb);
-        }
-      }).catch(()=>{});
-  }, i*120);
+  (function(capturedFb,capturedTid,capturedName,idx){
+    setTimeout(function(){
+      fetch('https://api.inaturalist.org/v1/taxa/'+capturedTid)
+        .then(function(r){return r.ok?r.json():null;})
+        .then(function(d){
+          var url=d&&d.results&&d.results[0]&&d.results[0].default_photo
+            ?d.results[0].default_photo.medium_url:null;
+          if(url&&capturedFb.parentElement){
+            var img=document.createElement('img');
+            img.src=url;img.alt=capturedName;img.className='feat-thumb';
+            img.style.cssText='width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.88) saturate(.82);';
+            capturedFb.parentElement.replaceChild(img,capturedFb);
+          }
+        }).catch(function(){});
+    },idx*200);
+  })(fb,s.tid,s.name,i);
 });
 </script>
 </body>
