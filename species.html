@@ -106,7 +106,7 @@
   <p class="page-hero-desc">200種以上を収録。カテゴリ・難易度・キーワードで絞り込み可能。カードをクリックで詳細を表示。</p>
 </div>
 
-<div class="section fade-in">
+<div class="section">
   <div class="search-wrap">
     <input class="search-input" id="spSearch" type="text" placeholder="種名・学名・特徴で検索..." oninput="renderGrid()" autocomplete="off">
     <span class="search-ico">🔍</span>
@@ -133,7 +133,7 @@
   <div class="species-grid" id="speciesGrid"></div>
 </div>
 
-<div class="section-alt fade-in">
+<div class="section-alt">
   <div class="container">
     <p class="sec-label">// MORPH DATABASE</p>
     <h2 class="sec-title">モルフ（色彩変異）図鑑</h2>
@@ -782,6 +782,8 @@ function renderMorphs(){
 }
 
 buildMorphFilter();renderMorphs();renderGrid();
+// スマホ対策: fade-inクラスを即座にvisibleにする
+document.querySelectorAll('.fade-in').forEach(function(el){el.classList.add('visible');});
 const _obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);_obs.unobserve(e.target);}})},{threshold:0.07});
 document.querySelectorAll('.fade-in').forEach(el=>_obs.observe(el));
 </script>
