@@ -230,7 +230,7 @@ const SD = [
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // GECKO / ヤモリ目
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-{cat:'gecko',icon:'🦎',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Eublepharis_macularius_2009_G01.jpg/480px-Eublepharis_macularius_2009_G01.jpg',name:'ヒョウモントカゲモドキ',latin:'Eublepharis macularius',diff:'beginner',tags:['初心者向け','夜行性','地表棲','人工飼料可'],desc:'通称レオパ。世界最人気のヤモリ。温和・丈夫で人工飼料も食べる。モルフ数は600種以上。',h:'パキスタン～インド北西部・アフガニスタンの乾燥岩地帯',d:'コオロギ・デュビア・ミルワーム・人工飼料（レオパドライ等）',s:{sz:'20～25cm',li:'15～20年',t:'28～32℃'},tip:'ウェットシェルターで脱皮を補助。尾が太ければ健康の証。週3～4回給餌が目安。'},
+{cat:'gecko',icon:'🦎',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Eublepharis_macularius_2009_G01.jpg/480px-Eublepharis_macularius_2009_G01.jpg',name:'ヒョウモントカゲモドキ',tid:35194,DUMMY:'Eublepharis macularius',diff:'beginner',tags:['初心者向け','夜行性','地表棲','人工飼料可'],desc:'通称レオパ。世界最人気のヤモリ。温和・丈夫で人工飼料も食べる。モルフ数は600種以上。',h:'パキスタン～インド北西部・アフガニスタンの乾燥岩地帯',d:'コオロギ・デュビア・ミルワーム・人工飼料（レオパドライ等）',s:{sz:'20～25cm',li:'15～20年',t:'28～32℃'},tip:'ウェットシェルターで脱皮を補助。尾が太ければ健康の証。週3～4回給餌が目安。'},
 {cat:'gecko',icon:'🦎',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Correlophus_ciliatus_-_Zurich_Zoo_-_2010-10-07_%28cropped%29.jpg/480px-Correlophus_ciliatus_-_Zurich_Zoo_-_2010-10-07_%28cropped%29.jpg',name:'クレステッドゲッコー',latin:'Correlophus ciliatus',diff:'beginner',tags:['初心者向け','樹上棲','夜行性','専用フード可'],desc:'ニューカレドニア原産。まつ毛状の突起が特徴。専用ペレットで完全飼育できる。',h:'ニューカレドニア島の熱帯雨林',d:'クレステッドゲッコーフード・コオロギ・果物',s:{sz:'18～25cm',li:'15～20年',t:'24～26℃'},tip:'高温（27℃超）に弱い。夏場は保冷対策必須。'},
 {cat:'gecko',icon:'🦎',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Tokay_gecko_%28Gekko_gecko%29.jpg/480px-Tokay_gecko_%28Gekko_gecko%29.jpg',name:'トッケイヤモリ',latin:'Gekko gecko',diff:'intermediate',tags:['中級者向け','大型','咬みつき注意','夜行性'],desc:'鮮やかな赤い斑点が美しい大型ヤモリ。気性が荒く咬みつくが近年慣れた個体も流通。',h:'東南アジア広域・岩壁・木の幹',d:'コオロギ・ゴキブリ・ピンクマウス',s:{sz:'25～35cm',li:'10～15年',t:'28～32℃'},tip:'幼体から慣らすことが重要。強い咬合力に注意。'},
 {cat:'gecko',icon:'🦎',img:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Hemitheconyx_caudicinctus.jpg/480px-Hemitheconyx_caudicinctus.jpg',name:'アフリカンファットテール',latin:'Hemitheconyx caudicinctus',diff:'beginner',tags:['初心者向け','夜行性','西アフリカ産'],desc:'西アフリカ原産。レオパに似た体型でおとなしく飼いやすい。尾に脂肪蓄積。',h:'西アフリカのサバンナ・草原',d:'コオロギ・デュビア',s:{sz:'18～25cm',li:'15～20年',t:'28～32℃'},tip:'レオパより高湿度を好む（50～70%）。ウェットシェルター必須。'},
@@ -616,12 +616,12 @@ window.addEventListener('scroll', () => {
 document.addEventListener('click',e=>{if(!e.target.closest('.hero-search'))document.getElementById('hDrop').classList.remove('show');});
 
 const FEAT=[
-  {name:'ヒョウモントカゲモドキ',cat:'gecko',diff:'beginner',icon:'🦎',latin:'Eublepharis macularius'},
-  {name:'ボールパイソン',cat:'boa',diff:'beginner',icon:'⚫',latin:'Python regius'},
-  {name:'フトアゴヒゲトカゲ',cat:'agama',diff:'intermediate',icon:'🦖',latin:'Pogona vitticeps'},
-  {name:'コーンスネーク',cat:'snake',diff:'beginner',icon:'🐍',latin:'Pantherophis guttatus'},
-  {name:'クレステッドゲッコー',cat:'gecko',diff:'beginner',icon:'🦎',latin:'Correlophus ciliatus'},
-  {name:'ロシアリクガメ',cat:'tortoise',diff:'beginner',icon:'🐢',latin:'Agrionemys horsfieldii'},
+  {name:'ヒョウモントカゲモドキ',cat:'gecko',diff:'beginner',icon:'🦎',tid:35194},
+  {name:'ボールパイソン',cat:'boa',diff:'beginner',icon:'⚫',tid:35530},
+  {name:'フトアゴヒゲトカゲ',cat:'agama',diff:'intermediate',icon:'🦖',tid:35526},
+  {name:'コーンスネーク',cat:'snake',diff:'beginner',icon:'🐍',tid:35561},
+  {name:'クレステッドゲッコー',cat:'gecko',diff:'beginner',icon:'🦎',tid:73574},
+  {name:'ロシアリクガメ',cat:'tortoise',diff:'beginner',icon:'🐢',tid:39583},
 ];
 const dL={beginner:'初心者向け',intermediate:'中級者向け',advanced:'上級者向け'};
 const dC={beginner:'diff-b',intermediate:'diff-i',advanced:'diff-a'};
@@ -636,16 +636,12 @@ FEAT.forEach(function(s,i){
   var nm=document.createElement('div');nm.className='feat-name';nm.textContent=s.name;info.appendChild(nm);
   var diff=document.createElement('span');diff.className='feat-diff '+dC[s.diff];diff.textContent=dL[s.diff];info.appendChild(diff);
   a.appendChild(info);fg.appendChild(a);
-  (function(capturedFb,capturedLatin,capturedName,idx){
+  (function(capturedFb,capturedTid,capturedName,idx){
     setTimeout(function(){
-      fetch('https://api.inaturalist.org/v1/taxa?name='+encodeURIComponent(capturedLatin)+'&rank=species&per_page=1')
+      fetch('https://api.inaturalist.org/v1/observations?taxon_id='+capturedTid+'&quality_grade=research&photos=true&per_page=1&order_by=votes&order=desc')
         .then(function(r){return r.ok?r.json():null;})
         .then(function(d){
-          // 返ってきた種の学名が要求したものと一致するか検証
-          var taxon=d&&d.results&&d.results.find(function(t){
-            return t.name&&t.name.toLowerCase()===capturedLatin.toLowerCase();
-          });
-          var url=taxon&&taxon.default_photo?taxon.default_photo.medium_url:null;
+          var obs=d&&d.results&&d.results[0];var photo=obs&&obs.photos&&obs.photos[0];var url=photo?photo.url.replace('square','medium'):null;
           if(url&&capturedFb.parentElement){
             var img=document.createElement('img');
             img.src=url;img.alt=capturedName;img.className='feat-thumb';
@@ -654,7 +650,7 @@ FEAT.forEach(function(s,i){
           }
         }).catch(function(){});
     },idx*200);
-  })(fb,s.latin,s.name,i);
+  })(fb,s.tid,s.name,i);
 });
 </script>
 </body>
