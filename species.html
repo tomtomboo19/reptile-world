@@ -731,9 +731,6 @@ function openModal(sp){
   const box=document.getElementById('modalContent');box.innerHTML='';
   const wrap=document.createElement('div');
   makePhoto(sp,wrap,true);
-  // モーダルは即座に取得（画面内に確実にある）
-  const tid=TAXON_IDS[sp.name];
-  if(tid){_loadPhoto(tid,url=>_applyImg(url,wrap,sp.name,true));}
   box.appendChild(wrap);
   const nm=document.createElement('div');nm.className='m-name';nm.textContent=sp.name;box.appendChild(nm);
   const lt=document.createElement('div');lt.className='m-latin';lt.textContent=sp.latin;box.appendChild(lt);
