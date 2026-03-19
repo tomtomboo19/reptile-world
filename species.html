@@ -645,11 +645,32 @@ function _processQueue() {
 }
 
 function _loadPhoto(latin, cb) {
-  if (!latin) { cb(null); return; }
-  if (_photoCache[latin] !== undefined) { cb(_photoCache[latin]); return; }
+  if (!latin || typeof latin !== 'string') { cb(null); return; }
+  // nullはキャッシュしない（再取得できるように）
+  if (_photoCache[latin]) { cb(_photoCache[latin]); return; }
   _fetchQueue.push({latin, cb});
   _processQueue();
 }
+// モーダル用: キューを使わず直接取得
+function _fetchForModal(latin, wrapEl) {
+  if (!latin || typeof latin !== 'string') return;
+  const parts = latin.trim().split(' ');
+  const wikiName = (parts.length > 2 ? parts.slice(0,2).join(' ') : latin).replace(/ /g, '_');
+  fetch('https://en.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(wikiName))
+    .then(r => r.ok ? r.json() : null)
+    .then(d => {
+      const url = d && d.thumbnail ? d.thumbnail.source : null;
+      if (url) {
+        _photoCache[latin] = url;
+        if (!document.contains(wrapEl)) return;
+        const img = document.createElement('img');
+        img.src = url; img.className = 'm-img';
+        img.setAttribute('referrerpolicy', 'no-referrer');
+        wrapEl.innerHTML = ''; wrapEl.appendChild(img);
+      }
+    }).catch(() => {});
+}
+
 
 function _applyImg(url, wrapEl, spName, isMod) {
   if (!url || !document.contains(wrapEl)) return;
@@ -684,8 +705,7 @@ function makePhoto(sp, wrapEl, isMod) {
     wrapEl.dataset.name = sp.name;
     wrapEl.dataset.mod = isMod ? '1' : '0';
     if (isMod) {
-      // モーダルは即座に取得
-      _loadPhoto(sp.latin, url => _applyImg(url, wrapEl, sp.name, true));
+      _fetchForModal(sp.latin, wrapEl);
     } else {
       _visObs.observe(wrapEl);
     }
