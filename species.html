@@ -163,7 +163,6 @@
 </footer>
 
 <script>
-/* ===== DATA ===== */
 // REPTILE WORLD - Complete Species & Morph Database v2
 // Images: local SVG fallbacks + Wikimedia Commons (referrerpolicy=no-referrer)
 
@@ -504,158 +503,87 @@ const TAXON_IDS = {
 };
 
 
-window.SD = SD;
-window.MORPHS = MORPHS;
-window.TAXON_IDS = TAXON_IDS;
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 追加種・追加モルフ v3
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SD.push(
+// ── 追加ヤモリ ──
+{cat:'gecko',icon:'🦎',name:'オウカンミカドヤモリ',latin:'Paroedura pictus',diff:'beginner',tags:['初心者向け','地表棲','マダガスカル産'],desc:'マダガスカル産の小型ヤモリ。飼いやすく入門種として人気上昇中。パターンが美しい。',h:'マダガスカル南部の乾燥林',d:'コオロギ・ミルワーム',s:{sz:'12～16cm',li:'8～12年',t:'26～30℃'},tip:'乾燥気味の環境を好む。シェルター必須。繁殖も比較的容易。'},
+{cat:'gecko',icon:'🦎',name:'スタロポリゲッコー',latin:'Eublepharis angramainyu',diff:'intermediate',tags:['中級者向け','夜行性','中東産'],desc:'イラン・イラク産のEublepharis属。大型で力強い体型が特徴。希少性が高い。',h:'中東の乾燥岩地帯・砂礫地',d:'コオロギ・デュビア・ピンクマウス',s:{sz:'20～28cm',li:'15～20年',t:'28～32℃'},tip:'飼育はレオパに準じるが、やや高めの温度を好む。'},
+{cat:'gecko',icon:'🦎',name:'ウィリアムズコバルトブルーデイゲッコー',latin:'Lygodactylus williamsi',diff:'advanced',tags:['上級者向け','電気ブルー','タンザニア産'],desc:'電気ブルーの体色が衝撃的な超小型ヤモリ。野生では絶滅危惧種。繁殖個体のみ流通。',h:'タンザニア・コンベ島の特定樹木のみ',d:'フルーツフライ・コオロギSS',s:{sz:'6～8cm',li:'8～10年',t:'28～32℃'},tip:'ワシントン条約付属書I。必ず繁殖個体を購入。オス同士の同居は厳禁。'},
+{cat:'gecko',icon:'🦎',name:'スキンクゲッコー',latin:'Teratoscincus scincus',diff:'intermediate',tags:['中級者向け','砂漠産','ユニーク'],desc:'砂漠産の大型眼鱗を持つ独特なヤモリ。触ると独特の音を出す。',h:'中央アジア・中東の砂漠地帯',d:'コオロギ・ミルワーム',s:{sz:'16～20cm',li:'10～15年',t:'30～38℃'},tip:'細かい砂を深く敷く。触ると鱗が落ちるため最小限のハンドリングで。'},
+{cat:'gecko',icon:'🦎',name:'パンサーゲッコー',latin:'Aeluroscalabotes felinus',diff:'advanced',tags:['上級者向け','東南アジア産','夜行性'],desc:'東南アジア産の猫のような動きをするヤモリ。長い四肢と尻尾が特徴。',h:'マレー半島・スマトラ島の熱帯雨林',d:'コオロギ・ワックスワーム',s:{sz:'15～20cm',li:'8～12年',t:'24～28℃'},tip:'高湿度（70～80%）と低温環境が必要。流通量は少なく希少。'},
+// ── 追加カメレオン ──
+{cat:'chameleon',icon:'🌿',name:'コノハカメレオン',latin:'Rhampholeon brevicaudatus',diff:'advanced',tags:['上級者向け','超小型','東アフリカ産'],desc:'東アフリカ産の超小型カメレオン。枯れ葉に擬態し発見が難しい。高い管理技術が必要。',h:'タンザニア・ケニアの山岳林',d:'フルーツフライ・ワラジムシ',s:{sz:'5～9cm',li:'3～5年',t:'20～25℃'},tip:'超小型なのでフードサイズに注意。温度は低めで安定させる。'},
+{cat:'chameleon',icon:'🌿',name:'メラーカメレオン',latin:'Trioceros melleri',diff:'advanced',tags:['上級者向け','大型カメレオン','単独必須'],desc:'アフリカ産最大級のカメレオン。特徴的な大きな目と派手な体色。非常に高い管理技術が必要。',h:'マラウイ・タンザニアの熱帯雨林',d:'コオロギ・バッタ・ゴキブリ',s:{sz:'45～60cm',li:'5～7年',t:'24～30℃'},tip:'単独飼育必須。ストレスに極めて敏感。経験豊富な飼育者向け。'},
+// ── 追加モニター ──
+{cat:'monitor',icon:'🦕',name:'ブラックツリーモニター',latin:'Varanus beccarii',diff:'advanced',tags:['上級者向け','全身黒','樹上棲'],desc:'全身真っ黒な美麗モニター。パプアニューギニア産の樹上性モニター。',h:'パプアニューギニア・アルー諸島の熱帯雨林',d:'コオロギ・ゴキブリ・マウス',s:{sz:'90～120cm',li:'10～15年',t:'28～35℃'},tip:'樹上棲のため高さのあるケージが必要。湿度70%以上を維持。'},
+{cat:'monitor',icon:'🦕',name:'スポッテッドツリーモニター',latin:'Varanus similis',diff:'advanced',tags:['上級者向け','樹上棲','オーストラリア産'],desc:'オーストラリア産の小型樹上性モニター。スポット模様が美しい。',h:'オーストラリア北部の熱帯林',d:'コオロギ・デュビア・マウス',s:{sz:'60～90cm',li:'10～15年',t:'30～38℃'},tip:'アッキーと同様の飼育方法。木登りできる環境が必要。'},
+// ── 追加ヘビ ──
+{cat:'snake',icon:'🐍',name:'ブルーレーサー',latin:'Coluber constrictor foxii',diff:'intermediate',tags:['中級者向け','北米産','速い'],desc:'北米産の美しい青みがかったレーサースネーク。動きが非常に速い。',h:'北米中部の草地・低木林',d:'マウス（冷凍解凍）',s:{sz:'100～180cm',li:'10～15年',t:'26～30℃'},tip:'非常に素早い。ケージから出さないよう注意。幼体から慣らすと扱いやすくなる。'},
+{cat:'snake',icon:'🐍',name:'アオダイショウ',latin:'Elaphe climacophora',diff:'beginner',tags:['初心者向け','国産','無毒'],desc:'日本最大の無毒ヘビ。近年飼育人気が上昇中。白化個体（アルビノ）も流通。',h:'日本全国の里山・農地・森林',d:'マウス（冷凍解凍）',s:{sz:'100～200cm',li:'15～20年',t:'26～30℃'},tip:'冬眠が可能だが初心者は室内加温越冬が安全。人馴れしやすく飼いやすい。'},
+{cat:'snake',icon:'🐍',name:'サンドボア',latin:'Eryx colubrinus',diff:'beginner',tags:['初心者向け','砂漠産','小型'],desc:'北アフリカ産の小型のボア。砂に潜る習性があり動きはゆっくり。飼いやすい入門種。',h:'北アフリカ・中東の砂漠・乾燥地帯',d:'マウス（冷凍解凍）',s:{sz:'45～80cm',li:'15～20年',t:'28～32℃'},tip:'砂に潜れる深さの床材が必要。水入れは小型のものを。'},
+{cat:'snake',icon:'🐍',name:'ディアマンドパイソン',latin:'Morelia spilota spilota',diff:'intermediate',tags:['中級者向け','オーストラリア産','大型'],desc:'カーペットパイソンの亜種でダイヤ模様が最も美しい。気温が低い地域に強い。',h:'オーストラリア南東部の森林',d:'マウス～ラット',s:{sz:'180～250cm',li:'20～30年',t:'26～32℃'},tip:'低温に強く冬の管理が楽。一方で高温には弱い。'},
+// ── 追加リクガメ ──
+{cat:'tortoise',icon:'🐢',name:'マルギナータリクガメ',latin:'Testudo marginata',diff:'beginner',tags:['初心者向け','ギリシャ産','大型'],desc:'ギリシャ産の大型リクガメ。後部甲板が外側に広がる独特の形が特徴。丈夫で飼いやすい。',h:'ギリシャ・イタリアの乾燥草原',d:'野草・葉物野菜',s:{sz:'25～38cm',li:'50～80年',t:'28～35℃'},tip:'テストゥド属の中では最大種。飼育方法はヘルマンと同様。'},
+{cat:'tortoise',icon:'🐢',name:'エジプトリクガメ',latin:'Testudo kleinmanni',diff:'advanced',tags:['上級者向け','超小型','絶滅危惧'],desc:'世界最小クラスのリクガメ。絶滅危惧種のためCITES付属書I。繁殖個体のみ流通。',h:'北アフリカ・リビア・エジプトの砂漠',d:'野草・乾燥牧草',s:{sz:'8～12cm',li:'30～50年',t:'28～35℃'},tip:'超乾燥環境が必要。小型のため床材の誤飲に注意。流通は繁殖個体のみ。'},
+{cat:'tortoise',icon:'🐢',name:'チャコリクガメ',latin:'Chelonoidis chilensis',diff:'intermediate',tags:['中級者向け','南米産','乾燥地帯'],desc:'南米産の小型リクガメ。乾燥環境を好む。比較的安価で入手しやすい。',h:'アルゼンチン・ボリビアの乾燥草原',d:'野草・乾燥牧草・葉物野菜',s:{sz:'18～25cm',li:'30～60年',t:'28～35℃'},tip:'南米産リクガメの入門種として最適。乾燥気味の環境を維持する。'}
+);
 
-/* ===== 写真取得キュー（学名検索・100ms間隔）===== */
-const _q = [];
-let _qRunning = false;
-const _cache = {};
-function _enqueue(latin, cb) {
-  if (_cache[latin] !== undefined) { cb(_cache[latin]); return; }
-  _q.push({latin, cb});
-  if (!_qRunning) _drainQueue();
-}
-function _drainQueue() {
-  if (!_q.length) { _qRunning = false; return; }
-  _qRunning = true;
-  const {latin, cb} = _q.shift();
-  const q = encodeURIComponent(latin);
-  fetch('https://api.inaturalist.org/v1/taxa?name=' + q + '&rank=species&per_page=1')
-    .then(r => r.ok ? r.json() : null)
-    .then(d => {
-      const url = d && d.results && d.results[0] && d.results[0].default_photo
-        ? d.results[0].default_photo.medium_url : null;
-      _cache[latin] = url;
-      cb(url);
-    })
-    .catch(() => { _cache[latin] = null; cb(null); })
-    .finally(() => setTimeout(_drainQueue, 120));
-}
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 追加モルフ
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+MORPHS.push(
+// ── クレステッドゲッコー モルフ（全網羅）──
+{sp:'crestie',sn:'クレステッドゲッコー',name:'フレイム',gene:'Polygenic',rarity:'common',price:'8,000～25,000',desc:'背中の中央に炎のような明るいパターンが走るベーシックなモルフ。様々なベースカラーがある。',c1:'#e06020',c2:'#c8a84b'},
+{sp:'crestie',sn:'クレステッドゲッコー',name:'ハーレクイン',gene:'Polygenic',rarity:'common',price:'15,000～50,000',desc:'フレイムパターンに加え側面にも模様が広がるモルフ。カラーバリエーションが豊富。',c1:'#e06020',c2:'#f0d080'},
+{sp:'crestie',sn:'クレステッドゲッコー',name:'ピンストライプ',gene:'Polygenic',rarity:'common',price:'10,000～35,000',desc:'背中沿いに細いピン状の線が走るモルフ。ピンストライプの発現量で価値が変わる。',c1:'#c87830',c2:'#e8c060'},
+{sp:'crestie',sn:'クレステッドゲッコー',name:'フルピンストライプ',gene:'Polygenic',rarity:'rare',price:'30,000～100,000',desc:'ピンストライプが完全に繋がり背中全体を覆うモルフ。コレクター垂涎の美麗個体。',c1:'#d08020',c2:'#f0e080'},
+{sp:'crestie',sn:'クレステッドゲッコー',name:'ダルメシアン',gene:'Polygenic',rarity:'common',price:'10,000～40,000',desc:'全身に斑点（スポット）が散らばるモルフ。スポットの数が多いほど価値が高い。',c1:'#f0e8d8',c2:'#3a2a10'},
+{sp:'crestie',sn:'クレステッドゲッコー',name:'スーパーダルメシアン',gene:'Polygenic',rarity:'rare',price:'50,000～200,000',desc:'100点以上の大量のスポットを持つ超ダルメシアン。非常に美しく高価。',c1:'#f0e8d8',c2:'#1a0a00'},
+{sp:'crestie',sn:'クレステッドゲッコー',name:'タイガー',gene:'Polygenic',rarity:'common',price:'8,000～25,000',desc:'側面に虎縞模様が入るモルフ。バンドのコントラストが強いほど評価される。',c1:'#c86020',c2:'#2a1a00'},
+{sp:'crestie',sn:'クレステッドゲッコー',name:'バイカラー',gene:'Polygenic',rarity:'common',price:'8,000～20,000',desc:'背中と側面でくっきり2色に分かれるシンプルで美しいモルフ。',c1:'#8a5020',c2:'#e8d090'},
+{sp:'crestie',sn:'クレステッドゲッコー',name:'モノクロ',gene:'Polygenic',rarity:'rare',price:'20,000～60,000',desc:'白と黒のみで構成された珍しいモルフ。近年人気が急上昇。',c1:'#f0f0f0',c2:'#1a1a1a'},
+{sp:'crestie',sn:'クレステッドゲッコー',name:'リリーホワイト',gene:'Dominant',rarity:'rare',price:'50,000～200,000',desc:'側面から腹部にかけて真白になるモルフ。顕性遺伝。スーパー体は致死。',c1:'#f8f5f0',c2:'#c87830'},
+{sp:'crestie',sn:'クレステッドゲッコー',name:'ホワイトウォール',gene:'Polygenic',rarity:'rare',price:'30,000～100,000',desc:'側面が白く抜けるモルフ。リリーホワイトに似るが異なる遺伝機構。',c1:'#f0ece4',c2:'#a06020'},
+{sp:'crestie',sn:'クレステッドゲッコー',name:'クリーム',gene:'Polygenic',rarity:'common',price:'8,000～20,000',desc:'全体がクリーム色に統一された落ち着いた雰囲気のモルフ。',c1:'#f5ead0',c2:'#d0a860'},
+{sp:'crestie',sn:'クレステッドゲッコー',name:'レッドフレイム',gene:'Polygenic',rarity:'rare',price:'25,000～80,000',desc:'赤みの強いフレイムモルフ。高品質な赤のコントラストが美しい。',c1:'#c02010',c2:'#f0a040'},
+{sp:'crestie',sn:'クレステッドゲッコー',name:'イエローフレイム',gene:'Polygenic',rarity:'rare',price:'20,000～60,000',desc:'黄色みの強いフレイムモルフ。鮮やかな黄色が目を引く。',c1:'#e0c000',c2:'#f8f060'},
+{sp:'crestie',sn:'クレステッドゲッコー',name:'オレンジ',gene:'Polygenic',rarity:'common',price:'8,000～25,000',desc:'全身がオレンジ色の鮮やかなモルフ。チョコレートベースとオレンジの組み合わせが多い。',c1:'#e06010',c2:'#f89040'},
+{sp:'crestie',sn:'クレステッドゲッコー',name:'チョコレート',gene:'Polygenic',rarity:'common',price:'5,000～15,000',desc:'全体がチョコレートブラウンに統一されたモルフ。シックな外観が人気。',c1:'#4a2808',c2:'#8a5020'},
+{sp:'crestie',sn:'クレステッドゲッコー',name:'ブラック',gene:'Polygenic',rarity:'ultra',price:'80,000～300,000',desc:'全身が漆黒に近いモルフ。非常に希少で長年の選別繁殖が必要。',c1:'#181818',c2:'#303030'},
+{sp:'crestie',sn:'クレステッドゲッコー',name:'グリーン',gene:'Polygenic',rarity:'rare',price:'20,000～80,000',desc:'緑みの強い珍しいモルフ。クレスでは緑は出にくく希少性が高い。',c1:'#1a6010',c2:'#40a030'},
+{sp:'crestie',sn:'クレステッドゲッコー',name:'アクセルロス（アクシャル）',gene:'Recessive',rarity:'ultra',price:'200,000～800,000',desc:'脊椎が見えるほど透明な鱗を持つ超希少モルフ。ブリーダー垂涎の的。',c1:'#e0f0e8',c2:'#60a870'},
+{sp:'crestie',sn:'クレステッドゲッコー',name:'モスアイ',gene:'Polygenic',rarity:'rare',price:'30,000～100,000',desc:'蛾の目のように均一なパターンが全身に広がる独特のモルフ。',c1:'#806040',c2:'#c0a060'},
 
-/* ===== UI ===== */
-function toggleDrawer(){document.getElementById('hamburger').classList.toggle('open');document.getElementById('navDrawer').classList.toggle('open');document.body.style.overflow=document.getElementById('navDrawer').classList.contains('open')?'hidden':'';}
-function closeDrawer(){document.getElementById('hamburger').classList.remove('open');document.getElementById('navDrawer').classList.remove('open');document.body.style.overflow='';}
+// ── レオパ追加モルフ ──
+{sp:'leopard',sn:'レオパ',name:'W&Y（ホワイト&イエロー）',gene:'Co-dominant',rarity:'rare',price:'30,000～100,000',desc:'白と黄色が美しいモルフ。RAPTOR等との組み合わせでさらに鮮やかになる。',c1:'#f8f0a0',c2:'#f0f8f0'},
+{sp:'leopard',sn:'レオパ',name:'RAPTOR',gene:'Recessive×3',rarity:'rare',price:'20,000～80,000',desc:'赤目・無地・アルビノが組み合わさったコンボモルフ。赤い目が特徴的。',c1:'#f0c840',c2:'#f0f0e0'},
+{sp:'leopard',sn:'レオパ',name:'ノーバット（NWBV）',gene:'Polygenic',rarity:'common',price:'5,000～15,000',desc:'模様が薄くなった個体。ブリーダーによって定義が異なる。',c1:'#e8d060',c2:'#e0c040'},
+{sp:'leopard',sn:'レオパ',name:'ディアブロブランコ',gene:'Recessive×2',rarity:'rare',price:'30,000～80,000',desc:'真白でブリザード×ラプターの組み合わせ。真っ白な体に赤い目が映える。',c1:'#f8f8f6',c2:'#f0f0ee'},
+{sp:'leopard',sn:'レオパ',name:'スネークアイ（Snake Eyes）',gene:'Recessive',rarity:'rare',price:'15,000～50,000',desc:'目が部分的に黒くなる蛇の目のようなモルフ。エクリプスの変異体。',c1:'#c8a050',c2:'#2a1a08'},
+{sp:'leopard',sn:'レオパ',name:'バンデッド',gene:'Polygenic',rarity:'common',price:'5,000～15,000',desc:'スポットではなくバンド（縞）模様が残るモルフ。ワイルドタイプに近い形態。',c1:'#e8b030',c2:'#1a0808'},
+{sp:'leopard',sn:'レオパ',name:'スーパーハイポメラニスティック',gene:'Polygenic',rarity:'common',price:'8,000～25,000',desc:'黒色素を最小限まで減少させ、全体的に鮮やかな体色になるモルフ。',c1:'#f0a020',c2:'#f8c040'},
+{sp:'leopard',sn:'レオパ',name:'ラベンダー',gene:'Polygenic',rarity:'rare',price:'15,000～60,000',desc:'薄紫（ラベンダー）がかった体色が特徴の珍しいモルフ。固定が難しい。',c1:'#d0b0e0',c2:'#b090d0'},
 
-let activeCat='all', activeDiff=null;
-function setCat(cat,btn){activeCat=cat;document.querySelectorAll('.filter-btn:not(.diff-btn)').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderGrid();}
-function setDiff(diff,btn){if(activeDiff===diff){activeDiff=null;btn.classList.remove('active');}else{activeDiff=diff;document.querySelectorAll('.diff-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}renderGrid();}
-function tagClass(t){if(t==='初心者向け')return'beginner';if(t==='中級者向け')return'intermediate';if(t==='上級者向け')return'advanced';return '';}
+// ── ボールパイソン追加モルフ ──
+{sp:'ball',sn:'ボールパイソン',name:'クラウン×パイボール',gene:'Recessive×2',rarity:'ultra',price:'100,000～500,000',desc:'クラウン遺伝子とパイボール遺伝子のコンボ。白と金の組み合わせが圧巻。',c1:'#f8e860',c2:'#f8f5e8'},
+{sp:'ball',sn:'ボールパイソン',name:'ピューマ',gene:'Co-dominant',rarity:'rare',price:'40,000～150,000',desc:'独特のピューマ（山ライオン）柄に似たパターンを持つ希少モルフ。',c1:'#c89050',c2:'#e8c080'},
+{sp:'ball',sn:'ボールパイソン',name:'パスタ',gene:'Co-dominant',rarity:'rare',price:'30,000～100,000',desc:'模様がねじれたような独特のパターンを持つモルフ。コンボで美麗な個体が誕生する。',c1:'#d09040',c2:'#f0d880'},
+{sp:'ball',sn:'ボールパイソン',name:'スコーピオン',gene:'Co-dominant',rarity:'rare',price:'50,000～200,000',desc:'サソリのような独特の模様変化を持つ希少モルフ。コンボ作成に人気。',c1:'#a07030',c2:'#d0a050'},
+{sp:'ball',sn:'ボールパイソン',name:'ウォーホッグ',gene:'Co-dominant',rarity:'rare',price:'30,000～120,000',desc:'側面の模様が特徴的に変化するモルフ。コンボで意外な変化を見せる。',c1:'#b08040',c2:'#e0c060'},
+{sp:'ball',sn:'ボールパイソン',name:'ファイア',gene:'Co-dominant',rarity:'common',price:'8,000～25,000',desc:'全体的に明るく燃えるような体色のモルフ。スーパー体は真っ白のファイアボール。',c1:'#d09020',c2:'#f0c030'},
+{sp:'ball',sn:'ボールパイソン',name:'ウルトラメル',gene:'Co-dominant',rarity:'rare',price:'30,000～100,000',desc:'明るい黄色と白が混在する美しいモルフ。コンボ素材として非常に優秀。',c1:'#e8d060',c2:'#f8f0a0'},
 
-function makePhoto(sp, wrapEl, isMod) {
-  const fb = document.createElement('div');
-  fb.className = isMod ? 'm-fallback' : 'sp-fallback';
-  fb.textContent = sp.icon || '🦎';
-  wrapEl.appendChild(fb);
-  if (sp.latin) {
-    _enqueue(sp.latin, url => {
-      if (!url || !document.contains(wrapEl)) return;
-      const img = document.createElement('img');
-      img.src = url;
-      img.alt = sp.name;
-      if (isMod) { img.className = 'm-img'; }
-      else { img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.88) saturate(.82);transition:all .4s;'; }
-      wrapEl.innerHTML = '';
-      wrapEl.appendChild(img);
-    });
-  }
-}
+// ── コーンスネーク追加モルフ ──
+{sp:'corn',sn:'コーンスネーク',name:'ラベンダー',gene:'Recessive',rarity:'rare',price:'15,000～45,000',desc:'全体がラベンダー色のモルフ。成長と共に薄紫が強くなる。',c1:'#c0a0d8',c2:'#d8c0e8'},
+{sp:'corn',sn:'コーンスネーク',name:'ゴースト（ハイポアネリ）',gene:'Recessive×2',rarity:'rare',price:'20,000～50,000',desc:'ハイポ×アネリのコンボ。全体的に灰色がかったゴーストのような体色。',c1:'#a0a090',c2:'#c0c0b0'},
+{sp:'corn',sn:'コーンスネーク',name:'ブラッドレッド',gene:'Recessive',rarity:'rare',price:'15,000～50,000',desc:'全身が真っ赤な血のような色のモルフ。模様が退色し成体では無地の赤になる。',c1:'#a01010',c2:'#c82020'},
+{sp:'corn',sn:'コーンスネーク',name:'サングロー（サンキスド×ハイポ）',gene:'Polygenic',rarity:'rare',price:'20,000～60,000',desc:'サンキスド×ハイポのコンボ。鮮やかなオレンジ～赤が輝くように美しい。',c1:'#e05010',c2:'#f88040'},
+{sp:'corn',sn:'コーンスネーク',name:'クリムゾン',gene:'Recessive',rarity:'rare',price:'20,000～60,000',desc:'深い赤と白のコントラストが美しい。アメラニとは別の赤を出すモルフ。',c1:'#900020',c2:'#f0d0c0'}
+);
 
-function renderGrid() {
-  const q = (document.getElementById('spSearch')?.value || '').toLowerCase();
-  const grid = document.getElementById('speciesGrid');
-  grid.innerHTML = '';
-  const list = SD.filter(sp => {
-    if (activeCat !== 'all' && sp.cat !== activeCat) return false;
-    if (activeDiff && sp.diff !== activeDiff) return false;
-    if (q && !sp.name.toLowerCase().includes(q) && !sp.latin.toLowerCase().includes(q)
-        && !sp.desc.toLowerCase().includes(q) && !sp.tags.join('').toLowerCase().includes(q)) return false;
-    return true;
-  });
-  document.getElementById('countNum').textContent = list.length;
-  list.forEach(sp => {
-    const card = document.createElement('div');
-    card.className = 'species-card';
-    card.onclick = () => openModal(sp);
-    const wrap = document.createElement('div');
-    wrap.className = 'sp-img-wrap';
-    makePhoto(sp, wrap, false);
-    card.appendChild(wrap);
-    const body = document.createElement('div'); body.className = 'sp-body';
-    const c = document.createElement('div'); c.className='sp-cat'; c.textContent=sp.cat.toUpperCase(); body.appendChild(c);
-    const n = document.createElement('div'); n.className='sp-name'; n.textContent=sp.name; body.appendChild(n);
-    const l = document.createElement('div'); l.className='sp-latin'; l.textContent=sp.latin; body.appendChild(l);
-    const d = document.createElement('p'); d.className='sp-desc'; d.textContent=sp.desc; body.appendChild(d);
-    const tags = document.createElement('div'); tags.className='sp-tags';
-    sp.tags.forEach(t => { const s=document.createElement('span'); s.className='tag '+tagClass(t); s.textContent=t; tags.appendChild(s); });
-    body.appendChild(tags);
-    card.appendChild(body);
-    grid.appendChild(card);
-  });
-}
-
-function openModal(sp) {
-  const box = document.getElementById('modalContent');
-  box.innerHTML = '';
-  const wrap = document.createElement('div');
-  makePhoto(sp, wrap, true);
-  box.appendChild(wrap);
-  const nm = document.createElement('div'); nm.className='m-name'; nm.textContent=sp.name; box.appendChild(nm);
-  const lt = document.createElement('div'); lt.className='m-latin'; lt.textContent=sp.latin; box.appendChild(lt);
-  function sec(label,text){const s=document.createElement('div');s.className='m-sec';const t=document.createElement('div');t.className='m-stitle';t.textContent=label;s.appendChild(t);const p=document.createElement('p');p.className='m-text';p.textContent=text;s.appendChild(p);box.appendChild(s);}
-  const ss=document.createElement('div');ss.className='m-sec';
-  const st=document.createElement('div');st.className='m-stitle';st.textContent='// データ';ss.appendChild(st);
-  const sg=document.createElement('div');sg.className='m-stats';
-  [[sp.s.sz,'全長'],[sp.s.li,'寿命'],[sp.s.t,'温度目安']].forEach(([v,l])=>{const d=document.createElement('div');d.className='m-stat';const ve=document.createElement('span');ve.className='m-stat-v';ve.textContent=v;d.appendChild(ve);const le=document.createElement('span');le.className='m-stat-l';le.textContent=l;d.appendChild(le);sg.appendChild(d);});
-  ss.appendChild(sg); box.appendChild(ss);
-  sec('// 基本情報',sp.desc); sec('// 生息地',sp.h); sec('// 食性・餌',sp.d); sec('// 飼育のコツ',sp.tip);
-  document.getElementById('spModal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeModal(){document.getElementById('spModal').classList.remove('open');document.body.style.overflow='';}
-
-/* ===== MORPH ===== */
-let activeMorphSp = 'all';
-function buildMorphFilter() {
-  const bar = document.getElementById('morphFilter');
-  bar.innerHTML = '';
-  const sps = [...new Set(MORPHS.map(m => m.sp))];
-  const labels = {leopard:'レオパ', ball:'ボールパイソン', corn:'コーンスネーク'};
-  function mkBtn(label, sp) {
-    const btn = document.createElement('button');
-    btn.className = 'filter-btn' + (sp==='all' ? ' active' : '');
-    btn.textContent = label;
-    btn.onclick = () => { activeMorphSp=sp; bar.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderMorphs(); };
-    bar.appendChild(btn);
-  }
-  mkBtn('すべて','all');
-  sps.forEach(sp => mkBtn(labels[sp]||sp, sp));
-}
-function renderMorphs() {
-  const rl = {common:'流通多', rare:'希少', ultra:'超希少'};
-  document.getElementById('morphGrid').innerHTML = MORPHS
-    .filter(m => activeMorphSp==='all' || m.sp===activeMorphSp)
-    .map(m => `<div class="morph-card">
-      <div class="morph-swatch" style="background:linear-gradient(135deg,${m.c1} 0%,${m.c2} 100%);"></div>
-      <div class="morph-sp">${m.sn.toUpperCase()}</div>
-      <div class="morph-name">${m.name}</div>
-      <div class="morph-gene">${m.gene}</div>
-      ${m.price?'<div class="morph-price">¥'+m.price+'</div>':''}
-      <div class="morph-desc">${m.desc}</div>
-      <span class="morph-rarity ${m.rarity}">${rl[m.rarity]||m.rarity}</span>
-    </div>`).join('');
-}
-
-/* ===== INIT ===== */
-buildMorphFilter();
-renderMorphs();
-renderGrid();
-
-const _obs = new IntersectionObserver(entries => {
-  entries.forEach((e,i) => { if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);_obs.unobserve(e.target);} });
-}, {threshold:0.07});
-document.querySelectorAll('.fade-in').forEach(el => _obs.observe(el));
+window.SD=SD;window.MORPHS=MORPHS;window.TAXON_IDS=TAXON_IDS;
 </script>
 <script src="common.js"></script>
 </body>

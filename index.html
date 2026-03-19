@@ -616,43 +616,41 @@ window.addEventListener('scroll', () => {
 document.addEventListener('click',e=>{if(!e.target.closest('.hero-search'))document.getElementById('hDrop').classList.remove('show');});
 
 const FEAT=[
-  {name:'ヒョウモントカゲモドキ',cat:'gecko',diff:'beginner',icon:'🦎',
-   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Eublepharis_macularius_2009_G01.jpg/480px-Eublepharis_macularius_2009_G01.jpg'},
-  {name:'ボールパイソン',cat:'boa',diff:'beginner',icon:'⚫',
-   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Python_regius_1.jpg/480px-Python_regius_1.jpg'},
-  {name:'フトアゴヒゲトカゲ',cat:'agama',diff:'intermediate',icon:'🦖',
-   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Pogona_vitticeps_2009_G01.jpg/480px-Pogona_vitticeps_2009_G01.jpg'},
-  {name:'コーンスネーク',cat:'snake',diff:'beginner',icon:'🐍',
-   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Pantherophis_guttatus_2009_G02.jpg/480px-Pantherophis_guttatus_2009_G02.jpg'},
-  {name:'クレステッドゲッコー',cat:'gecko',diff:'beginner',icon:'🦎',
-   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Correlophus_ciliatus_-_Zurich_Zoo_-_2010-10-07_%28cropped%29.jpg/480px-Correlophus_ciliatus_-_Zurich_Zoo_-_2010-10-07_%28cropped%29.jpg'},
-  {name:'ロシアリクガメ',cat:'tortoise',diff:'beginner',icon:'🐢',
-   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Agrionemys_horsfieldii_2009_G02.jpg/480px-Agrionemys_horsfieldii_2009_G02.jpg'},
+  {name:'ヒョウモントカゲモドキ',cat:'gecko',diff:'beginner',icon:'🦎',latin:'Eublepharis macularius'},
+  {name:'ボールパイソン',cat:'boa',diff:'beginner',icon:'⚫',latin:'Python regius'},
+  {name:'フトアゴヒゲトカゲ',cat:'agama',diff:'intermediate',icon:'🦖',latin:'Pogona vitticeps'},
+  {name:'コーンスネーク',cat:'snake',diff:'beginner',icon:'🐍',latin:'Pantherophis guttatus'},
+  {name:'クレステッドゲッコー',cat:'gecko',diff:'beginner',icon:'🦎',latin:'Correlophus ciliatus'},
+  {name:'ロシアリクガメ',cat:'tortoise',diff:'beginner',icon:'🐢',latin:'Agrionemys horsfieldii'},
 ];
 const dL={beginner:'初心者向け',intermediate:'中級者向け',advanced:'上級者向け'};
 const dC={beginner:'diff-b',intermediate:'diff-i',advanced:'diff-a'};
 
 const fg=document.getElementById('featuredGrid');
-FEAT.forEach(s=>{
+FEAT.forEach((s,i)=>{
   const a=document.createElement('a');a.href='species.html';a.className='feat-card';
-  const img=document.createElement('img');
-  img.src=s.img;img.alt=s.name;img.id='feat_'+s.tid;img.className='feat-thumb';img.loading='lazy';
-  img.setAttribute('referrerpolicy','no-referrer');
-  img.onerror=function(){const fb=document.createElement('div');fb.className='feat-fallback';fb.textContent=s.icon;this.parentElement.replaceChild(fb,this);};
-  a.appendChild(img);
+  const fb=document.createElement('div');fb.className='feat-fallback';fb.textContent=s.icon;
+  a.appendChild(fb);
   const info=document.createElement('div');info.className='feat-info';
   const cat=document.createElement('div');cat.className='feat-cat';cat.textContent=s.cat.toUpperCase();info.appendChild(cat);
   const nm=document.createElement('div');nm.className='feat-name';nm.textContent=s.name;info.appendChild(nm);
   const diff=document.createElement('span');diff.className='feat-diff '+dC[s.diff];diff.textContent=dL[s.diff];info.appendChild(diff);
   a.appendChild(info);fg.appendChild(a);
-  // iNaturalist写真を非同期で取得
-  fetch('https://api.inaturalist.org/v1/taxa/'+s.tid)
-    .then(r=>r.json())
-    .then(d=>{
-      const url=d.results&&d.results[0]&&d.results[0].default_photo
-        ?d.results[0].default_photo.medium_url:null;
-      if(url){const el=document.getElementById('feat_'+s.tid);if(el)el.src=url;}
-    }).catch(()=>{});
+  // 学名でiNaturalist検索（120ms間隔でレート制限回避）
+  setTimeout(()=>{
+    fetch('https://api.inaturalist.org/v1/taxa?name='+encodeURIComponent(s.latin)+'&rank=species&per_page=1')
+      .then(r=>r.ok?r.json():null)
+      .then(d=>{
+        const url=d&&d.results&&d.results[0]&&d.results[0].default_photo
+          ?d.results[0].default_photo.medium_url:null;
+        if(url){
+          const img=document.createElement('img');
+          img.src=url;img.alt=s.name;img.className='feat-thumb';
+          img.style.cssText='width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.88) saturate(.82);';
+          fb.parentElement.replaceChild(img,fb);
+        }
+      }).catch(()=>{});
+  }, i*120);
 });
 </script>
 </body>
