@@ -122,7 +122,7 @@
   <div id="shopDistList"></div>
 
   <p class="sec-label" style="margin-top:3rem;">// RECOMMENDED SHOPS</p>
-  <h3 style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--text);margin-bottom:2rem;">西東京・多摩エリアのおすすめ店舗</h3>
+  <h3 style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--text);margin-bottom:2rem;">全国おすすめ爬虫類ショップ（★印）</h3>
   <div class="shop-grid" id="staticShopGrid">
     <div class="shop-card"><div class="shop-badge">爬虫類専門 ★おすすめ</div><div class="shop-name">Tsuchinoko</div><div class="shop-addr">東京都昭島市緑町5-7-17</div><div class="shop-hours">月～木 18～21時 / 土 15～21時（火・金・日定休）</div><div class="shop-rating"><span class="shop-stars">★★★★☆</span><span class="shop-rnum">4.3（52件）</span></div><div class="shop-tel">☎ 090-4748-7706</div><p class="shop-note">レオパ・血統アナコンダ等を専門に扱う地域密着型。購入後のアフターフォローが手厚いと評判。</p></div>
     <div class="shop-card"><div class="shop-badge">爬虫類専門 ★高評価</div><div class="shop-name">LUCK UP Reptiles</div><div class="shop-addr">東京都杉並区阿佐谷北3-13-13</div><div class="shop-hours">月・火・木～日 12～20時（水定休）</div><div class="shop-rating"><span class="shop-stars">★★★★★</span><span class="shop-rnum">4.9（110件）</span></div><div class="shop-tel">☎ 03-4361-7794</div><p class="shop-note">都内屈指の高評価爬虫類専門店。レオパの自家繁殖個体が豊富。店内清潔で初心者にも入りやすい。</p></div>
@@ -236,14 +236,7 @@ function getLocation(){
     const mapDiv=document.getElementById('shopMap');mapDiv.style.display='block';
     const q=encodeURIComponent('爬虫類 ペットショップ');
     mapDiv.innerHTML=`<iframe src="https://maps.google.com/maps?q=${q}&ll=${lat},${lng}&z=12&output=embed" width="100%" height="400" style="border:none;filter:invert(88%) hue-rotate(175deg) saturate(0.55) brightness(.9);" allowfullscreen loading="lazy"></iframe>`;
-    const shops=[
-      {name:'Tsuchinoko',addr:'昭島市緑町5-7-17',lat:35.7130,lng:139.3395,badge:'爬虫類専門',rating:'4.3',hours:'月～木 18～21時 / 土 15～21時',tel:'090-4748-7706'},
-      {name:'LUCK UP Reptiles',addr:'杉並区阿佐谷北3-13-13',lat:35.7100,lng:139.6340,badge:'爬虫類専門',rating:'4.9',hours:'月・火・木～日 12～20時（水休）',tel:'03-4361-7794'},
-      {name:'TropiLand（東村山）',addr:'東村山市恩多町2-41-7',lat:35.7467,lng:139.4856,badge:'爬虫類取扱あり',rating:'4.0',hours:'月・水～金 13～20:30 / 土日 11～19時',tel:'042-390-0708'},
-      {name:'KENNY 多摩平の森',addr:'日野市多摩平2-4-1',lat:35.6616,lng:139.3803,badge:'爬虫類取扱あり',rating:'3.6',hours:'毎日 11～21時',tel:'042-506-2326'},
-      {name:'ペットフォレスト小平店',addr:'小平市小川東町3-7-1',lat:35.7422,lng:139.4724,badge:'総合ペット',rating:'5.0',hours:'毎日 10～20時',tel:'042-312-3337'},
-      {name:'BORNtoBONE（所沢）',addr:'所沢市山口1517-2',lat:35.7785,lng:139.4349,badge:'爬虫類取扱あり',rating:'4.3',hours:'火・水・金～日 16～20時（月・木休）',tel:'080-4470-5549'},
-    ];
+    const shops=window.SHOPS
     function calcDist(la1,lo1,la2,lo2){const R=6371,dL=(la2-la1)*Math.PI/180,dLo=(lo2-lo1)*Math.PI/180,a=Math.sin(dL/2)**2+Math.cos(la1*Math.PI/180)*Math.cos(la2*Math.PI/180)*Math.sin(dLo/2)**2;return(R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a))).toFixed(1);}
     const wd=shops.map(s=>({...s,dist:parseFloat(calcDist(lat,lng,s.lat,s.lng))})).sort((a,b)=>a.dist-b.dist);
     document.getElementById('shopDistList').innerHTML=`<p style="font-family:'Space Mono',monospace;font-size:.65rem;color:var(--text3);margin:1.5rem 0 .8rem;">// 現在地からの距離順</p><div class="shop-grid">${wd.map(s=>`<div class="shop-card"><div class="shop-badge">${s.badge}</div><div class="shop-name">${s.name}</div><div class="shop-addr">${s.addr}</div><div class="shop-hours">${s.hours}</div><div class="shop-rating"><span class="shop-stars">★ ${s.rating}</span></div><div class="shop-tel">☎ ${s.tel}</div><div class="shop-dist">📍 約 ${s.dist} km</div></div>`).join('')}</div>`;
