@@ -730,8 +730,8 @@ function renderGrid(){
 function openModal(sp){
   const box=document.getElementById('modalContent');box.innerHTML='';
   const wrap=document.createElement('div');
+  box.appendChild(wrap);  // DOMに先に追加してからphoto取得
   makePhoto(sp,wrap,true);
-  box.appendChild(wrap);
   const nm=document.createElement('div');nm.className='m-name';nm.textContent=sp.name;box.appendChild(nm);
   const lt=document.createElement('div');lt.className='m-latin';lt.textContent=sp.latin;box.appendChild(lt);
   function sec(label,text){const s=document.createElement('div');s.className='m-sec';const t=document.createElement('div');t.className='m-stitle';t.textContent=label;s.appendChild(t);const p=document.createElement('p');p.className='m-text';p.textContent=text;s.appendChild(p);box.appendChild(s);}
