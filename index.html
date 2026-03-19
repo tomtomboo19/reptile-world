@@ -19,7 +19,7 @@
   gtag('config', 'G-NQVSG0XPLW');
 </script>
 <style>
-.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,#0d2010 0%,#0a0f0a 70%);padding:2rem 1.5rem;}
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;overflow:visible;background:radial-gradient(ellipse at 50% 40%,#0d2010 0%,#0a0f0a 70%);padding:2rem 1.5rem;}
 .hero-scales{position:absolute;inset:0;overflow:hidden;opacity:.06;pointer-events:none;}
 .hero-eye{position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle at 40% 45%,#1a4a1e,#0a0f0a 70%);top:50%;left:50%;transform:translate(-50%,-62%);opacity:.45;pointer-events:none;}
 .hero-eye::after{content:"";position:absolute;width:70px;height:190px;background:rgba(0,0,0,.92);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);box-shadow:0 0 32px 5px rgba(76,175,80,.2);}
@@ -34,7 +34,7 @@
 .hero-search input:focus{border-color:var(--accent);}
 .hero-search input::placeholder{color:var(--text3);opacity:.7;}
 .hs-ico{position:absolute;right:.9rem;top:50%;transform:translateY(-50%);color:var(--accent);font-size:.95rem;pointer-events:none;}
-.sdrop{display:none;position:absolute;width:100%;background:var(--surface);border:1px solid var(--border2);border-top:none;max-height:300px;overflow-y:auto;z-index:9999;text-align:left;}
+.sdrop{display:none;position:fixed;width:460px;max-width:90vw;background:var(--surface);border:1px solid var(--border2);max-height:300px;overflow-y:auto;z-index:9999;text-align:left;}
 .sdrop.show{display:block;}
 .sdi{padding:.6rem .9rem;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;display:flex;gap:.7rem;align-items:center;}
 .sdi:hover{background:var(--bg3);}
@@ -596,8 +596,23 @@ function doSearch(q){
   }else{
     dd.innerHTML='<div class="sdi-none">「'+v+'」に該当する種は見つかりません</div>';
   }
+  // Position dropdown under the search input
+  const inp = document.getElementById('hSearch');
+  const rect = inp.getBoundingClientRect();
+  dd.style.top = (rect.bottom) + 'px';
+  dd.style.left = rect.left + 'px';
+  dd.style.width = rect.width + 'px';
   dd.classList.add('show');
 }
+window.addEventListener('scroll', () => {
+  const inp = document.getElementById('hSearch');
+  const dd = document.getElementById('hDrop');
+  if (inp && dd && dd.classList.contains('show')) {
+    const rect = inp.getBoundingClientRect();
+    dd.style.top = (rect.bottom) + 'px';
+    dd.style.left = rect.left + 'px';
+  }
+});
 document.addEventListener('click',e=>{if(!e.target.closest('.hero-search'))document.getElementById('hDrop').classList.remove('show');});
 
 const FEAT=[
