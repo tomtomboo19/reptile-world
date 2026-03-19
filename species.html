@@ -626,8 +626,13 @@ const _fetchQueue = [];
 function _processQueue() {
   if (_fetching >= 2 || !_fetchQueue.length) return;
   const item = _fetchQueue.shift();
+  if (!item.latin || typeof item.latin !== 'string') {
+    setTimeout(_processQueue, 100); return;
+  }
   _fetching++;
-  const wikiName = item.latin.replace(/ /g, '_');
+  // 亜種名（3語以上）は属+種の2語にフォールバック
+  const parts = item.latin.trim().split(' ');
+  const wikiName = (parts.length > 2 ? parts.slice(0,2).join(' ') : item.latin).replace(/ /g, '_');
   fetch('https://en.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(wikiName))
     .then(r => r.ok ? r.json() : null)
     .then(d => {
