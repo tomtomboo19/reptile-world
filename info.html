@@ -111,7 +111,7 @@
   <h2 class="sec-title">近くのショップを探す</h2>
   <p class="sec-desc">現在地を取得して周辺の爬虫類ショップを地図上に表示します。</p>
   <button class="geo-btn" id="geoBtn" onclick="getLocation()">📍 現在地から近くのショップを探す</button>
-  <div class="geo-status" id="geoStatus">位置情報の取得を許可してください</div>
+  <div class="geo-status" id="geoStatus"></div>
   <div class="map-wrap">
     <div class="map-placeholder" id="mapPlaceholder">
       <p>📍 「現在地から探す」ボタンを押すと地図が表示されます</p>
@@ -227,11 +227,11 @@ function getLocation(){
   const btn=document.getElementById('geoBtn');
   const status=document.getElementById('geoStatus');
   if(!navigator.geolocation){status.textContent='位置情報をサポートしていません';status.className='geo-status err';return;}
-  btn.disabled=true;status.textContent='📡 位置情報を取得中...';status.className='geo-status';
+  btn.disabled=true;status.textContent='';status.className='geo-status';
   navigator.geolocation.getCurrentPosition(pos=>{
     const lat=pos.coords.latitude,lng=pos.coords.longitude;
-    status.textContent=`✅ 取得完了（緯度 ${lat.toFixed(4)}、経度 ${lng.toFixed(4)}）`;
-    status.className='geo-status ok';btn.textContent='📍 現在地を再取得';btn.disabled=false;
+    status.textContent='';
+    status.className='geo-status';btn.textContent='📍 現在地を再取得';btn.disabled=false;
     document.getElementById('mapPlaceholder').style.display='none';
     const mapDiv=document.getElementById('shopMap');mapDiv.style.display='block';
     const q=encodeURIComponent('爬虫類 ペットショップ');
