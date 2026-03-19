@@ -7,6 +7,9 @@
 <title>コミュニティ | REPTILE WORLD</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@300;400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NQVSG0XPLW"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-NQVSG0XPLW');</script>
 <style>
 .post-form{background:var(--surface);border:1px solid var(--border);padding:1.8rem;margin-bottom:2rem;}
 .post-form-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--accent2);margin-bottom:1rem;}
@@ -16,6 +19,9 @@
 .form-select{background:var(--bg);border:1px solid var(--border);color:var(--text);font-family:'Space Mono',monospace;font-size:.72rem;padding:.65rem 1rem;width:100%;outline:none;}
 .form-textarea{background:var(--bg);border:1px solid var(--border);color:var(--text);font-family:'Noto Sans JP',sans-serif;font-size:.85rem;padding:.65rem 1rem;width:100%;min-height:90px;resize:vertical;outline:none;transition:border-color .2s;}
 .form-textarea:focus{border-color:var(--border2);}
+.img-upload-label{display:inline-block;cursor:pointer;font-family:'Space Mono',monospace;font-size:.7rem;padding:.5rem 1rem;border:1px dashed var(--border2);color:var(--text3);transition:all .2s;margin-top:.5rem;}
+.img-upload-label:hover{border-color:var(--accent);color:var(--accent);}
+.img-preview{max-width:100%;max-height:160px;object-fit:contain;margin-top:.6rem;display:none;border:1px solid var(--border);}
 .form-submit{font-family:'Space Mono',monospace;font-size:.75rem;letter-spacing:.08em;padding:.7rem 1.8rem;background:var(--accent);color:#0a1a0a;border:none;cursor:pointer;font-weight:700;transition:all .2s;margin-top:.6rem;}
 .form-submit:hover{background:var(--accent2);}
 .posts-list{display:flex;flex-direction:column;gap:.8rem;}
@@ -25,39 +31,13 @@
 .post-tag{font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.08em;padding:.15rem .45rem;background:rgba(76,175,80,.1);color:var(--accent3);border:1px solid var(--border);}
 .post-time{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--text3);}
 .post-body{font-size:.86rem;color:var(--text2);font-weight:300;line-height:1.7;}
-.posts-empty{font-family:'Space Mono',monospace;font-size:.75rem;color:var(--text3);text-align:center;padding:2.5rem;border:1px dashed var(--border);}
-.taxonomy-wrap{overflow-x:auto;padding-bottom:1rem;}
-.tax-tree{display:flex;min-width:680px;}
-.tax-col{flex:1;border-right:1px solid var(--border);}
-.tax-col:last-child{border-right:none;}
-.tax-head{padding:.7rem .9rem;background:var(--surface);border-bottom:1px solid var(--border);font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.18em;color:var(--accent3);}
-.tax-item{padding:.65rem .9rem;font-size:.78rem;color:var(--text2);border-bottom:1px solid rgba(76,175,80,.06);font-weight:300;transition:background .15s,color .15s;}
-.tax-item:hover{background:var(--surface);color:var(--accent2);}
-.tax-hl{color:var(--accent);font-weight:700;}
-/* 画像アップロード */
-.img-upload-label{display:inline-block;cursor:pointer;font-family:'Space Mono',monospace;font-size:.7rem;padding:.5rem 1rem;border:1px dashed var(--border2);color:var(--text3);transition:all .2s;margin-top:.5rem;}
-.img-upload-label:hover{border-color:var(--accent);color:var(--accent);}
-.img-preview{max-width:100%;max-height:160px;object-fit:contain;margin-top:.6rem;display:none;border:1px solid var(--border);}
 .post-img{max-width:100%;max-height:240px;object-fit:contain;margin-top:.7rem;border:1px solid var(--border);display:block;}
-/* 管理者削除ボタン */
-.admin-bar{display:none;background:rgba(229,115,115,.08);border:1px solid rgba(229,115,115,.2);padding:.4rem .8rem;margin-bottom:.5rem;font-family:'Space Mono',monospace;font-size:.62rem;color:var(--red);align-items:center;justify-content:space-between;gap:.5rem;}
-.admin-on .admin-bar{display:flex;}
-.admin-on .delete-btn{display:inline-block;}
-.delete-btn{display:none;font-family:'Space Mono',monospace;font-size:.6rem;padding:.2rem .6rem;background:none;border:1px solid var(--red);color:var(--red);cursor:pointer;transition:all .2s;}
-.delete-btn:hover{background:var(--red);color:#fff;}
-.admin-login{position:fixed;bottom:5rem;right:1.5rem;z-index:100;}
-.admin-btn{font-family:'Space Mono',monospace;font-size:.6rem;padding:.4rem .8rem;background:var(--surface);border:1px solid var(--border);color:var(--text3);cursor:pointer;transition:all .2s;}
-.admin-btn:hover{border-color:var(--accent);color:var(--accent);}
+.admin-bar{display:none;background:rgba(229,115,115,.08);border:1px solid rgba(229,115,115,.2);border-radius:2px;padding:.35rem .8rem;margin-bottom:.6rem;font-family:'Space Mono',monospace;font-size:.6rem;color:#e57373;align-items:center;justify-content:space-between;}
+.delete-btn{font-family:'Space Mono',monospace;font-size:.6rem;padding:.2rem .6rem;background:none;border:1px solid #e57373;color:#e57373;cursor:pointer;transition:all .2s;}
+.delete-btn:hover{background:#e57373;color:#fff;}
+.posts-empty{font-family:'Space Mono',monospace;font-size:.75rem;color:var(--text3);text-align:center;padding:2.5rem;border:1px dashed var(--border);}
 @media(max-width:600px){.form-row{grid-template-columns:1fr;}}
 </style>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-NQVSG0XPLW"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-NQVSG0XPLW');
-</script>
 </head>
 <body>
 <nav>
@@ -77,21 +57,17 @@
   <a href="species.html" onclick="closeDrawer()">図鑑</a>
   <a href="care.html" onclick="closeDrawer()">飼育・繁殖</a>
   <a href="info.html" onclick="closeDrawer()">情報・ショップ</a>
-  <a href="community.html" onclick="closeDrawer()">コミュニティ</a>
+  <a href="community.html" class="active" onclick="closeDrawer()">コミュニティ</a>
   <a href="faq.html" onclick="closeDrawer()">FAQ</a>
 </div>
 
 <div class="page-hero">
-  <div class="page-hero-label">// 04. COMMUNITY</div>
-  <h1 class="page-hero-title">コミュ<span>ニティ</span></h1>
-  <p class="page-hero-desc">飼育の悩みや自慢の子を投稿できる掲示板です。気軽に投稿してください。</p>
+  <div class="page-hero-label">// COMMUNITY</div>
+  <h1 class="page-hero-title">コミュニ<span>ティ</span></h1>
+  <p class="page-hero-desc">飼育の悩み・自慢の子の紹介・情報交換など気軽に投稿してください。</p>
 </div>
 
-<!-- BOARD -->
 <div class="section fade-in">
-  <p class="sec-label">// COMMUNITY BOARD</p>
-  <h2 class="sec-title">みんなの掲示板</h2>
-  <p class="sec-desc">飼育の悩み・自慢の子の紹介・情報交換など気軽に投稿してください。</p>
   <div class="post-form">
     <div class="post-form-title">投稿する</div>
     <div class="form-row">
@@ -108,7 +84,10 @@
     </div>
     <textarea class="form-textarea" id="postBody" placeholder="内容を書いてください（500文字以内）" maxlength="500"></textarea>
     <div>
-      <label class="img-upload-label">📷 画像を追加（任意）<input type="file" id="postImg" accept="image/*" style="display:none" onchange="previewImg(this)"></label>
+      <label class="img-upload-label">
+        📷 画像を追加（任意・3MB以下）
+        <input type="file" id="postImg" accept="image/*" style="display:none" onchange="previewImg(this)">
+      </label>
       <img id="imgPreview" class="img-preview">
     </div>
     <div><button class="form-submit" onclick="submitPost()">投稿する →</button></div>
@@ -116,9 +95,6 @@
   <div class="posts-list" id="postsList"></div>
 </div>
 
-
-
-<div class="admin-login"><button class="admin-btn" onclick="toggleAdmin()" id="adminBtn">🔑 管理</button></div>
 <footer>
   <div class="footer-logo">REPTILE WORLD</div>
   <ul class="footer-nav">
@@ -129,7 +105,7 @@
     <li><a href="community.html">コミュニティ</a></li>
     <li><a href="faq.html">FAQ</a></li>
   </ul>
-  <p class="footer-copy">© 2026 REPTILE WORLD</p>
+  <p class="footer-copy">© 2026 REPTILE WORLD — FOR REPTILE ENTHUSIASTS</p>
 </footer>
 
 <script>
@@ -137,90 +113,114 @@ function toggleDrawer(){document.getElementById('hamburger').classList.toggle('o
 function closeDrawer(){document.getElementById('hamburger').classList.remove('open');document.getElementById('navDrawer').classList.remove('open');document.body.style.overflow='';}
 
 /* ===== 掲示板 ===== */
-const KEY='rw_posts_v2';
-function loadPosts(){try{return JSON.parse(localStorage.getItem(KEY)||'[]');}catch(e){return[];}}
-function savePosts(p){try{localStorage.setItem(KEY,JSON.stringify(p.slice(0,100)));}catch(e){alert('投稿の保存に失敗しました（ストレージ不足の可能性）');}}
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+const KEY = 'rw_posts_v2';
+let adminMode = false;
+
+function loadPosts(){
+  try{return JSON.parse(localStorage.getItem(KEY)||'[]');}catch(e){return[];}
+}
+function savePosts(p){
+  try{localStorage.setItem(KEY,JSON.stringify(p.slice(0,100)));}
+  catch(e){alert('保存失敗（ストレージ不足の可能性があります）');}
+}
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 
 function renderPosts(){
-  const posts=loadPosts();
-  const c=document.getElementById('postsList');
-  if(!posts.length){c.innerHTML='<div class="posts-empty">まだ投稿がありません。最初の投稿をしてみましょう！</div>';return;}
-  c.innerHTML='';
-  posts.forEach((p,i)=>{
-    const card=document.createElement('div');
-    card.className='post-card';
-    card.innerHTML=
-      '<div class="admin-bar">🔑 管理者モード <button class="delete-btn" onclick="deletePost('+i+')">✕ 削除</button></div>'+
-      '<div class="post-header"><div><span class="post-author">'+esc(p.name||'匿名')+'</span><span class="post-tag" style="margin-left:.5rem;">'+esc(p.tag)+'</span></div><span class="post-time">'+p.time+'</span></div>'+
-      '<div class="post-body">'+esc(p.body)+'</div>'+
-      (p.img?'<img class="post-img" src="'+p.img+'" alt="投稿画像" loading="lazy">':'');
+  const posts = loadPosts();
+  const c = document.getElementById('postsList');
+  if(!posts.length){
+    c.innerHTML = '<div class="posts-empty">まだ投稿がありません。最初の投稿をしてみましょう！</div>';
+    return;
+  }
+  c.innerHTML = '';
+  posts.forEach(function(p, i){
+    const card = document.createElement('div');
+    card.className = 'post-card';
+    // 管理バー（デフォルト非表示）
+    const bar = document.createElement('div');
+    bar.className = 'admin-bar';
+    bar.style.display = 'none';
+    bar.innerHTML = '🔑 管理者モード <button class="delete-btn" onclick="deletePost(' + i + ')">✕ 削除</button>';
+    card.appendChild(bar);
+    // 投稿本文
+    card.innerHTML += '<div class="post-header"><div><span class="post-author">' + esc(p.name||'匿名') + '</span><span class="post-tag" style="margin-left:.5rem;">' + esc(p.tag) + '</span></div><span class="post-time">' + esc(p.time) + '</span></div><div class="post-body">' + esc(p.body) + '</div>' + (p.img ? '<img class="post-img" src="' + p.img + '" alt="投稿画像" loading="lazy">' : '');
     c.appendChild(card);
   });
+  // 管理モードなら管理バーを表示
+  if(adminMode) showAdminBars();
+}
+
+function showAdminBars(){
+  document.querySelectorAll('.admin-bar').forEach(function(b){b.style.display='flex';});
+}
+function hideAdminBars(){
+  document.querySelectorAll('.admin-bar').forEach(function(b){b.style.display='none';});
 }
 
 function deletePost(i){
   if(!confirm('この投稿を削除しますか？'))return;
-  const posts=loadPosts();
-  posts.splice(i,1);
+  const posts = loadPosts();
+  posts.splice(i, 1);
   savePosts(posts);
   renderPosts();
 }
 
 function previewImg(input){
-  const preview=document.getElementById('imgPreview');
+  const preview = document.getElementById('imgPreview');
   if(!input.files||!input.files[0]){preview.style.display='none';return;}
-  const file=input.files[0];
-  if(file.size>3*1024*1024){alert('画像は3MB以下にしてください');input.value='';preview.style.display='none';return;}
-  const reader=new FileReader();
-  reader.onload=e=>{preview.src=e.target.result;preview.style.display='block';};
+  const file = input.files[0];
+  if(file.size > 3*1024*1024){alert('画像は3MB以下にしてください');input.value='';preview.style.display='none';return;}
+  const reader = new FileReader();
+  reader.onload = function(e){preview.src=e.target.result;preview.style.display='block';};
   reader.readAsDataURL(file);
 }
 
 function submitPost(){
-  const name=document.getElementById('postName').value.trim();
-  const tag=document.getElementById('postTag').value;
-  const body=document.getElementById('postBody').value.trim();
+  const name = document.getElementById('postName').value.trim();
+  const tag = document.getElementById('postTag').value;
+  const body = document.getElementById('postBody').value.trim();
   if(!body){alert('内容を入力してください');return;}
-  const preview=document.getElementById('imgPreview');
-  const img=preview.style.display!=='none'?preview.src:null;
-  const now=new Date();
-  const time=`${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-  const posts=loadPosts();
-  posts.unshift({name:name||'匿名',tag,body,time,img});
+  const preview = document.getElementById('imgPreview');
+  const img = (preview.style.display !== 'none' && preview.src) ? preview.src : null;
+  const now = new Date();
+  const time = now.getFullYear() + '/' + String(now.getMonth()+1).padStart(2,'0') + '/' + String(now.getDate()).padStart(2,'0') + ' ' + String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+  const posts = loadPosts();
+  posts.unshift({name:name||'匿名', tag:tag, body:body, time:time, img:img});
   savePosts(posts);
-  document.getElementById('postName').value='';
-  document.getElementById('postBody').value='';
-  document.getElementById('postImg').value='';
-  preview.src=''; preview.style.display='none';
+  document.getElementById('postName').value = '';
+  document.getElementById('postBody').value = '';
+  document.getElementById('postImg').value = '';
+  preview.src = ''; preview.style.display = 'none';
   renderPosts();
 }
 
-/* ===== 管理者モード ===== */
-const ADMIN_PASS='reptileworld2026';
-let adminMode=false;
+/* ===== 管理者モード: Ctrl+Shift+A で起動（他ユーザーには非表示）===== */
+const ADMIN_PASS = 'reptileworld2026';
 function toggleAdmin(){
   if(adminMode){
-    adminMode=false;
-    document.body.classList.remove('admin-on');
-    document.getElementById('adminBtn').textContent='🔑 管理';
-  }else{
-    const p=prompt('管理者パスワードを入力してください');
-    if(p===ADMIN_PASS){
-      adminMode=true;
-      document.body.classList.add('admin-on');
-      document.getElementById('adminBtn').textContent='🔓 管理中';
-      alert('管理者モードになりました。各投稿の削除ボタンが表示されます。');
-    }else if(p!==null){
+    adminMode = false;
+    hideAdminBars();
+  } else {
+    const p = prompt('管理者パスワードを入力してください');
+    if(p === ADMIN_PASS){
+      adminMode = true;
+      showAdminBars();
+      alert('管理者モードON。終了: Ctrl+Shift+A');
+    } else if(p !== null){
       alert('パスワードが違います');
     }
   }
 }
+document.addEventListener('keydown', function(e){
+  if(e.ctrlKey && e.shiftKey && e.key === 'A'){e.preventDefault(); toggleAdmin();}
+});
 
 renderPosts();
 
-const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*50);obs.unobserve(e.target);}});},{threshold:0.07});
-document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+const obs = new IntersectionObserver(function(entries){entries.forEach(function(e,i){if(e.isIntersecting){setTimeout(function(){e.target.classList.add('visible');},i*50);obs.unobserve(e.target);}});},{threshold:0.07});
+document.querySelectorAll('.fade-in').forEach(function(el){obs.observe(el);});
 </script>
 <script src="common.js"></script>
 </body>
