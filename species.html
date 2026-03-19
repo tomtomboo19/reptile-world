@@ -522,7 +522,7 @@ function _drainQueue() {
   _qRunning = true;
   const {latin, cb} = _q.shift();
   const q = encodeURIComponent(latin);
-  fetch('https://api.inaturalist.org/v1/taxa?q=' + q + '&rank=species&per_page=1')
+  fetch('https://api.inaturalist.org/v1/taxa?name=' + q + '&rank=species&per_page=1')
     .then(r => r.ok ? r.json() : null)
     .then(d => {
       const url = d && d.results && d.results[0] && d.results[0].default_photo
