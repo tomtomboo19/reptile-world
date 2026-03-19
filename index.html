@@ -616,12 +616,12 @@ window.addEventListener('scroll', () => {
 document.addEventListener('click',e=>{if(!e.target.closest('.hero-search'))document.getElementById('hDrop').classList.remove('show');});
 
 const FEAT=[
-  {name:'ヒョウモントカゲモドキ',cat:'gecko',diff:'beginner',icon:'🦎',tid:35194},
-  {name:'ボールパイソン',cat:'boa',diff:'beginner',icon:'⚫',tid:35530},
-  {name:'フトアゴヒゲトカゲ',cat:'agama',diff:'intermediate',icon:'🦖',tid:35526},
-  {name:'コーンスネーク',cat:'snake',diff:'beginner',icon:'🐍',tid:35561},
-  {name:'クレステッドゲッコー',cat:'gecko',diff:'beginner',icon:'🦎',tid:73574},
-  {name:'ロシアリクガメ',cat:'tortoise',diff:'beginner',icon:'🐢',tid:39583},
+  {name:'ヒョウモントカゲモドキ',cat:'gecko',diff:'beginner',icon:'🦎',latin:'Eublepharis macularius'},
+  {name:'ボールパイソン',cat:'boa',diff:'beginner',icon:'⚫',latin:'Python regius'},
+  {name:'フトアゴヒゲトカゲ',cat:'agama',diff:'intermediate',icon:'🦖',latin:'Pogona vitticeps'},
+  {name:'コーンスネーク',cat:'snake',diff:'beginner',icon:'🐍',latin:'Pantherophis guttatus'},
+  {name:'クレステッドゲッコー',cat:'gecko',diff:'beginner',icon:'🦎',latin:'Correlophus ciliatus'},
+  {name:'ロシアリクガメ',cat:'tortoise',diff:'beginner',icon:'🐢',latin:'Agrionemys horsfieldii'},
 ];
 const dL={beginner:'初心者向け',intermediate:'中級者向け',advanced:'上級者向け'};
 const dC={beginner:'diff-b',intermediate:'diff-i',advanced:'diff-a'};
@@ -636,13 +636,12 @@ FEAT.forEach(function(s,i){
   var nm=document.createElement('div');nm.className='feat-name';nm.textContent=s.name;info.appendChild(nm);
   var diff=document.createElement('span');diff.className='feat-diff '+dC[s.diff];diff.textContent=dL[s.diff];info.appendChild(diff);
   a.appendChild(info);fg.appendChild(a);
-  (function(capturedFb,capturedTid,capturedName,idx){
+  (function(capturedFb,capturedLatin,capturedName,idx){
     setTimeout(function(){
-      fetch('https://api.inaturalist.org/v1/taxa/'+capturedTid)
+      fetch('https://api.inaturalist.org/v1/taxa?name='+encodeURIComponent(capturedLatin)+'&rank=species&per_page=1')
         .then(function(r){return r.ok?r.json():null;})
         .then(function(d){
-          var url=d&&d.results&&d.results[0]&&d.results[0].default_photo
-            ?d.results[0].default_photo.medium_url:null;
+          var url=d&&d.results&&d.results[0]&&d.results[0].default_photo?d.results[0].default_photo.medium_url:null;
           if(url&&capturedFb.parentElement){
             var img=document.createElement('img');
             img.src=url;img.alt=capturedName;img.className='feat-thumb';
@@ -651,7 +650,7 @@ FEAT.forEach(function(s,i){
           }
         }).catch(function(){});
     },idx*200);
-  })(fb,s.tid,s.name,i);
+  })(fb,s.latin,s.name,i);
 });
 </script>
 </body>
