@@ -636,6 +636,7 @@ FEAT.forEach((s,i)=>{
   const nm=document.createElement('div');nm.className='feat-name';nm.textContent=s.name;info.appendChild(nm);
   const diff=document.createElement('span');diff.className='feat-diff '+dC[s.diff];diff.textContent=dL[s.diff];info.appendChild(diff);
   a.appendChild(info);fg.appendChild(a);
+  // 500ms間隔で順番に取得（レート制限対策）
   setTimeout((function(f,l){
     return function(){
       fetch('https://api.inaturalist.org/v1/taxa?name='+encodeURIComponent(l)+'&rank=species&per_page=1')
@@ -651,7 +652,7 @@ FEAT.forEach((s,i)=>{
           }
         }).catch(()=>{});
     };
-  })(fb,s.latin), i*150);
+  })(fb,s.latin), i*500);
 });
 </script>
 </body>

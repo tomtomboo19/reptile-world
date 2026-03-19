@@ -587,29 +587,56 @@ MORPHS.push(
 
 window.SD=SD; window.MORPHS=MORPHS; window.TAXON_IDS=TAXON_IDS;
 
-/* ===== 写真取得キュー ===== */
-const _q=[]; let _qR=false; const _cache={};
-function _enq(latin,cb){
-  if(!latin){cb(null);return;}
-  if(_cache[latin]!==undefined){cb(_cache[latin]);return;}
-  _q.push({latin,cb});
-  if(!_qR)_drain();
-}
-function _drain(){
-  if(!_q.length){_qR=false;return;}
-  _qR=true;
-  const item=_q.shift();
-  fetch('https://api.inaturalist.org/v1/taxa?name='+encodeURIComponent(item.latin)+'&rank=species&per_page=1')
+/* ===== 写真取得（画面内に入ったカードのみ取得・レート制限対策）===== */
+const _cache={};
+let _pending=0;
+const _MAX=2; // 同時取得数を2に制限
+const _waiting=[];
+
+function _fetchPhoto(latin,wrapEl,isMod,sp){
+  if(_cache[latin]!==undefined){
+    _applyPhoto(_cache[latin],wrapEl,isMod,sp);return;
+  }
+  if(_pending>=_MAX){_waiting.push({latin,wrapEl,isMod,sp});return;}
+  _pending++;
+  fetch('https://api.inaturalist.org/v1/taxa?name='+encodeURIComponent(latin)+'&rank=species&per_page=1')
     .then(r=>r.ok?r.json():null)
     .then(d=>{
       const url=d&&d.results&&d.results[0]&&d.results[0].default_photo
         ?d.results[0].default_photo.medium_url:null;
-      _cache[item.latin]=url;
-      item.cb(url);
+      _cache[latin]=url;
+      _applyPhoto(url,wrapEl,isMod,sp);
     })
-    .catch(()=>{_cache[item.latin]=null;item.cb(null);})
-    .finally(()=>setTimeout(_drain,150));
+    .catch(()=>{_cache[latin]=null;})
+    .finally(()=>{
+      _pending--;
+      if(_waiting.length){
+        setTimeout(()=>{const nx=_waiting.shift();if(nx)_fetchPhoto(nx.latin,nx.wrapEl,nx.isMod,nx.sp);},500);
+      }
+    });
 }
+
+function _applyPhoto(url,wrapEl,isMod,sp){
+  if(!url||!document.contains(wrapEl))return;
+  const img=document.createElement('img');
+  img.src=url;img.alt=sp.name;
+  if(isMod)img.className='m-img';
+  else img.style.cssText='width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.88) saturate(.82);transition:all .4s;';
+  wrapEl.innerHTML='';wrapEl.appendChild(img);
+}
+
+// IntersectionObserver: 画面に入ったカードだけ写真を取得
+const _photoObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    const wrap=e.target;
+    const latin=wrap.dataset.latin;
+    const isMod=wrap.dataset.mod==='1';
+    const sp=JSON.parse(wrap.dataset.sp||'{}');
+    if(latin)_fetchPhoto(latin,wrap,isMod,sp);
+    _photoObs.unobserve(wrap);
+  });
+},{rootMargin:'200px',threshold:0});
 
 function makePhoto(sp,wrapEl,isMod){
   const fb=document.createElement('div');
@@ -617,14 +644,10 @@ function makePhoto(sp,wrapEl,isMod){
   fb.textContent=sp.icon||'🦎';
   wrapEl.appendChild(fb);
   if(sp.latin){
-    _enq(sp.latin,url=>{
-      if(!url||!document.contains(wrapEl))return;
-      const img=document.createElement('img');
-      img.src=url; img.alt=sp.name;
-      if(isMod)img.className='m-img';
-      else img.style.cssText='width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.88) saturate(.82);transition:all .4s;';
-      wrapEl.innerHTML=''; wrapEl.appendChild(img);
-    });
+    wrapEl.dataset.latin=sp.latin;
+    wrapEl.dataset.mod=isMod?'1':'0';
+    wrapEl.dataset.sp=JSON.stringify({name:sp.name,icon:sp.icon||'🦎'});
+    _photoObs.observe(wrapEl);
   }
 }
 
